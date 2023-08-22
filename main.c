@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
+/*   main.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/08/21 17:23:37 by vvan-der      ########   odam.nl         */
+/*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
+/*   Updated: 2023/08/22 16:16:41 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <stdbool.h>
-# include <ctype.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+int	main(int argc, char **argv)
+{
+	char	*tmp;
+	int		i;
 
-
-
-
-
-
-
-#endif
+	argc = 0;
+	argv = NULL;
+	i = 0;
+	while (i < 5)
+	{
+		tmp = readline("Very real shell company: ");
+		add_history(tmp);
+		i++;
+		if (i == 5)
+		{
+			rl_clear_history();
+			i = 0;
+		}
+	}
+}
