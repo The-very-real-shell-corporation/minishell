@@ -35,19 +35,45 @@ wait4		sounds very similar to "waitpid"
 
 Pipex & other:
 
-access		checks if "open" will work
-fork		copies current processes
-getcwd
-chdir
+access		checks if "open" a thing will work
+fork		copies current processes (infinitely and crashes computer if you allow it to)
 
-stat 
-lstat
-fstat
+getcwd		-> executes "pwd" or something
+chdir		-> executes "cd" or something
 
-unlink
-execve
-dup, dup2, pipe, opendir, readdir, closedir,
-strerror, perror, isatty, ttyname, ttyslot, ioctl,
-getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
-tgetnum, tgetstr, tgoto, tputs
+stat 		gets info about a thing and places it somewhere
+lstat		^^
+fstat		^^ about a file with a fd
+
+execve		-> execute program or something
+unlink		-> executes "rm" or something something link to file something
+
+dup			duplicate existing file descriptor
+dup2		duplicate specific fd
+
+pipe		-> pipe stuff
+
+opendir		-> open directory
+readdir		-> read ^^
+closedir	-> close ^^
+
+strerror	returns pointer to specific error message
+perror		specify your own message to print to STD_ERRNO
+
+isatty		checks if a fd is a terminal device
+ttyname		return name of a terminal
+ttyslot		find the slot of the current user's terminal in some file
+
+ioctl		input/output control
+getenv		get environment
+tcsetattr	set terminal attributes
+tcgetattr	get ^^
+tgetent		gets a terminal thing from a specific place
+tgetflag	returns yes/no for entry
+tgetnum		returns integer for entry
+tgetstr		returns string for entry
+
+
+tgoto		this routine instantiates the parameters into the given capability. The output from this routine is to be passed to tputs.
+tputs		this routine is described on the curs_terminfo(3X) manual page. It can retrieve capabilities by either termcap or terminfo name.
 

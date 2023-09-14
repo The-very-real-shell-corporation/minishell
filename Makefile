@@ -6,7 +6,7 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/09/04 13:35:07 by vvan-der      ########   odam.nl          #
+#    Updated: 2023/09/14 20:22:04 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,9 @@ USER	= vvan-der
 LIBFT	= libft
 RM		= rm -rf
 CC		= gcc
-CFLAGS	= -Wall -Werror -Wextra -I/Users/$(USER)/.brew/opt/readline/include #-g3 -fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra -I/Users/$(USER)/.brew/opt/readline/include -g -fsanitize=address
 L_FLAGS	= -L/usr/local/lib -I/usr/local/include -L/Users/$(USER)/.brew/opt/readline/lib  -lreadline
-SRCS	= main.c
+SRCS	= builtins.c main.c
 
 OBJDIR	= minishobjects
 
@@ -39,7 +39,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
 $(NAME): $(OBJDIR) $(OBJS)
-	$(CC) $(CFLAGS) $(L_FLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(L_FLAGS) $(LIBFT)/$(LIBFT).a $(OBJS) -o $(NAME)
 
 clean:	
 	$(RM) $(OBJDIR)

@@ -1,0 +1,5 @@
+1-	Parser (read the input of the user)
+
+2-	Decide what to do with said input
+
+3-	Execute
