@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/08/22 16:16:41 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/09/04 13:59:36 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < 5)
 	{
-		tmp = readline("Very real shell company: ");
+		tmp = readline("NULL: ");
 		add_history(tmp);
 		i++;
-		if (i == 5)
+		printf("%d\n", rl_on_new_line());
+		if (i == 4)
 		{
-			rl_clear_history();
+			rl_replace_line("TEAL COMPANY I SWEAT\n", 10);
+			rl_redisplay();
 			i = 0;
 		}
 	}

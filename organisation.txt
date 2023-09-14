@@ -1,23 +1,53 @@
 Readline functions:
 
-readline, rl_clear_history, rl_on_new_line,
-rl_replace_line, rl_redisplay, add_history,
+readline			reads the input and stores the info in a struct
+add_history			adds the last command to the history in a list
+rl_clear_history	clears the history list
+rl_on_new_line		?
+rl_replace_line		?
+rl_redisplay		?
 
 Common knowledge:
 
-printf, malloc, free, write, open, read, close, exit
-
+printf		print stuff
+malloc		allocate memory
+free		free allocated memory
+write		write stuff
+open		open file
+read		read content of file
+close		close file
+exit		exit program
 
 Waiting/signal functions:
 
-wait, waitpid, wait3, wait4, signal,
-sigaction, sigemptyset, sigaddset, kill
+signal		basic version of sending a signal
+sigaction	sending signals with more options
+sigemptyset	initialize some values in the signal struct to not very much
+sigaddset	adds signal to the struct
+kill		send signal
+
+Wait functions:
+
+wait		waits for forks to merge
+wait3		^^ + if signal interrupts
+waitpid		wait for a particular process
+wait4		sounds very similar to "waitpid"
 
 Pipex & other:
 
-access, fork, 
-getcwd, chdir, stat, lstat, fstat, unlink, execve,
+access		checks if "open" will work
+fork		copies current processes
+getcwd
+chdir
+
+stat 
+lstat
+fstat
+
+unlink
+execve
 dup, dup2, pipe, opendir, readdir, closedir,
 strerror, perror, isatty, ttyname, ttyslot, ioctl,
 getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
 tgetnum, tgetstr, tgoto, tputs
+
