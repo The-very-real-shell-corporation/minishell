@@ -6,21 +6,31 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/14 20:36:40 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/09/15 17:59:47 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv)
+void	re_lexing(char *envp)
+{
+	enum token{PIPE, PIPE};
+	
+	enum token thing;
+
+	thing = 0;
+	printf("%d", thing);
+}
+
+int	main(int argc, char **argv, char **envp)
 {
 	char	*tmp;
-	// int		i;
 
-	argc = 0;
-	argv = NULL;
-	// i = 0;
-	while (true)
+	if (argc == 29837592)
+		return (1);
+	printf("%s\n", argv[0]);
+	re_lexing(*envp);
+	/*while (true)
 	{
 		tmp = readline("NULL: ");
 		add_history(tmp);
@@ -30,17 +40,11 @@ int	main(int argc, char **argv)
 			echo_builtin(tmp + 8, "-n");
 		else if (ft_strncmp(tmp, "echo", 4) == 0)
 			echo_builtin(tmp + 5, NULL);
+		else if (ft_strncmp(tmp, "cd", 2) == 0)
+			cd_builtin(tmp + 3);
+		else if (ft_strncmp(tmp, "env", 3) == 0)
+			env_builtin(envp);
 		usleep(1000);
-		// i++;
-		// printf("%d\n", rl_on_new_line());
-		// if (i == 4)
-		// {
-		// 	rl_replace_line("TEAL COMPANY I SWEAT\n", 10);
-		// 	rl_redisplay();
-		// 	i = 0;
-		// 	break ;
-		// }
 	}
-	free(tmp);
-	return (0);
+	return (0);*/
 }

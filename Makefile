@@ -6,7 +6,7 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/09/14 20:22:04 by vvan-der      ########   odam.nl          #
+#    Updated: 2023/09/15 14:45:31 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
 $(NAME): $(OBJDIR) $(OBJS)
-	$(CC) $(CFLAGS) $(L_FLAGS) $(LIBFT)/$(LIBFT).a $(OBJS) -o $(NAME)
+	$(CC) $(L_FLAGS) $(CFLAGS) $(OBJS) $(LIBFT)/$(LIBFT).a  -o $(NAME)
 
 clean:	
 	$(RM) $(OBJDIR)
