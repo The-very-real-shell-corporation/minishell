@@ -6,18 +6,18 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/09/18 18:08:09 by vvan-der      ########   odam.nl          #
+#    Updated: 2023/09/18 18:53:49 by akasiota      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 USER	= vvan-der
 LIBFT	= libft
-LIBS	= $(LIBFT)/libft.a /usr/lib/x86_64-linux-gnu/libreadline.a
+LIBS	= $(LIBFT)/libft.a #/usr/lib/x86_64-linux-gnu/libreadline.a
 RM		= rm -rf
 CC		= gcc
-CFLAGS	= -Wall -Werror -Wextra -g -fsanitize=address
-HEADERS	= -I/usr/include/readline
+CFLAGS	= -Wall -Werror -Wextra #-g -fsanitize=address
+HEADERS	= #-I/usr/include/readline
 L_FLAGS	= -lreadline #-L/usr/local/lib #-I/usr/local/include #-L/Users/$(USER)/.brew/opt/readline/lib 
 
 SRCS	=	builtins.c \
@@ -46,7 +46,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
 $(NAME): $(OBJDIR) $(OBJS)
-	$(CC) $(L_FLAGS) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(L_FLAGS) -o $(NAME)
 
 clean:	
 	$(RM) $(OBJDIR)
