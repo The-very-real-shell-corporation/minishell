@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/18 18:18:54 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/09/19 13:31:10 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,26 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <ctype.h>
-//# include <readline.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft/libft.h"
 
 typedef enum e_token
 {
+	INITIALIZED,
 	PIPE,
 	REDIRECT,
 	APPEND,
 	
 }	t_token;
 
-typedef struct s_alexcent
+typedef struct s_mlist
 {
-	char	*word;
-	
-}	t_alexcent;
+	char			*str;
+	t_token			token;
+	struct t_mlist	*nx;
+	struct t_mlist	*pv;
+}	t_mlist;
 
 /*	Built-ins	*/
 
@@ -43,6 +45,14 @@ void	pwd_builtin(void);
 void	echo_builtin(char *msg, char *flag);
 void	cd_builtin(char *path);
 void	env_builtin(char **envp);
+
+/*	List functions	*/
+
+void	clear_mlist(t_mlist **list);
+t_mlist	*new_node(char *word);
+t_mlist	*node_last(t_mlist *list);
+void	node_addback(t_mlist **list, t_mlist *new_node);
+t_mlist	*ft_shell_list_split(char *input);
 
 /*	Lexer	*/
 

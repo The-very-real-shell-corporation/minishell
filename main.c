@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/18 17:43:37 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/09/19 13:34:47 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 void	exit_error(char *msg)
 {
-	printf("%s\n", msg);
+	ft_putstr_fd(msg, STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
 
@@ -43,7 +43,7 @@ void	leaks(void)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*tmp;
+	char	*line;
 	char	**input;
 
 	atexit(leaks);
@@ -55,20 +55,20 @@ int	main(int argc, char **argv, char **envp)
 	// re_lexing(*envp);
 	while (true)
 	{
-		tmp = readline("Much wow: ");
-		add_history(tmp);
-		parse_input(input, tmp);
+		line = readline("Much wow: ");
+		add_history(line);
+		parse_input(input, line);
 		rl_redisplay();
 		
-		// if (ft_strncmp(tmp, "pwd", 3) == 0)
+		// if (ft_strncmp(line, "pwd", 3) == 0)
 		// 	pwd_builtin();
-		// else if (ft_strncmp(tmp, "echo -n", 7) == 0)
-		// 	echo_builtin(tmp + 8, "-n");
-		// else if (ft_strncmp(tmp, "echo", 4) == 0)
-		// 	echo_builtin(tmp + 5, NULL);
-		// else if (ft_strncmp(tmp, "cd", 2) == 0)
-		// 	cd_builtin(tmp + 3);
-		// else if (ft_strncmp(tmp, "env", 3) == 0)
+		// else if (ft_strncmp(line, "echo -n", 7) == 0)
+		// 	echo_builtin(line + 8, "-n");
+		// else if (ft_strncmp(line, "echo", 4) == 0)
+		// 	echo_builtin(line + 5, NULL);
+		// else if (ft_strncmp(line, "cd", 2) == 0)
+		// 	cd_builtin(line + 3);
+		// else if (ft_strncmp(line, "env", 3) == 0)
 		// 	env_builtin(envp);
 		usleep(1000);
 	}

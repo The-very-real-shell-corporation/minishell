@@ -6,11 +6,12 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/09/18 18:53:49 by akasiota      ########   odam.nl          #
+#    Updated: 2023/09/19 13:08:21 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
+NAME2	= minishell2
 USER	= vvan-der
 LIBFT	= libft
 LIBS	= $(LIBFT)/libft.a #/usr/lib/x86_64-linux-gnu/libreadline.a
@@ -21,8 +22,10 @@ HEADERS	= #-I/usr/include/readline
 L_FLAGS	= -lreadline #-L/usr/local/lib #-I/usr/local/include #-L/Users/$(USER)/.brew/opt/readline/lib 
 
 SRCS	=	builtins.c \
+			ft_shell_list_split.c \
 			ft_shell_split.c \
 			lexer.c \
+			list_functions.c \
 			main.c \
 			utilities_01.c \
 
@@ -46,7 +49,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
 $(NAME): $(OBJDIR) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(L_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(L_FLAGS) $(LIBS) -o $(NAME)
 
 clean:	
 	$(RM) $(OBJDIR)
