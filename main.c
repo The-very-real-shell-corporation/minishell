@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/19 13:34:47 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/09/19 18:10:25 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,37 +28,43 @@ void	exit_error(char *msg)
 	exit(EXIT_FAILURE);
 }
 
-void	parse_input(char **in, char *input)
+t_mlist	*parse_input(char *line)
 {
-	if (in != NULL)
-		free_2D(in);
-	in = chop_string(input);
-	analyze_input(in);
+	t_mlist	*list;
+	
+	list = chop_string(line);
+	if (list != NULL)
+		analyze_input(list);
+	return (list);
 }
 
-void	leaks(void)
+/* void	leaks(void)
 {
 	system("leaks -q minishell"); 
-}
+} */
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	char	**input;
+	t_mlist	*list;
 
-	atexit(leaks);
+	// atexit(leaks);
 	(void)argv;
 	(void)envp;
 	(void)argc;
-	input = NULL;
-	// printf("%s\n", argv[0]);
-	// re_lexing(*envp);
 	while (true)
 	{
 		line = readline("Much wow: ");
+		if (line == NULL)
+			exit_error("Readline failed");
 		add_history(line);
-		parse_input(input, line);
-		rl_redisplay();
+		list = parse_input(line);
+		if (list != NULL)
+		{
+			print_list(list);
+			clear_mlist(&list);
+		}
+		// rl_redisplay();
 		
 		// if (ft_strncmp(line, "pwd", 3) == 0)
 		// 	pwd_builtin();

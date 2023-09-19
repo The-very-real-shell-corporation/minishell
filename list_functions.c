@@ -6,11 +6,28 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:03:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/19 15:29:36 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/09/19 18:17:27 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_list(t_mlist *list)
+{
+	int	i;
+
+	i = 0;
+	if (!list)
+		return ;
+	while (list != NULL)
+	{
+		if (list->str != NULL)
+			printf("node [%d]:	%s\n", i, list->str);
+		printf("Address:	%p\n", list);
+		list = list->nx;
+		i++;
+	}
+}
 
 t_mlist	*node_last(t_mlist *list)
 {

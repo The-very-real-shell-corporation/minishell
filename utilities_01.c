@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 13:50:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/18 14:48:18 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/09/19 17:05:12 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_2D(char **input)
+/* void	free_2D(char **input)
 {
 	int	i;
 
@@ -24,22 +24,17 @@ void	free_2D(char **input)
 	}
 	free(input);
 	input = NULL;
-}
+} */
 
-char	**chop_string(char *input)
+t_mlist	*chop_string(char *input)
 {
-	char	**result;
-	char	**tmp;
+	t_mlist	*list;
 
-	result = ft_shell_split(input);
-	if (!result)
-		exit_error("Split failed");
-	tmp = result;
-	while (*result)
+	list = ft_shell_list_split(input);
+	if (!list)
 	{
-		printf("%s\n", *result);
-		result++;
+		/* error message*/
+		list = NULL;
 	}
-	result = tmp;
-	return (result);
+	return (list);
 }

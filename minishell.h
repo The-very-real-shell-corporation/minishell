@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/19 13:31:10 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/09/19 17:53:52 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ typedef struct s_mlist
 {
 	char			*str;
 	t_token			token;
-	struct t_mlist	*nx;
-	struct t_mlist	*pv;
+	struct s_mlist	*nx;
+	struct s_mlist	*pv;
 }	t_mlist;
 
 /*	Built-ins	*/
@@ -56,18 +56,19 @@ t_mlist	*ft_shell_list_split(char *input);
 
 /*	Lexer	*/
 
-void	analyze_input(char **input);
+void	analyze_input(t_mlist *input);
 
 
 /*	Parser functions	*/
 
-char	**chop_string(char *input);
-void	parse_input(char **in, char *input);
+t_mlist	*chop_string(char *input);
+t_mlist	*parse_input(char *line);
 char	**ft_shell_split(char *s);
 
 /*	Utility functions	*/
 
-void	free_2D(char **input);
+// void	free_2D(char **input);
 void	exit_error(char *msg);
+void	print_list(t_mlist *list);
 
 #endif
