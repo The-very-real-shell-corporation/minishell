@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vvan-der <vvan-der@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/02 18:18:21 by vvan-der          #+#    #+#             */
-/*   Updated: 2023/03/10 15:48:36 by vvan-der         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_split.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: vvan-der <vvan-der@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/11/02 18:18:21 by vvan-der      #+#    #+#                 */
+/*   Updated: 2023/09/25 15:49:05 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_getamount(const char *s, char c)
+static int	ft_getamount(char *s, char c)
 {
 	int	i;
 	int	amount;
@@ -45,7 +45,7 @@ static void	ft_free(char **s2)
 	free(s2);
 }
 
-static char	**ft_crearray(char **s2, const char *s, char c, int len)
+static char	**ft_crearray(char **s2, char *s, char c, int len)
 {
 	int	x;
 
@@ -74,7 +74,7 @@ static char	**ft_crearray(char **s2, const char *s, char c, int len)
 	return (s2);
 }
 
-char	**ft_split(const char *s, char c)
+char	**ft_split(char *s, char c)
 {
 	char	**out;
 	int		amount;

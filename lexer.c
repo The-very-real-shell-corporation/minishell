@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/25 13:44:27 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/09/25 17:53:26 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	analyze_input(t_mlist *input)
 {
-	// if (is_command(*input) == true)
+	tokenize_list(input);
 	if (input == NULL)
 		printf("%s\n", "error: invalid input");
 	else if (1 == 2)
@@ -23,13 +23,43 @@ void	analyze_input(t_mlist *input)
 		printf("%s: command not found\n", input->str);
 }
 
-/* int	assign_token(char *word)
+static int	assign_token(char *str)
 {
-	int	i;
+	int			token;
 
-	i = 0;
-	while (word[i])
+	if (ft_strncmp(str, ">>", 3) == 0)
+		token = APPEND;
+	else if (ft_strncmp(str, "<<", 3) == 0)
+		token = HEREDOC;
+	else if (ft_strncmp(str, ">", 2) == 0)
+		token = RE_OUTPUT;
+	else if (ft_strncmp(str, "<", 2) == 0)
+		token = RE_INPUT;
+	else if (ft_strncmp(str, "|", 2) == 0)
+		token = PIPE;
+	else if (ft_strncmp(str, "$", 2) == 0)
+		token = DOLLAR_SIGN;
+	else if (ft_strncmp(str, "\'", 2) == 0)
+		token = SINGLE_QUOTE;
+	else if (ft_strncmp(str, "\"", 2) == 0)
+		token = DOUBLE_QUOTE;
+	// else if (command_compare == true)
+	// 	token = COMMAND;
+	else
+		token = WORD;
+	return (token);
+}
+
+void	tokenize_list(t_mlist *list)
+{
+	if (list != NULL)
 	{
-		
+		list->token = COMMAND;
+		list = list->nx;
 	}
-} */
+	while (list != NULL)
+	{
+		list->token = assign_token(list->str);
+		list = list->nx;
+	}
+}

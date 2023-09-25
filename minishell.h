@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/25 13:54:18 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/09/25 16:53:08 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_mlist	*ft_shell_list_split(char *input);
 /*	Lexer	*/
 
 void	analyze_input(t_mlist *input);
+void	tokenize_list(t_mlist *list);
 
 
 /*	Parser functions	*/

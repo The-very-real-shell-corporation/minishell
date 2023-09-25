@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:00:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/25 15:33:52 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/09/25 16:58:12 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ static void	edit_string(char *dest, char *src, int i, bool triple)
 		dest[i - 2] = ' ';
 	dest[i - 1] = *src;
 	dest[i] = ' ';
+	if (triple == true)
+		ft_strcpy(&dest[i + 1], &src[2]);
+	else
+		ft_strcpy(&dest[i + 1], &src[1]);
 }
 
 static char	*read_string(char *input)
@@ -36,19 +40,21 @@ static char	*read_string(char *input)
 	new_input = ft_strdup(input);
 	while (input[i])
 	{
-		if (ft_strchr("|;$><", input[i]) != NULL)
+		if (ft_strchr("\"\'|;$><", input[i]) != NULL)
 		{
 			x += 2;
 			if (ft_strchr("><", input[i+1]) != NULL && input[i] == input[i+1])
 			{
-				x++;
 				new_input = ft_realloc(new_input, ft_strlen(input) + x + 1);
-				edit_string(new_input, &input[i], i + x, true);
+				edit_string(new_input, &input[i], i + x + 1, true);
+				printf("Edited input (double edit): %s\n", new_input);
+				i++;
 			}
 			else
 			{
 				new_input = ft_realloc(new_input, ft_strlen(input) + x + 1);
 				edit_string(new_input, &input[i], i + x, false);
+				printf("Edited input (single edit): %s\n", new_input);
 			}
 		}
 		i++;

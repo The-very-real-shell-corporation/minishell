@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 16:30:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/08/07 11:23:47 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/09/25 15:49:35 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdarg.h>
+# include "../minishell.h"
 
 # ifndef S_LIST
 #  define S_LIST
@@ -82,10 +83,10 @@ int			ft_printf(const char *input, ...);
 
 /* String functions */
 
-char		**ft_split(const char *s, char c);
+char		**ft_split(char *s, char c);
 char		*ft_strchr(const char *str, int c);
 void		ft_strcpy(char *dst, char *src);
-char		*ft_strdup(const char *s1);
+char		*ft_strdup(char *s1);
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));
 char		*ft_strjoin(const char *s1, const char *s2);
 size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
@@ -95,7 +96,7 @@ char		*ft_strmapi(const char *s, char (*f)(unsigned int, char));
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char		*ft_strrchr(const char *s, int c);
-char		*ft_strtrim(const char *s1, const char *set);
+char		*ft_strtrim(char *s1, char *set);
 char		*ft_substr(const char *s, unsigned int start, size_t len);
 char		*ft_tolower_str(char *str);
 int			ft_putstrlen_fd(char *s, int fd);
