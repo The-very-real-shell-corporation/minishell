@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/19 17:53:52 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/09/25 13:54:18 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,15 @@ typedef enum e_token
 {
 	INITIALIZED,
 	PIPE,
-	REDIRECT,
+	RE_INPUT,
+	RE_OUTPUT,
+	HEREDOC,
 	APPEND,
-	
+	WORD,
+	COMMAND,
+	DOLLAR_SIGN,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE
 }	t_token;
 
 typedef struct s_mlist

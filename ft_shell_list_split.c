@@ -6,13 +6,26 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:00:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/19 18:39:24 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/09/25 15:33:52 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*fix_input(char *input)
+static void	edit_string(char *dest, char *src, int i, bool triple)
+{
+	if (triple == true)
+	{
+		dest[i - 3] = ' ';
+		dest[i - 2] = *src;
+	}
+	else
+		dest[i - 2] = ' ';
+	dest[i - 1] = *src;
+	dest[i] = ' ';
+}
+
+static char	*read_string(char *input)
 {
 	char	*new_input;
 	int		i;
@@ -20,26 +33,37 @@ static char	*fix_input(char *input)
 
 	i = 0;
 	x = 0;
-	if (ft_strchr("|><;", input[i]) != NULL)
-		return (free(input), NULL);
-	new_input = ft_calloc(ft_strlen(input) + 1, sizeof(char));
-	if (!new_input)
-		exit_error("Malloc error");
+	new_input = ft_strdup(input);
 	while (input[i])
 	{
-		if (ft_strchr("|><;", input[i]) != NULL)
+		if (ft_strchr("|;$><", input[i]) != NULL)
 		{
 			x += 2;
-			new_input = ft_realloc(new_input, ft_strlen(input) + x + 1);
-			new_input[i + x - 2] = ' ';
-			new_input[i + x - 1] = input[i];
-			new_input[i + x] = ' ';
+			if (ft_strchr("><", input[i+1]) != NULL && input[i] == input[i+1])
+			{
+				x++;
+				new_input = ft_realloc(new_input, ft_strlen(input) + x + 1);
+				edit_string(new_input, &input[i], i + x, true);
+			}
+			else
+			{
+				new_input = ft_realloc(new_input, ft_strlen(input) + x + 1);
+				edit_string(new_input, &input[i], i + x, false);
+			}
 		}
-		else
-			new_input[i + x] = input[i];
 		i++;
 	}
-	return (free(input), new_input);
+	return (new_input);
+}
+
+static char	*fix_input(char *input)
+{
+	char	*new_input;
+
+	if (ft_strchr("|><;", *input) != NULL)
+		return (free(input), NULL);
+	new_input = read_string(input);
+	return (new_input);
 }
 
 static char	*make_word(char *str, int start, int end)
@@ -70,8 +94,8 @@ t_mlist	*ft_shell_list_split(char *input)
 	i = 0;
 	list = NULL;
 	input = fix_input(input);
-	// if (!input)
-	// 	return (NULL);
+	if (input == NULL)
+		return (NULL);
 	while (input[i])
 	{
 		while (ft_iswhitespace(input[i]) == true)

@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lexer.c                                            :+:    :+:            */
+/*   ft_iswhitespace.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/25 13:44:27 by vvan-der      ########   odam.nl         */
+/*   Created: 2022/10/28 16:09:26 by vvan-der      #+#    #+#                 */
+/*   Updated: 2022/11/06 15:24:20 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	analyze_input(t_mlist *input)
+int	ft_iswhitespace(int c)
 {
-	// if (is_command(*input) == true)
-	if (input == NULL)
-		printf("%s\n", "error: invalid input");
-	else if (1 == 2)
-		puts("stuff");
-	else
-		printf("%s: command not found\n", input->str);
+	if ((c > 8 && c < 14) || c == 32)
+		return (1);
+	return (0);
 }
-
-/* int	assign_token(char *word)
-{
-	int	i;
-
-	i = 0;
-	while (word[i])
-	{
-		
-	}
-} */
