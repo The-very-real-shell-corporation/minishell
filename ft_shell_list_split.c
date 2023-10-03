@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:00:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/25 16:58:12 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/03 13:51:36 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	edit_string(char *dest, char *src, int i, bool triple)
 static char	*read_string(char *input)
 {
 	char	*new_input;
+	char	c;
 	int		i;
 	int		x;
 
@@ -40,24 +41,38 @@ static char	*read_string(char *input)
 	new_input = ft_strdup(input);
 	while (input[i])
 	{
-		if (ft_strchr("\"\'|;$><", input[i]) != NULL)
+		if (ft_strchr("\"\'", input[i]) != NULL)
+		{
+			c = input[i];
+			i++;
+			if (input[i] == c)
+			{
+				x += 2;
+				new_input = ft_realloc(new_input, ft_strlen(input) + x + 1);
+				edit_string(new_input, &input[i - 1], i + x, true);
+			}
+			while (input[i] != c && input[i] != '\0')
+				i++;
+		}
+		else if (ft_strchr("|;$><", input[i]) != NULL)
 		{
 			x += 2;
 			if (ft_strchr("><", input[i+1]) != NULL && input[i] == input[i+1])
 			{
 				new_input = ft_realloc(new_input, ft_strlen(input) + x + 1);
 				edit_string(new_input, &input[i], i + x + 1, true);
-				printf("Edited input (double edit): %s\n", new_input);
+				// printf("Edited input (double edit): %s\n", new_input);
 				i++;
 			}
 			else
 			{
 				new_input = ft_realloc(new_input, ft_strlen(input) + x + 1);
 				edit_string(new_input, &input[i], i + x, false);
-				printf("Edited input (single edit): %s\n", new_input);
+				// printf("Edited input (single edit): %s\n", new_input);
 			}
 		}
-		i++;
+		if (input[i] != '\0')
+			i++;
 	}
 	return (new_input);
 }
@@ -66,35 +81,15 @@ static char	*fix_input(char *input)
 {
 	char	*new_input;
 
-	if (ft_strchr("|><;", *input) != NULL)
-		return (free(input), NULL);
 	new_input = read_string(input);
 	return (new_input);
 }
 
-static char	*make_word(char *str, int start, int end)
-{
-	char	*word;
-	int		i;
-
-	i = 0;
-	word = ft_calloc((end - start + 1), sizeof(char));
-	if (!word)
-		exit_error("Malloc error");
-	while (start < end)
-	{
-		word[i] = str[start];
-		i++;
-		start++;
-	}
-	return (word);
-}
-
 t_mlist	*ft_shell_list_split(char *input)
 {
-	int i;
-	int	start;
-	int	end;
+	int 	i;
+	int		start;
+	int		end;
 	t_mlist	*list;
 
 	i = 0;
@@ -102,17 +97,29 @@ t_mlist	*ft_shell_list_split(char *input)
 	input = fix_input(input);
 	if (input == NULL)
 		return (NULL);
-	while (input[i])
+	printf("input: %s\n", input);
+	while (input[i] != '\0')
 	{
 		while (ft_iswhitespace(input[i]) == true)
 			i++;
 		start = i;
-		while (input[i] && ft_iswhitespace(input[i]) == false)
+		if (ft_strchr("\'\"", input[i]) != NULL)
+		{
 			i++;
+			while (input[i] != '\0' && input[i] != input[start])
+				i++;
+			if (input[i] == input[start])
+				i++;
+		}
+		else
+		{
+			while (input[i] != '\0' && ft_iswhitespace(input[i]) == false)
+				i++;
+		}
 		end = i;
 		if (start != end)
 			node_addback(&list, (new_node(make_word(input, start, end))));
 	}
-	// print_list(list);
+	free(input);
 	return (list);
 }

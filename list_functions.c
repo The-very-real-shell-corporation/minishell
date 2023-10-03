@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:03:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/25 16:53:22 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/02 15:24:23 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_list(t_mlist *list)
 		if (list->str != NULL)
 		{
 			printf("node [%d]:	%s\n", i, list->str);
-			printf("token: %d\n\n", list->token);
+			// printf("token: %d\n\n", list->token);
 		}
 		// printf("Address:	%p\n", list);
 		list = list->nx;

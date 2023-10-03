@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/25 16:53:08 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/02 15:29:40 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ typedef enum e_token
 	WORD,
 	COMMAND,
 	DOLLAR_SIGN,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE
+	STRING_SQ,
+	STRING_DQ,
+	// SINGLE_QUOTE,
+	// DOUBLE_QUOTE
 }	t_token;
 
 typedef struct s_mlist
@@ -64,7 +66,8 @@ t_mlist	*ft_shell_list_split(char *input);
 
 void	analyze_input(t_mlist *input);
 void	tokenize_list(t_mlist *list);
-
+char	*make_word(char *str, int start, int end);
+int		assign_token(char *str);
 
 /*	Parser functions	*/
 

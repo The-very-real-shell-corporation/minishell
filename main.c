@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/25 14:46:17 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/03 14:00:30 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,15 @@ t_mlist	*parse_input(char *line)
 	return (list);
 }
 
-/* void	leaks(void)
-{
-	system("leaks -q minishell"); 
-} */
-
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_mlist	*list;
 
-	// atexit(leaks);
 	(void)argv;
 	(void)envp;
 	(void)argc;
+	i = 0;
 	while (true)
 	{
 		line = readline("Much wow: ");
@@ -64,18 +59,6 @@ int	main(int argc, char **argv, char **envp)
 			print_list(list);
 			clear_mlist(&list);
 		}
-		// rl_redisplay();
-		
-		// if (ft_strncmp(line, "pwd", 3) == 0)
-		// 	pwd_builtin();
-		// else if (ft_strncmp(line, "echo -n", 7) == 0)
-		// 	echo_builtin(line + 8, "-n");
-		// else if (ft_strncmp(line, "echo", 4) == 0)
-		// 	echo_builtin(line + 5, NULL);
-		// else if (ft_strncmp(line, "cd", 2) == 0)
-		// 	cd_builtin(line + 3);
-		// else if (ft_strncmp(line, "env", 3) == 0)
-		// 	env_builtin(envp);
 		usleep(1000);
 	}
 	return (0);
