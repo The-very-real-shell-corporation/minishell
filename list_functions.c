@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:03:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/02 15:24:23 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/10 17:39:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ t_mlist	*node_last(t_mlist *list)
 	return (list);
 }
 
-t_mlist	*new_node(char *word)
+t_mlist	*new_node(t_data *data, char *word)
 {
 	t_mlist	*new;
 
 	new = malloc(sizeof(t_mlist));
 	if (!new)
-		exit_error("List malloc failed");
+		exit_error(data, "List malloc failed");
 	new->str = word;
 	new->token = INITIALIZED;
 	new->nx = NULL;

@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strchr.c                                        :+:    :+:            */
+/*   clean_up.c                                         :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: vvan-der <vvan-der@student.42.fr>            +#+                     */
+/*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/10/10 17:13:20 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/03 14:09:30 by vvan-der      ########   odam.nl         */
+/*   Created: 2023/10/10 18:29:27 by vvan-der      #+#    #+#                 */
+/*   Updated: 2023/10/10 18:56:07 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strchr(const char *str, int c)
+static void	free_2D(char **input)
 {
-	while (*str)
+	int	i;
+
+	i = 0;
+	while (input[i])
 	{
-		if (*str == (unsigned char) c)
-			return ((char *)str);
-		str++;
+		free(input[i]);
+		i++;
 	}
-	return (NULL);
+	free(input);
+	input = NULL;
+}
+
+void	clean_up(t_data *data)
+{
+	if (data->path != NULL)
+		free_2D(data->path);
 }

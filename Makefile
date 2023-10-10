@@ -6,7 +6,7 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/10/02 15:42:30 by vvan-der      ########   odam.nl          #
+#    Updated: 2023/10/10 19:04:02 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,15 +22,17 @@ HEADERS	= #-I/usr/include/readline
 L_FLAGS	= -lreadline #-L/usr/local/lib #-I/usr/local/include #-L/Users/$(USER)/.brew/opt/readline/lib
 
 SRCS	=	builtins.c \
+			clean_up.c \
 			fill_in_nodes.c \
 			ft_shell_list_split.c \
 			ft_shell_split.c \
 			lexer.c \
 			list_functions.c \
 			main.c \
+			path.c \
 			utilities_01.c \
 
-OBJDIR	= minishobjects
+OBJDIR	= shobjects
 
 OBJS	= $(SRCS:%.c=$(OBJDIR)/%.o)
 

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:00:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/03 13:51:36 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/10 18:13:12 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	edit_string(char *dest, char *src, int i, bool triple)
 		ft_strcpy(&dest[i + 1], &src[1]);
 }
 
-static char	*read_string(char *input)
+static char	*read_string(t_data *data, char *input)
 {
 	char	*new_input;
 	char	c;
@@ -48,7 +48,7 @@ static char	*read_string(char *input)
 			if (input[i] == c)
 			{
 				x += 2;
-				new_input = ft_realloc(new_input, ft_strlen(input) + x + 1);
+				new_input = ft_realloc(data, new_input, ft_strlen(input) + x + 1);
 				edit_string(new_input, &input[i - 1], i + x, true);
 			}
 			while (input[i] != c && input[i] != '\0')
@@ -59,14 +59,14 @@ static char	*read_string(char *input)
 			x += 2;
 			if (ft_strchr("><", input[i+1]) != NULL && input[i] == input[i+1])
 			{
-				new_input = ft_realloc(new_input, ft_strlen(input) + x + 1);
+				new_input = ft_realloc(data, new_input, ft_strlen(input) + x + 1);
 				edit_string(new_input, &input[i], i + x + 1, true);
 				// printf("Edited input (double edit): %s\n", new_input);
 				i++;
 			}
 			else
 			{
-				new_input = ft_realloc(new_input, ft_strlen(input) + x + 1);
+				new_input = ft_realloc(data, new_input, ft_strlen(input) + x + 1);
 				edit_string(new_input, &input[i], i + x, false);
 				// printf("Edited input (single edit): %s\n", new_input);
 			}
@@ -77,30 +77,30 @@ static char	*read_string(char *input)
 	return (new_input);
 }
 
-static char	*fix_input(char *input)
-{
-	char	*new_input;
+// static char	*fix_input(t_data *data, char *input)
+// {
+// 	char	*new_input;
 
-	new_input = read_string(input);
-	return (new_input);
-}
+// 	new_input = read_string(data, input);
+// 	return (new_input);
+// }
 
-t_mlist	*ft_shell_list_split(char *input)
+t_mlist	*ft_shell_list_split(t_data *data, char *input)
 {
 	int 	i;
 	int		start;
 	int		end;
 	t_mlist	*list;
+	t_mlist	*node;
 
 	i = 0;
 	list = NULL;
-	input = fix_input(input);
+	input = read_string(data, input);
 	if (input == NULL)
 		return (NULL);
-	printf("input: %s\n", input);
 	while (input[i] != '\0')
 	{
-		while (ft_iswhitespace(input[i]) == true)
+		while (input[i] != '\0' && ft_iswhitespace(input[i]) == true)
 			i++;
 		start = i;
 		if (ft_strchr("\'\"", input[i]) != NULL)
@@ -118,7 +118,10 @@ t_mlist	*ft_shell_list_split(char *input)
 		}
 		end = i;
 		if (start != end)
-			node_addback(&list, (new_node(make_word(input, start, end))));
+		{
+			node = new_node(data, make_word(data, input, start, end));
+			node_addback(&list, node);
+		}
 	}
 	free(input);
 	return (list);

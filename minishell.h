@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/02 15:29:40 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/10 18:32:02 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,13 @@
 # include <ctype.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <dirent.h>
+# include <sys/types.h>
 # include "libft/libft.h"
+
+typedef struct s_data	t_data;
+
+#define INFINITY 1
 
 typedef enum e_token
 {
@@ -35,6 +41,7 @@ typedef enum e_token
 	DOLLAR_SIGN,
 	STRING_SQ,
 	STRING_DQ,
+	BUILT_IN,
 	// SINGLE_QUOTE,
 	// DOUBLE_QUOTE
 }	t_token;
@@ -47,6 +54,12 @@ typedef struct s_mlist
 	struct s_mlist	*pv;
 }	t_mlist;
 
+struct s_data
+{
+	char	**path;
+	t_mlist	*input;
+};
+
 /*	Built-ins	*/
 
 void	pwd_builtin(void);
@@ -57,28 +70,28 @@ void	env_builtin(char **envp);
 /*	List functions	*/
 
 void	clear_mlist(t_mlist **list);
-t_mlist	*new_node(char *word);
+t_mlist	*new_node(t_data *data, char *word);
 t_mlist	*node_last(t_mlist *list);
 void	node_addback(t_mlist **list, t_mlist *new_node);
-t_mlist	*ft_shell_list_split(char *input);
+t_mlist	*ft_shell_list_split(t_data *data, char *input);
 
 /*	Lexer	*/
 
 void	analyze_input(t_mlist *input);
 void	tokenize_list(t_mlist *list);
-char	*make_word(char *str, int start, int end);
+char	*make_word(t_data *data, char *str, int start, int end);
 int		assign_token(char *str);
 
 /*	Parser functions	*/
 
-t_mlist	*chop_string(char *input);
-t_mlist	*parse_input(char *line);
 char	**ft_shell_split(char *s);
+void	get_path_ready(t_data *data);
 
 /*	Utility functions	*/
 
-// void	free_2D(char **input);
-void	exit_error(char *msg);
+void	clean_up(t_data *data);
+void	exit_error(t_data *data, char *msg);
 void	print_list(t_mlist *list);
+void	print_2Dcharray(char **array);
 
 #endif

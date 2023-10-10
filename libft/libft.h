@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 16:30:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/09/25 15:49:35 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/10 18:09:27 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,13 @@
 # include <stdarg.h>
 # include "../minishell.h"
 
-# ifndef S_LIST
-#  define S_LIST
+typedef struct s_data t_data;
 
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }	t_list;
-
-# endif
 
 /* Character functions */
 
@@ -51,7 +48,7 @@ int			ft_toupper(int c);
 
 void		ft_bzero(void *str, size_t n);
 void		*ft_calloc(size_t count, size_t size);
-char		*ft_realloc(char *str, size_t size);
+char		*ft_realloc(t_data *data, char *str, size_t size);
 void		*ft_memchr(const void *s, int c, size_t n);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 void		*ft_memcpy(void *dst, const void *src, size_t n);
@@ -87,6 +84,7 @@ char		**ft_split(char *s, char c);
 char		*ft_strchr(const char *str, int c);
 void		ft_strcpy(char *dst, char *src);
 char		*ft_strdup(char *s1);
+char		*ft_strdup2(t_data *data, char *s1);
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));
 char		*ft_strjoin(const char *s1, const char *s2);
 size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
