@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/10 18:59:50 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/16 16:48:48 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	tokenize_list(t_mlist *list)
 	}
 }
 
-void	analyze_input(t_mlist *input)
+void	analyze_input(t_data *data, t_mlist *input)
 {
 	tokenize_list(input);
 	if (input == NULL)
@@ -75,10 +75,10 @@ void	analyze_input(t_mlist *input)
 	{
 		printf("Current: %s, next node: %s\n", input->str, input->nx->str);
 		puts("Current dir");
-		pwd_builtin();
+		pwd_builtin(data);
 		cd_builtin(input->nx->str);
 		puts("New(?) dir");
-		pwd_builtin();
+		pwd_builtin(data);
 	}
 	else if (1 == 2)
 		puts("stuff");

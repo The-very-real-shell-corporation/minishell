@@ -65,7 +65,7 @@ ttyname		return name of a terminal
 ttyslot		find the slot of the current user's terminal in some file
 
 ioctl		input/output control
-getenv		get environment
+getenv		get environment variable
 tcsetattr	set terminal attributes
 tcgetattr	get ^^
 tgetent		gets a terminal thing from a specific place

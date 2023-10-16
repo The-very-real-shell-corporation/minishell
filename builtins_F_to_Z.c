@@ -1,51 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtins.c                                         :+:    :+:            */
+/*   builtins_F_to_Z.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/10 20:11:21 by vvan-der      ########   odam.nl         */
+/*   Created: 2023/10/16 16:35:26 by vvan-der      #+#    #+#                 */
+/*   Updated: 2023/10/16 20:03:39 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	echo_builtin(char *msg, char *flag)
-{
-	if (flag == NULL)
-		printf("%s\n", msg);
-	else if (ft_strncmp(flag, "-n", 2) == 0)
-		printf("%s%%", msg);
-}
-
-void	pwd_builtin(void)
+void	pwd_builtin(t_data *data)
 {
 	char	*out;
 
 	out = getcwd(NULL, 0);
-	printf("%s\n", out);
-	free(out);
-}
-
-void	cd_builtin(char *path)
-{
-	if (chdir(path) == -1)
-		printf("Error: \"%s\" is not a directory\n", path);
-}
-
-void	env_builtin(char **envp)
-{
-	while (*envp != NULL)
+	if (out != NULL)
 	{
-		printf("%s\n", *envp);
-		envp++;
+		printf("%s\n", out);
+		free(out);
 	}
+	else
+		exit_error(data, "Pwd determining failed\n");
 }
 
-void	exit_builtin(char *msg)
+/* void	unset_builtin(t_data *data, char *msg)
 {
-	if (msg == NULL)
-		exit(0);
-}
+
+} */

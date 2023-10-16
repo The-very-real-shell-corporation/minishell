@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:03:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/10 17:39:57 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/16 21:31:29 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,23 @@ void	print_list(t_mlist *list)
 	int	i;
 
 	i = 0;
-	if (!list)
+	if (list == NULL)
+	{
+		puts("HALP CANT PRINT OMFG");
 		return ;
+	}
+	while (list->pv != NULL)
+		list = list->pv;
 	while (list != NULL)
 	{
 		if (list->str != NULL)
 		{
 			printf("node [%d]:	%s\n", i, list->str);
 			// printf("token: %d\n\n", list->token);
+			printf("Prev:		%p\n", list->pv);
+			printf("Address:	%p\n", list);
+			printf("Next:		%p\n", list->nx);
 		}
-		// printf("Address:	%p\n", list);
 		list = list->nx;
 		i++;
 	}
@@ -68,6 +75,20 @@ void	node_addback(t_mlist **list, t_mlist *new_node)
 		(*list)->nx = new_node;
 		new_node->pv = *list;
 		*list = tmp;
+	}
+}
+
+void	insert_node(t_mlist *node1, t_mlist *node2, t_mlist *new)
+{
+	new->nx = node2;
+	new->pv = node1;
+	if (node1 != NULL)
+		node1->nx = new;
+	if (node2 == NULL)
+		puts("Node2 IS NULL YOU FUCKER");
+	if (node2 != NULL)
+	{
+		node2->pv = new;
 	}
 }
 
