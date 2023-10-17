@@ -6,11 +6,27 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:03:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/16 21:31:29 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/17 19:05:32 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_env(t_mlist *list)
+{
+	if (list == NULL)
+	{
+		puts("HALP CANT PRINT OMFG");
+		return ;
+	}
+	list = node_first(list);
+	while (list != NULL)
+	{
+		if (ft_strchr(list->str, '=') != NULL)
+			printf("%s\n", list->str);
+		list = list->nx;
+	}
+}
 
 void	print_list(t_mlist *list)
 {
@@ -22,29 +38,33 @@ void	print_list(t_mlist *list)
 		puts("HALP CANT PRINT OMFG");
 		return ;
 	}
-	while (list->pv != NULL)
-		list = list->pv;
+	list = node_first(list);
 	while (list != NULL)
 	{
 		if (list->str != NULL)
 		{
 			printf("node [%d]:	%s\n", i, list->str);
 			// printf("token: %d\n\n", list->token);
-			printf("Prev:		%p\n", list->pv);
-			printf("Address:	%p\n", list);
-			printf("Next:		%p\n", list->nx);
+			// printf("Prev:		%p\n", list->pv);
+			// printf("Address:	%p\n", list);
+			// printf("Next:		%p\n", list->nx);
 		}
 		list = list->nx;
 		i++;
 	}
 }
 
+t_mlist	*node_first(t_mlist *list)
+{
+	while (list->pv != NULL)
+		list = list->pv;
+	return (list);
+}
+
 t_mlist	*node_last(t_mlist *list)
 {
 	while (list->nx != NULL)
-	{
 		list = list->nx;
-	}
 	return (list);
 }
 
@@ -78,18 +98,14 @@ void	node_addback(t_mlist **list, t_mlist *new_node)
 	}
 }
 
-void	insert_node(t_mlist *node1, t_mlist *node2, t_mlist *new)
+void	insert_node(t_mlist **node1, t_mlist **node2, t_mlist *new)
 {
-	new->nx = node2;
-	new->pv = node1;
-	if (node1 != NULL)
-		node1->nx = new;
-	if (node2 == NULL)
-		puts("Node2 IS NULL YOU FUCKER");
-	if (node2 != NULL)
-	{
-		node2->pv = new;
-	}
+	new->pv = *node1;
+	new->nx = *node2;
+	if (*node1 != NULL && *node1 != new)
+		(*node1)->nx = new;
+	if (*node2 != NULL && *node2 != new)
+		(*node2)->pv = new;
 }
 
 void	clear_mlist(t_mlist **list)
@@ -105,4 +121,24 @@ void	clear_mlist(t_mlist **list)
 		free(tmp);
 	}
 	list = NULL;
+}
+
+bool	find_input(t_data *data, char *input)
+{
+	t_mlist	*tmp;
+
+	tmp = data->env;
+	while (data->env != NULL)
+	{
+		if (ft_ministrncmp(data->env->str, input) != 0)
+			data->env = data->env->nx;
+		else
+		{
+			data->env->str = ft_realloc(data, input, ft_strlen(input) + 1);
+			data->env = tmp;
+			return (true);
+		}
+	}
+	data->env = tmp;
+	return (false);
 }

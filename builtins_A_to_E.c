@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/16 20:06:37 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/17 20:55:11 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,7 @@ void	echo_builtin(char *msg, char *flag)
 
 void	env_builtin(t_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (data->env[i] != NULL)
-	{
-		printf("%s\n", data->env[i]);
-		i++;
-	}
-	// while (data->sorted_env != NULL)
-	// {
-	// 	printf("%s\n", data->sorted_env->str);
-	// 	data->sorted_env = data->sorted_env->nx;
-	// }
+	print_env(data->env);
 }
 
 void	exit_builtin(char *msg)
@@ -48,12 +36,15 @@ void	exit_builtin(char *msg)
 	if (msg == NULL)
 		exit(0);
 }
-/* 
+
 void	export_builtin(t_data *data, char *input)
 {
 	if (input == NULL)
-		
-	else
-	
-} */
+	{
+		sort_environment(data);
+		print_list(data->sorted_env);
+	}
+	else if (find_input(data, input) == false)
+		node_addback(&data->env, new_node(data, input));
+}
 

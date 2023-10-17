@@ -6,7 +6,7 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/10/16 19:55:19 by vvan-der      ########   odam.nl          #
+#    Updated: 2023/10/17 18:28:08 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS	=	builtins_A_to_E.c \
 			clean_up.c \
 			environment.c \
 			fill_in_nodes.c \
+			ft_ministrncmp.c \
 			ft_shell_list_split.c \
 			ft_shell_split.c \
 			lexer.c \
