@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 19:47:55 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/17 17:55:35 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/19 16:47:15 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ t_mlist	*find_position(char *str, t_mlist *list, bool *direction)
 void	sort_environment(t_data *data)
 {
 	t_mlist	*tmp;
+	t_mlist	*tmp2;
 	bool	direction;
 
+	tmp2 = data->env;
 	direction = LEFT;
 	if (data->env == NULL)
 		return ;
@@ -59,6 +61,7 @@ void	sort_environment(t_data *data)
 		data->env = data->env->nx;
 	}
 	data->sorted_env = node_first(tmp);
+	data->env = tmp2;
 }
 
 void	copy_environment(t_data *data, char **envp)

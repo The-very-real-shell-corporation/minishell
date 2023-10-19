@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/17 19:18:08 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/19 17:04:12 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,25 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_data	data;
-	char	*test;
+	// char	*test;
 
 	(void)argv;
 	// (void)envp;
 	(void)argc;
-	test = ft_calloc(1, 1000);
 	initialize_data(&data, envp);
 	while (INFINITY)
 	{
+		// test = ft_calloc(1, 1000);
 		line = readline("Much wow: ");
 		if (line == NULL)
 			exit_error(&data, "Readline failed");
-		ft_strcpy(test, "hello");
+		// ft_strcpy(test, "hello");
 		if (ft_strncmp(line, "env", 4) == 0)
 			env_builtin(&data);
-		if (ft_strncmp(line, "export", 7) == 0)
-			export_builtin(&data, test);
+		if (ft_strncmp(line, "export", 6) == 0)
+			export_builtin(&data, &line[7]);
+		if (ft_strncmp(line, "unset", 5) == 0)
+			unset_builtin(&data, &line[6]);
 		add_history(line);
 		parse_input(&data, line);
 		usleep(1000);

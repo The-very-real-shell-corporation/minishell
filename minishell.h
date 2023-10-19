@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/17 19:04:25 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/19 16:34:48 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,23 +69,29 @@ struct s_data
 /*	Built-ins	*/
 
 void	cd_builtin(char *path); //done
-void	echo_builtin(char *msg, char *flag);
+void	echo_builtin(char *msg, bool n_flag);
 void	env_builtin(t_data *data); //done
 void	exit_builtin(char *msg);
 void	export_builtin(t_data *data, char *input);
 void	pwd_builtin(t_data *data); //done
-// void	unset_builtin(t_data *data, char *msg);
+void	unset_builtin(t_data *data, char *input);
 
-/*	List functions	*/
+/*	List functions (editing)	*/
 
 void	clear_mlist(t_mlist **list);
 t_mlist	*new_node(t_data *data, char *word);
-t_mlist	*node_first(t_mlist *list);
-t_mlist	*node_last(t_mlist *list);
+void	delete_node(t_mlist *node);
 void	insert_node(t_mlist **node1, t_mlist **node2, t_mlist *new);
 void	node_addback(t_mlist **list, t_mlist *new_node);
 t_mlist	*ft_shell_list_split(t_data *data, char *input);
-bool	find_input(t_data *data, char *input);
+void	replace_node(t_data *data, t_mlist *node, char *input);
+void	unlink_node(t_mlist *node);
+
+/*	List functions (utility)	*/
+
+t_mlist	*node_first(t_mlist *list);
+t_mlist	*node_last(t_mlist *list);
+t_mlist	*find_input(t_mlist *env, char *input);
 void	print_list(t_mlist *list);
 void	print_env(t_mlist *list);
 
