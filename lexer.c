@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/16 16:48:48 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/23 21:18:51 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	assign_token(char *str)
 		token = STRING_DQ;
 	else if (command_compare(str) == true)
 		token = BUILT_IN;
+	else if (str[0] == '-')
+		token = FLAG;
 	// else if (find_in_path() == true)
 	// 	token = COMMAND;
 	else
@@ -54,6 +56,9 @@ int	assign_token(char *str)
 
 void	tokenize_list(t_mlist *list)
 {
+	t_mlist	*tmp;
+
+	tmp = list;
 	if (list != NULL)
 	{
 		list->token = COMMAND;
@@ -64,24 +69,25 @@ void	tokenize_list(t_mlist *list)
 		list->token = assign_token(list->str);
 		list = list->nx;
 	}
+	list = tmp;
 }
 
-void	analyze_input(t_data *data, t_mlist *input)
+void	analyze_input(t_data *data)
 {
-	tokenize_list(input);
-	if (input == NULL)
+	if (data->input == NULL)
 		printf("%s\n", "error: invalid input");
-	if (ft_strncmp(input->str, "cd", 3) == 0)
-	{
-		printf("Current: %s, next node: %s\n", input->str, input->nx->str);
-		puts("Current dir");
-		pwd_builtin(data);
-		cd_builtin(input->nx->str);
-		puts("New(?) dir");
-		pwd_builtin(data);
-	}
-	else if (1 == 2)
-		puts("stuff");
-	else
-		printf("%s: command not found\n", input->str);
+	tokenize_list(data->input);
+	// if (ft_strncmp(input->str, "cd", 3) == 0)
+	// {
+	// 	printf("Current: %s, next node: %s\n", input->str, input->nx->str);
+	// 	puts("Current dir");
+	// 	pwd_builtin(data);
+	// 	cd_builtin(input->nx->str);
+	// 	puts("New(?) dir");
+	// 	pwd_builtin(data);
+	// }
+	// else if (1 == 2)
+	// 	puts("stuff");
+	// else
+	// 	printf("%s: command not found\n", input->str);
 }

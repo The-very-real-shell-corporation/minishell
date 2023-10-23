@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/19 16:34:48 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/23 21:19:16 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <ctype.h>
 # include <readline/readline.h>
@@ -46,6 +47,7 @@ typedef enum e_token
 	STRING_SQ,
 	STRING_DQ,
 	BUILT_IN,
+	FLAG,
 	// SINGLE_QUOTE,
 	// DOUBLE_QUOTE
 }	t_token;
@@ -98,7 +100,7 @@ void	print_env(t_mlist *list);
 /*	Lexer	*/
 
 int		ft_ministrncmp(char *str1, char *str2);
-void	analyze_input(t_data *data, t_mlist *input);
+void	analyze_input(t_data *data);
 void	tokenize_list(t_mlist *list);
 char	*make_word(t_data *data, char *str, int start, int end);
 int		assign_token(char *str);

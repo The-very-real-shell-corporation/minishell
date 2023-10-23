@@ -1,0 +1,10 @@
+
+	1	Implement the path by being able to search it and execute 
+		executables named the same way as the input command.
+
+	2	Interpret the input by grouping different 
+		tokenized list items together appropriately.
+
+	3	Pipes
+
+	4	Signals

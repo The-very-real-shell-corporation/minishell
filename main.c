@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/19 17:04:12 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/23 21:18:21 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,31 @@ static void	parse_input(t_data *data, char *input)
 {
 	data->input = ft_shell_list_split(data, input);
 	if (data->input != NULL)
-		analyze_input(data, data->input);
+		analyze_input(data);
 }
+
+/* static int	init_sigaction(struct sigaction *sa)
+{
+	sigemptyset(&sa->sa_mask);
+	sa->sa_flags = SA_NODEFER | SA_SIGINFO;
+	sa->sa_handler = SIG_IGN;
+	sa->sa_sigaction = &signal_handler;
+	return (0);
+} */
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_data	data;
+	// struct sigaction	sa;
 	// char	*test;
 
 	(void)argv;
 	// (void)envp;
 	(void)argc;
+	// init_sigaction(&sa);
 	initialize_data(&data, envp);
+	// sigaction(SIGQUIT, &sa, NULL);
 	while (INFINITY)
 	{
 		// test = ft_calloc(1, 1000);

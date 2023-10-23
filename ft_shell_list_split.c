@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:00:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/10 18:13:12 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/23 21:13:38 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	*read_string(t_data *data, char *input)
 			while (input[i] != c && input[i] != '\0')
 				i++;
 		}
-		else if (ft_strchr("|;$><", input[i]) != NULL)
+		else if (ft_strchr("|$><", input[i]) != NULL)
 		{
 			x += 2;
 			if (ft_strchr("><", input[i+1]) != NULL && input[i] == input[i+1])
@@ -113,7 +113,8 @@ t_mlist	*ft_shell_list_split(t_data *data, char *input)
 		}
 		else
 		{
-			while (input[i] != '\0' && ft_iswhitespace(input[i]) == false)
+			while (ft_strchr("\'\"\0", input[i]) == NULL \
+			&& ft_iswhitespace(input[i]) == false)
 				i++;
 		}
 		end = i;
@@ -123,6 +124,7 @@ t_mlist	*ft_shell_list_split(t_data *data, char *input)
 			node_addback(&list, node);
 		}
 	}
+	print_list(list);
 	free(input);
 	return (list);
 }
