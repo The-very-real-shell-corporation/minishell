@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/23 15:43:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/27 17:25:13 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	export_builtin(t_data *data, char *input)
 {
 	t_mlist	*tmp;
 
+	sort_environment(data); /* added this line here to work with sorted list in case of NULL input */ 
 	if (input == NULL)
 	{
 		print_list(data->sorted_env);
