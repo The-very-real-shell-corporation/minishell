@@ -6,11 +6,24 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:03:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/19 16:59:13 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/30 17:50:23 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+size_t	list_size(t_mlist *list)
+{
+	size_t	i;
+
+	i = 0;
+	while (list != NULL)
+	{
+		list = list->nx;
+		i++;
+	}
+	return (i);
+}
 
 void	print_env(t_mlist *list)
 {

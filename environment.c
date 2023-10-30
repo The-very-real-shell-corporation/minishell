@@ -6,18 +6,12 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 19:47:55 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/19 16:47:15 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/30 19:37:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_path_ready(t_data *data)
-{
-	data->path = ft_split(getenv("PATH"), ':');
-	if (data->path == NULL)
-		exit_error(data, "Split error\n");
-}
 
 t_mlist	*find_position(char *str, t_mlist *list, bool *direction)
 {

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/23 21:19:16 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/30 19:46:55 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <dirent.h>
 # include <sys/types.h>
 # include <termios.h>
+# include <sys/wait.h>
 # include "libft/libft.h"
 
 typedef struct s_data	t_data;
@@ -63,6 +64,10 @@ typedef struct s_mlist
 struct s_data
 {
 	char	**path;
+	char	**path2;
+	char	**argv;
+	char	**env_array;
+	char	*cwd;
 	t_mlist	*env;
 	t_mlist	*sorted_env;
 	t_mlist	*input;
@@ -94,6 +99,7 @@ void	unlink_node(t_mlist *node);
 t_mlist	*node_first(t_mlist *list);
 t_mlist	*node_last(t_mlist *list);
 t_mlist	*find_input(t_mlist *env, char *input);
+size_t	list_size(t_mlist *list);
 void	print_list(t_mlist *list);
 void	print_env(t_mlist *list);
 
@@ -104,6 +110,10 @@ void	analyze_input(t_data *data);
 void	tokenize_list(t_mlist *list);
 char	*make_word(t_data *data, char *str, int start, int end);
 int		assign_token(char *str);
+
+/*	Pathfinding	*/
+
+bool	search_the_path(t_data *data, char **path);
 
 /*	Parser functions	*/
 

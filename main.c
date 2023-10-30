@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/27 17:01:42 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/10/30 20:00:36 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,16 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_data	data;
+	pid_t	id;
 	// struct sigaction	sa;
 	// char	*test;
 
 	(void)argv;
-	// (void)envp;
 	(void)argc;
 	// init_sigaction(&sa);
 	initialize_data(&data, envp);
 	// sigaction(SIGQUIT, &sa, NULL);
+	data.cwd = getcwd(NULL, 0);
 	while (INFINITY)
 	{
 		// test = ft_calloc(1, 1000);
@@ -70,8 +71,12 @@ int	main(int argc, char **argv, char **envp)
 			export_builtin(&data, NULL);
 		if (ft_strncmp(line, "unset", 5) == 0)
 			unset_builtin(&data, &line[6]);
-		add_history(line);
 		parse_input(&data, line);
+		id = fork();
+		if (id == 0)
+			search_the_path(&data, data.path);
+		wait(NULL);
+		add_history(line);
 		usleep(1000);
 	}
 	return (0);
