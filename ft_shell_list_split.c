@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:00:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/23 21:13:38 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/27 17:25:41 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*read_string(t_data *data, char *input)
 
 	i = 0;
 	x = 0;
-	new_input = ft_strdup(input);
+	new_input = ft_strdup2(data, input); /* Changed to strdup2, maybe we don't want the code to run in case of failed allocation */
 	while (input[i])
 	{
 		if (ft_strchr("\"\'", input[i]) != NULL)
@@ -113,8 +113,8 @@ t_mlist	*ft_shell_list_split(t_data *data, char *input)
 		}
 		else
 		{
-			while (ft_strchr("\'\"\0", input[i]) == NULL \
-			&& ft_iswhitespace(input[i]) == false)
+			while (ft_strchr("\'\"", input[i]) == NULL \
+			&& ft_iswhitespace(input[i]) == false && input[i] != '\0') /* separated the check of '\0' from strchr because it wasn't working */
 				i++;
 		}
 		end = i;

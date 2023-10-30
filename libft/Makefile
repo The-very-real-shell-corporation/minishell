@@ -6,13 +6,13 @@
 #    By: vvan-der <vvan-der@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/10/03 18:04:48 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/09/15 14:32:00 by vvan-der      ########   odam.nl          #
+#    Updated: 2023/10/27 17:23:27 by akasiota      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= libft.a
 RM		= rm -rf
-CC		= gcc
+CC		= cc # changed it to cc
 CFLAGS	= -Wall -Werror -Wextra#-g3 -fsanitize=address
 OBJDIR	= libft_obj
 

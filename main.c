@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/23 21:18:21 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/27 17:01:42 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strncmp(line, "env", 4) == 0)
 			env_builtin(&data);
 		if (ft_strncmp(line, "export", 6) == 0)
-			export_builtin(&data, &line[7]);
+			export_builtin(&data, NULL);
 		if (ft_strncmp(line, "unset", 5) == 0)
 			unset_builtin(&data, &line[6]);
 		add_history(line);
