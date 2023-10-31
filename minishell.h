@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/30 19:46:55 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/31 18:07:26 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef enum e_token
 	STRING_SQ,
 	STRING_DQ,
 	BUILT_IN,
-	FLAG,
+	ECHO_FLAG,
 	// SINGLE_QUOTE,
 	// DOUBLE_QUOTE
 }	t_token;
@@ -78,7 +78,7 @@ struct s_data
 void	cd_builtin(char *path); //done
 void	echo_builtin(char *msg, bool n_flag);
 void	env_builtin(t_data *data); //done
-void	exit_builtin(char *msg);
+void	exit_builtin(t_data *data, char *msg);
 void	export_builtin(t_data *data, char *input);
 void	pwd_builtin(t_data *data); //done
 void	unset_builtin(t_data *data, char *input);
@@ -125,6 +125,7 @@ void	sort_environment(t_data *data);
 /*	Utility functions	*/
 
 void	clean_up(t_data *data);
+void	free_2D(char **input);
 void	exit_error(t_data *data, char *msg);
 void	print_2Dcharray(char **array);
 

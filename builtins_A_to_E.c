@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/30 20:13:15 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/31 17:47:54 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ void	env_builtin(t_data *data)
 	print_env(data->env);
 }
 
-void	exit_builtin(char *msg)
+void	exit_builtin(t_data *data, char *msg)
 {
 	if (msg == NULL)
+	{
+		clean_up(data);	
 		exit(0);
+	}
 }
 
 void	export_builtin(t_data *data, char *input)

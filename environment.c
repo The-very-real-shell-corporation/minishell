@@ -6,12 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 19:47:55 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/30 19:37:22 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/31 17:13:27 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 t_mlist	*find_position(char *str, t_mlist *list, bool *direction)
 {

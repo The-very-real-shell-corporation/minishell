@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:03:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/30 17:50:23 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/10/31 18:13:07 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,14 @@ t_mlist	*new_node(t_data *data, char *word)
 	new = malloc(sizeof(t_mlist));
 	if (new == NULL)
 		exit_error(data, "List malloc failed");
-	new->str = ft_strdup(word);
-	if (new->str == NULL)
+	if (word != NULL)
 	{
-		free(new);
-		exit_error(data, "Malloc fail");
+		new->str = ft_strdup(word);
+		if (new->str == NULL)
+		{
+			free(new);
+			exit_error(data, "Malloc fail");
+		}
 	}
 	new->token = INITIALIZED;
 	new->nx = NULL;
@@ -128,7 +131,7 @@ void	delete_node(t_mlist *node)
 {
 	if (node->str != NULL)
 	{
-		printf("Str about to be deleted: %s\n", node->str);
+		// printf("Str about to be deleted: %s\n", node->str);
 		free(node->str);
 	}
 	free(node);
