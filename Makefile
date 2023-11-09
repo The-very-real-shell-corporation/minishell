@@ -6,7 +6,7 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/10/30 17:22:36 by vvan-der      ########   odam.nl          #
+#    Updated: 2023/11/08 13:11:18 by lotse         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRCS	=	builtins_A_to_E.c \
 			environment.c \
 			fill_in_nodes.c \
 			find_the_path.c \
-			ft_ministrncmp.c \
+			ft_ministrcmp.c \
 			ft_shell_list_split.c \
 			lexer.c \
 			list_functions.c \

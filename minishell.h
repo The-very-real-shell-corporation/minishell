@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/31 18:07:26 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/08 13:11:18 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_mlist
 struct s_data
 {
 	char	**path;
-	char	**path2;
+	char	**real_path;
 	char	**argv;
 	char	**env_array;
 	char	*cwd;
@@ -105,7 +105,7 @@ void	print_env(t_mlist *list);
 
 /*	Lexer	*/
 
-int		ft_ministrncmp(char *str1, char *str2);
+int		ft_ministrcmp(char *str1, char *str2);
 void	analyze_input(t_data *data);
 void	tokenize_list(t_mlist *list);
 char	*make_word(t_data *data, char *str, int start, int end);

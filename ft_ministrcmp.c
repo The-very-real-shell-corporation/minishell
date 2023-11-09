@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_ministrncmp.c                                   :+:    :+:            */
+/*   ft_ministrcmp.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	ft_ministrncmp(char *str1, char *str2)
+int	ft_ministrcmp(char *str1, char *str2)
 {
 	size_t	i;
 

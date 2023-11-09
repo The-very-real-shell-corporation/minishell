@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:00:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/31 18:12:50 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/09 09:40:35 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ static void	edit_string(char *dest, char *src, int i, bool triple)
 		dest[i - 2] = ' ';
 	dest[i - 1] = *src;
 	dest[i] = ' ';
-	if (triple == true)
-		ft_strcpy(&dest[i + 1], &src[2]);
-	else
-		ft_strcpy(&dest[i + 1], &src[1]);
+	ft_strcpy(&dest[i + 1], &src[1]);
 }
 
 static char	*read_string(t_data *data, char *input)
@@ -38,7 +35,7 @@ static char	*read_string(t_data *data, char *input)
 
 	i = 0;
 	x = 0;
-	new_input = ft_strdup2(data, input); /* Changed to strdup2, maybe we don't want the code to run in case of failed allocation */
+	new_input = ft_strdup2(data, input);
 	while (input[i])
 	{
 		if (ft_strchr("\"\'", input[i]) != NULL)
@@ -49,7 +46,7 @@ static char	*read_string(t_data *data, char *input)
 			{
 				x += 2;
 				new_input = ft_realloc(data, new_input, ft_strlen(input) + x + 1);
-				edit_string(new_input, &input[i - 1], i + x, true);
+				edit_string(new_input, &input[i], i + x, true);
 			}
 			while (input[i] != c && input[i] != '\0')
 				i++;
@@ -57,18 +54,16 @@ static char	*read_string(t_data *data, char *input)
 		else if (ft_strchr("|$><", input[i]) != NULL)
 		{
 			x += 2;
-			if (ft_strchr("><", input[i+1]) != NULL && input[i] == input[i+1])
+			if (ft_strchr("><", input[i + 1]) != NULL && input[i] == input[i + 1])
 			{
 				new_input = ft_realloc(data, new_input, ft_strlen(input) + x + 1);
-				edit_string(new_input, &input[i], i + x + 1, true);
-				// printf("Edited input (double edit): %s\n", new_input);
+				edit_string(new_input, &input[i + 1], i + x + 1, true);
 				i++;
 			}
 			else
 			{
 				new_input = ft_realloc(data, new_input, ft_strlen(input) + x + 1);
 				edit_string(new_input, &input[i], i + x, false);
-				// printf("Edited input (single edit): %s\n", new_input);
 			}
 		}
 		if (input[i] != '\0')
@@ -115,7 +110,7 @@ t_mlist	*ft_shell_list_split(t_data *data, char *input)
 		else
 		{
 			while (ft_strchr("\'\"", input[i]) == NULL \
-			&& ft_iswhitespace(input[i]) == false && input[i] != '\0') /* separated the check of '\0' from strchr because it wasn't working */
+			&& ft_iswhitespace(input[i]) == false && input[i] != '\0')
 				i++;
 		}
 		end = i;
@@ -127,7 +122,7 @@ t_mlist	*ft_shell_list_split(t_data *data, char *input)
 			node_addback(&list, node);
 		}
 	}
-	// print_list(list);
+	print_list(list);
 	free(input);
 	return (list);
 }

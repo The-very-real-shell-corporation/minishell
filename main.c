@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/31 18:19:11 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/08 14:06:31 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	initialize_data(t_data *data, char **envp)
 {
 	data->input = NULL;
 	data->path = NULL;
-	data->path2 = NULL;
+	data->real_path = NULL;
 	data->argv = NULL;
 	data->env_array = NULL;
 	data->cwd = NULL;
@@ -54,7 +54,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_data	data;
-	// pid_t	id;
+	pid_t	id;
 	// struct sigaction	sa;
 	// char	*test;
 
@@ -78,10 +78,10 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strncmp(line, "exit", 4) == 0)
 			exit_builtin(&data, NULL);
 		parse_input(&data, line);
-		// id = fork();
-		// if (id == 0)
-		// 	search_the_path(&data, data.path);
-		// wait(NULL);
+		id = fork();
+		if (id == 0)
+			search_the_path(&data, data.path);
+		wait(NULL);
 		add_history(line);
 		usleep(1000);
 	}

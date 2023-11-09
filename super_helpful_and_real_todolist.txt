@@ -1,6 +1,6 @@
 
-	1	Implement the path by being able to search it and execute 
-		executables named the same way as the input command.
+	1	Implement the path by being able to search it and execute
+		executables named the same way as the input command.       --->  Maybe we can use opendir, readdir, closedir
 
 	2	Interpret the input by grouping different 
 		tokenized list items together appropriately.

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/30 17:13:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/08 14:09:28 by lotse         ########   odam.nl         */
+/*   Updated: 2023/11/09 08:37:05 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	get_path_ready(t_data *data)
 		exit_error(data, "Split error\n");
 	while (data->path[i] != NULL)
 		i++;
-	data->real_path = ft_calloc((i + 1), sizeof(char *));
+	data->real_path = ft_calloc((i + 1), sizeof(char *)); 
 	i = 0;
 	while (data->path[i] != NULL)
 	{
