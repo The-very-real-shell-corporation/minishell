@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 18:29:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/31 17:54:48 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/09 09:46:57 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	clean_up(t_data *data)
 {
 	if (data->path != NULL)
 		free_2D(data->path);
-	if (data->path2 != NULL)
-		free_2D(data->path2);
+	if (data->real_path != NULL)
+		free_2D(data->real_path);
 	if (data->argv != NULL)
 		free_2D(data->argv);
 	if (data->env_array != NULL)
