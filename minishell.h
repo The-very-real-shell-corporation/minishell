@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/08 13:11:18 by lotse         ########   odam.nl         */
+/*   Updated: 2023/11/09 14:13:12 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,6 @@ void	clean_up(t_data *data);
 void	free_2D(char **input);
 void	exit_error(t_data *data, char *msg);
 void	print_2Dcharray(char **array);
+char	**list_to_array(t_data *data ,t_mlist *list);
 
 #endif

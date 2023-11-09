@@ -6,31 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/30 17:13:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/09 08:37:05 by lotse         ########   odam.nl         */
+/*   Updated: 2023/11/09 14:19:23 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static char	**list_to_array(t_data *data ,t_mlist *list)
-{
-	char 	**result;
-	size_t	i;
-
-	result = ft_calloc((list_size(list) + 1), sizeof(char *));
-	if (result == NULL)
-		return (NULL);
-	i = 0;
-	while (list != NULL)
-	{
-		result[i] = ft_strdup2(data, list->str);
-		// if (result[i] == NULL)
-		// 	return (free_2Darray(result), NULL);
-		list = list->nx;
-		i++;
-	}
-	return (result);
-}
 
 bool	search_the_path(t_data *data, char **path)
 {
@@ -40,7 +20,6 @@ bool	search_the_path(t_data *data, char **path)
 	i = 0;
 	data->cwd = getcwd(NULL, 0);
 	data->env_array = list_to_array(data, data->env);
-	data->argv = list_to_array(data, data->input);
 	while (path[i] != NULL)
 	{
 		chdir(path[i]);
@@ -56,6 +35,12 @@ bool	search_the_path(t_data *data, char **path)
 		i++;
 	}
 	chdir(data->cwd);
+	if (access(data->argv[0], X_OK) == 0)
+	{
+		if (execve(data->argv[0], data->argv, data->env_array) == -1)
+			printf("Error: could not execute\n");
+		return (true);
+	}
 	return (false);
 }
 

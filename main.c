@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/08 14:06:31 by lotse         ########   odam.nl         */
+/*   Updated: 2023/11/09 14:22:19 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	parse_input(t_data *data, char *input)
 	data->input = ft_shell_list_split(data, input);
 	if (data->input != NULL)
 		analyze_input(data);
+	data->argv = list_to_array(data, data->input);
 }
 
 /* static int	init_sigaction(struct sigaction *sa)
@@ -69,7 +70,10 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("Much wow: ");
 		if (line == NULL)
 			exit_error(&data, "Readline failed");
-		if (ft_strncmp(line, "env", 4) == 0)
+		parse_input(&data, line);
+		if (ft_strncmp(line, "cd", 2) == 0)
+			cd_builtin(data.argv[1]);
+		if (ft_strncmp(line, "env", 3) == 0)
 			env_builtin(&data);
 		if (ft_strncmp(line, "export", 6) == 0)
 			export_builtin(&data, NULL);
@@ -77,7 +81,6 @@ int	main(int argc, char **argv, char **envp)
 			unset_builtin(&data, &line[6]);
 		if (ft_strncmp(line, "exit", 4) == 0)
 			exit_builtin(&data, NULL);
-		parse_input(&data, line);
 		id = fork();
 		if (id == 0)
 			search_the_path(&data, data.path);

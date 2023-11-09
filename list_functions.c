@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:03:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/31 18:13:07 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/09 14:04:23 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ t_mlist	*find_input(t_mlist *env, char *input)
 {
 	while (env != NULL)
 	{
-		if (ft_ministrncmp(env->str, input) == 0)
+		if (ft_ministrcmp(env->str, input) == 0)
 			return (env);
 		env = env->nx;
 	}
