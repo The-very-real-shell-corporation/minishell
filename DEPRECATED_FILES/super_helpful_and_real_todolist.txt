@@ -8,3 +8,14 @@
 	3	Pipes
 
 	4	Signals
+
+special_split:
+
+"$USER $ $ $alksejflakjsf $   1"
+
+vvan-der 
+$ 
+$ 
+[empty string]
+$   1
+NULL

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/09 14:13:12 by lotse         ########   odam.nl         */
+/*   Updated: 2023/11/13 17:34:16 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,14 @@ typedef enum e_token
 	DOLLAR_SIGN,
 	STRING_SQ,
 	STRING_DQ,
-	BUILT_IN,
 	ECHO_FLAG,
-	// SINGLE_QUOTE,
-	// DOUBLE_QUOTE
+	B_CD,
+	B_ECHO,
+	B_ENV,
+	B_EXIT,
+	B_EXPORT,
+	B_PWD,
+	B_UNSET
 }	t_token;
 
 typedef struct s_mlist
@@ -63,6 +67,7 @@ typedef struct s_mlist
 
 struct s_data
 {
+	int		exit_status;
 	char	**path;
 	char	**real_path;
 	char	**argv;

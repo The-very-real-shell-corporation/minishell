@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lexer.c                                            :+:    :+:            */
+/*   alexer.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/31 17:38:46 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/13 19:07:53 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,22 @@
 
 static void	assign_command_token(t_mlist **node, char *str)
 {
-	if (ft_strncmp("echo", str, 4) == 0 || ft_strncmp("cd", str, 2) == 0|| \
-	ft_strncmp("pwd", str, 3) == 0 || ft_strncmp("export", str, 6) == 0 || \
-	ft_strncmp("unset", str, 5) == 0 || ft_strncmp("env", str, 3) == 0 || \
-	ft_strncmp("exit", str, 4) == 0)
-	{
-		(*node)->token = BUILT_IN;
-	}
+	if (ft_strncmp("cd", str, 3) == 0)
+		(*node)->token = B_CD;
+	else if (ft_strncmp("echo", str, 5) == 0)
+		(*node)->token = B_ECHO;
+	else if (ft_strncmp("env", str, 4) == 0)
+		(*node)->token = B_ENV;
+	else if (ft_strncmp("exit", str, 5) == 0)
+		(*node)->token = B_EXIT;
+	else if (ft_strncmp("export", str, 7) == 0)
+		(*node)->token = B_EXPORT;
+	else if (ft_strncmp("pwd", str, 4) == 0)
+		(*node)->token = B_PWD;
+	else if (ft_strncmp("unset", str, 6) == 0)
+		(*node)->token = B_UNSET;
 	else
-	{
 		(*node)->token = COMMAND;
-	}
 }
 
 int	assign_token(char *str)
@@ -43,9 +48,9 @@ int	assign_token(char *str)
 		token = PIPE;
 	else if (ft_strncmp(str, "$", 2) == 0)
 		token = DOLLAR_SIGN;
-	else if (str[0] == '\'')
+	else if (first_last(str, '\'') == true)
 		token = STRING_SQ;
-	else if (str[0] == '\"')
+	else if (first_last(str, '\"') == true)
 		token = STRING_DQ;
 	else if (ft_strncmp(str, "-n", 3) == 0)
 		token = ECHO_FLAG;

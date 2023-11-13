@@ -6,7 +6,7 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/11/08 13:11:18 by lotse         ########   odam.nl          #
+#    Updated: 2023/11/13 15:44:44 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ CFLAGS	= -Wall -Werror -Wextra -g #-fsanitize=address
 HEADERS	= #-I/usr/include/readline
 L_FLAGS	= -lreadline #-L/usr/local/lib #-I/usr/local/include #-L/Users/$(USER)/.brew/opt/readline/lib
 
-SRCS	=	builtins_A_to_E.c \
+SRCS	=	alexer.c \
+			builtins_A_to_E.c \
 			builtins_F_to_Z.c \
 			clean_up.c \
 			environment.c \
@@ -29,7 +30,6 @@ SRCS	=	builtins_A_to_E.c \
 			find_the_path.c \
 			ft_ministrcmp.c \
 			ft_shell_list_split.c \
-			lexer.c \
 			list_functions.c \
 			main.c \
 			utilities_01.c \

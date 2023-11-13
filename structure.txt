@@ -3,3 +3,12 @@
 2-	Decide what to do with said input
 
 3-	Execute
+
+
+
+if str[0] == ' and str[last] == ' -> use strtrim("\'")
+if str[0] == " and str[last] == " -> replace $X with either variable X or nothing -> use strtrim("\'")
+
+expand the $
+expand the DQ and SQ
+delete SQ/DQ pairs with nothing in-between
