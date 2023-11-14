@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/13 17:34:16 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/14 15:46:42 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ t_mlist	*new_node(t_data *data, char *word);
 void	delete_node(t_mlist *node);
 void	insert_node(t_mlist **node1, t_mlist **node2, t_mlist *new);
 void	node_addback(t_mlist **list, t_mlist *new_node);
-t_mlist	*ft_shell_list_split(t_data *data, char *input);
 void	replace_node(t_data *data, t_mlist *node, char *input);
 void	unlink_node(t_mlist *node);
 
@@ -110,10 +109,12 @@ void	print_env(t_mlist *list);
 
 /*	Lexer	*/
 
+// void	expansion_pack(t_data *data, t_mlist *input);
+bool	first_last(char *str, char c);
 int		ft_ministrcmp(char *str1, char *str2);
 void	analyze_input(t_data *data);
 void	tokenize_list(t_mlist *list);
-char	*make_word(t_data *data, char *str, int start, int end);
+char	*mini_substring(t_data *data, char *str, int len);
 int		assign_token(char *str);
 
 /*	Pathfinding	*/
@@ -123,6 +124,8 @@ bool	search_the_path(t_data *data, char **path);
 /*	Parser functions	*/
 
 char	**ft_shell_split(char *s);
+t_mlist	*ft_special_split(t_data *data, char *input);
+t_mlist	*ft_shell_list_split(t_data *data, char *input);
 void	get_path_ready(t_data *data);
 void	copy_environment(t_data *data, char **envp);
 void	sort_environment(t_data *data);

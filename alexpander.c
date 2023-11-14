@@ -6,28 +6,29 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/13 19:43:26 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/14 17:30:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*variable_to_value(t_data *data, char **var)
+/* char	*variable_to_value(t_data *data, char **var)
 {
 	char	*value;
 
 	
-}
+} */
 
-void	trim_n_free(t_data *data, t_mlist *node, char c)
+/* void	trim_n_free(t_data *data, t_mlist *node, char *c)
 {
 	char	*tmp;
-	
+
+	tmp = node->str;
 	node->str = ft_strtrim(tmp, c);
 	if (node->str == NULL)
 		exit_error(data, "Malloc fail");
 	free(tmp);
-}
+} */
 
 bool	first_last(char *str, char c)
 {
@@ -35,6 +36,12 @@ bool	first_last(char *str, char c)
 		return (true);
 	return (false);
 }
+
+ec"h"o
+
+ec
+"h"
+o \0
 
 void	expand_string(t_data *data, t_mlist *node)
 {

@@ -6,7 +6,7 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/11/13 15:44:44 by vvan-der      ########   odam.nl          #
+#    Updated: 2023/11/14 14:34:47 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ HEADERS	= #-I/usr/include/readline
 L_FLAGS	= -lreadline #-L/usr/local/lib #-I/usr/local/include #-L/Users/$(USER)/.brew/opt/readline/lib
 
 SRCS	=	alexer.c \
+			alexpander.c \
 			builtins_A_to_E.c \
 			builtins_F_to_Z.c \
 			clean_up.c \
@@ -30,6 +31,7 @@ SRCS	=	alexer.c \
 			find_the_path.c \
 			ft_ministrcmp.c \
 			ft_shell_list_split.c \
+			ft_special_split.c \
 			list_functions.c \
 			main.c \
 			utilities_01.c \

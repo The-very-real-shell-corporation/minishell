@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:00:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/13 15:15:36 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/14 15:06:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ t_mlist	*ft_shell_list_split(t_data *data, char *input)
 		end = i;
 		if (start != end)
 		{
-			tmp = make_word(data, input, start, end);
+			tmp = mini_substring(data, &input[start], end - start);
 			node = new_node(data, tmp);
 			free(tmp);
 			node_addback(&list, node);

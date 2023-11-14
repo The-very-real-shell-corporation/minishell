@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/09 14:22:19 by lotse         ########   odam.nl         */
+/*   Updated: 2023/11/14 15:44:20 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	initialize_data(t_data *data, char **envp)
 
 static void	parse_input(t_data *data, char *input)
 {
-	data->input = ft_shell_list_split(data, input);
+	data->input = ft_special_split(data, input);
 	if (data->input != NULL)
 		analyze_input(data);
 	data->argv = list_to_array(data, data->input);
