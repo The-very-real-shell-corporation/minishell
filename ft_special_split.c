@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/14 14:31:00 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/14 17:15:18 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/14 20:39:08 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,12 @@ static size_t	get_length(char *str)
 		if (str[i] == '\"' && ft_strchr(&str[i + 1], '\"') != NULL)
 		{
 			i += ft_strchr(&str[i + 1], '\"') - &str[i];
+			return (i + 1);
 		}
 		else if (str[i] == '\'' && ft_strchr(&str[i + 1], '\'') != NULL)
 		{
 			i += ft_strchr(&str[i + 1], '\'') - &str[i];
+			return (i + 1);
 		}
 		i++;
 	}
@@ -77,12 +79,13 @@ t_mlist	*ft_special_split(t_data *data, char *input)
 			len = get_token_length(&input[i]);
 		else
 			len = get_length(&input[i]);
+		if (ft_iswhitespace(input[i + len]) == true)
+			len++;
 		node_addback(&res, new_node(data, mini_substring(data, &input[i], len)));
 		if (len != 0)
 			i += len;
 		else
 			i++;
 	}
-	print_list(res);
 	return (res);
 }

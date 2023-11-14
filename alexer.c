@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/13 19:07:53 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/14 20:53:08 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	assign_token(char *str)
 		token = RE_INPUT;
 	else if (ft_strncmp(str, "|", 2) == 0)
 		token = PIPE;
-	else if (ft_strncmp(str, "$", 2) == 0)
-		token = DOLLAR_SIGN;
 	else if (first_last(str, '\'') == true)
 		token = STRING_SQ;
 	else if (first_last(str, '\"') == true)
@@ -66,12 +64,16 @@ void	tokenize_list(t_mlist *list)
 	tmp = list;
 	if (list != NULL)
 	{
-		assign_command_token(&list, list->str);
+		list->token = assign_token(list->str);
+		if (list->token != HEREDOC)
+			assign_command_token(&list, list->str);
 		list = list->nx;
 	}
 	while (list != NULL)
 	{
 		list->token = assign_token(list->str);
+		if (list->pv->token == HEREDOC)
+			list->token = HEREDOC_DELIM;
 		if (list->pv->token == PIPE)
 			assign_command_token(&list, list->str);
 		list = list->nx;

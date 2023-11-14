@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/14 15:46:42 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/14 20:52:42 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ typedef enum e_token
 	RE_INPUT,
 	RE_OUTPUT,
 	HEREDOC,
+	HEREDOC_DELIM,
 	APPEND,
 	WORD,
 	COMMAND,
-	DOLLAR_SIGN,
 	STRING_SQ,
 	STRING_DQ,
 	ECHO_FLAG,
@@ -109,7 +109,7 @@ void	print_env(t_mlist *list);
 
 /*	Lexer	*/
 
-// void	expansion_pack(t_data *data, t_mlist *input);
+void	expansion_pack(t_data *data, char *input);
 bool	first_last(char *str, char c);
 int		ft_ministrcmp(char *str1, char *str2);
 void	analyze_input(t_data *data);
