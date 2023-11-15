@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/14 20:40:40 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/15 16:00:52 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,74 +86,9 @@ static bool	quote_marks(char c)
 	return (false);
 }
 
-char	*expand_single(t_data *data, char *str)
+// char	*expand_single(t_data *data, char *str)
 
-char	*expand_dollar(t_data *data, char *str)
-{
-	char	**split;
-	char	*tmp;
-	int		x;
-	int		i;
-	bool	sq;
 
-	i = 0;
-	x = 0;
-	sq = false;
-	split = ft_split(str, '$');
-	if (split == NULL)
-		exit_error(data, "split failed");
-	while (split[x] != NULL)
-	{
-		
-		// tmp = NULL;
-		// while (split[x][i] != '\0')
-		// {
-		// 	if (quote_marks(split[x][i]) == true)
-		// 	{
-		// 		tmp = ft_strdup2(data, split[x]);
-		// 		if (tmp == NULL)
-		// 			exit_error(data, "malloc fail");
-		// 		tmp[i] = '\0';
-		// 		if (split[x][i] == '\'')
-		// 		{
-		// 			if (sq == false)
-		// 				sq = true;
-		// 			else
-		// 				sq = false;
-		// 		}
-		// 	}
-		// 	i++;
-		// }
-		// if (tmp != NULL)
-		// 	data->env = find_input(data->env, tmp);
-		// else
-		// 	data->env 
-		// i = 0;
-		// x++;		
-	}
-	// int		i;
-	// int		j;
-	// bool	quote;
-	// char	*tmp;
-
-	// i = 0;
-	// j = 0;
-	// quote = false;
-	// tmp = ft_calloc(ft_strlen(str) + 1, sizeof(char));
-	// while (str[i] != '\0')
-	// {
-	// 	if (str[i] == '\'' && ft_strchr(str[i + 1], '\'') != NULL)
-	// 		quote = true;
-	// 	if (str[i] == '$' && str[i + 1] != '\0' && quote == false)
-	// 	{
-	// 		i++;
-	// 		while (str[i] != '\0' && quote_marks(str[i]) == false && str[i] != '$')
-	// 			tmp[j] = str[i];
-			
-	// 	}
-	// 	i++;
-	// }
-}
 
 char	*remove_char(char *str, char c)
 {

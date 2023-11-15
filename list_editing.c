@@ -1,86 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   list_functions.c                                   :+:    :+:            */
+/*   list_editing.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:03:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/13 15:18:29 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/15 16:06:43 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-size_t	list_size(t_mlist *list)
-{
-	size_t	i;
-
-	i = 0;
-	while (list != NULL)
-	{
-		list = list->nx;
-		i++;
-	}
-	return (i);
-}
-
-void	print_env(t_mlist *list)
-{
-	if (list == NULL)
-	{
-		puts("HALP CANT PRINT OMFG");
-		return ;
-	}
-	list = node_first(list);
-	while (list != NULL)
-	{
-		if (ft_strchr(list->str, '=') != NULL)
-			printf("%s\n", list->str);
-		list = list->nx;
-	}
-}
-
-void	print_list(t_mlist *list)
-{
-	int	i;
-
-	i = 0;
-	if (list == NULL)
-	{
-		puts("HALP CANT PRINT OMFG");
-		return ;
-	}
-	list = node_first(list);
-	while (list != NULL)
-	{
-		if (list->str != NULL)
-		{
-			printf("%s\n", list->str);
-			// printf("node [%d]:	%s\n", i, list->str);
-			// printf("token: %d\n\n", list->token);
-			// printf("Prev:		%p\n", list->pv);
-			// printf("Address:	%p\n", list);
-			// printf("Next:		%p\n", list->nx);
-		}
-		list = list->nx;
-		i++;
-	}
-}
-
-t_mlist	*node_first(t_mlist *list)
-{
-	while (list->pv != NULL)
-		list = list->pv;
-	return (list);
-}
-
-t_mlist	*node_last(t_mlist *list)
-{
-	while (list->nx != NULL)
-		list = list->nx;
-	return (list);
-}
 
 t_mlist	*new_node(t_data *data, char *word)
 {
