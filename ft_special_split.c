@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/14 14:31:00 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/14 20:39:08 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/15 18:00:11 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ static bool	token_chars(char c)
 
 static int	get_token_length(char *str)
 {
-	int	i;
-
-	i = 0;
 	if (str[0] == '|')
 		return (1);
 	if (str[1] == str[0])

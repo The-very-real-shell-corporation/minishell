@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/15 16:00:52 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/15 18:03:50 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,9 +150,11 @@ void	expansion_pack(t_data *data, char *input)
 		analyze_input(data);
 	while (split != NULL)
 	{
-		expand_dollar(data, split->str);
-		remove_quotes(data, split);
+		expand_dollar(data, &split->str);
+		// remove_quotes(data, split);
 		// expand_string(data, input);
 		split = split->nx;
 	}
+	print_list(data->input);
+	exit(0);
 }

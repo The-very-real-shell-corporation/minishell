@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/14 20:52:42 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/15 17:57:33 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,17 @@ struct s_data
 
 /*	Built-ins	*/
 
-void	cd_builtin(char *path); //done
+void	cd_builtin(char *path);
 void	echo_builtin(char *msg, bool n_flag);
-void	env_builtin(t_data *data); //done
+void	env_builtin(t_data *data);
 void	exit_builtin(t_data *data, char *msg);
 void	export_builtin(t_data *data, char *input);
-void	pwd_builtin(t_data *data); //done
+void	pwd_builtin(t_data *data);
 void	unset_builtin(t_data *data, char *input);
+
+/*	Expander (dollar)	*/
+
+void	expand_dollar(t_data *data, char **str);
 
 /*	List functions (editing)	*/
 
@@ -98,12 +102,15 @@ void	node_addback(t_mlist **list, t_mlist *new_node);
 void	replace_node(t_data *data, t_mlist *node, char *input);
 void	unlink_node(t_mlist *node);
 
-/*	List functions (utility)	*/
+/*	List functions (navigation)	*/
 
 t_mlist	*node_first(t_mlist *list);
 t_mlist	*node_last(t_mlist *list);
 t_mlist	*find_input(t_mlist *env, char *input);
 size_t	list_size(t_mlist *list);
+
+/*	List functions (utility)	*/
+
 void	print_list(t_mlist *list);
 void	print_env(t_mlist *list);
 
@@ -129,6 +136,11 @@ t_mlist	*ft_shell_list_split(t_data *data, char *input);
 void	get_path_ready(t_data *data);
 void	copy_environment(t_data *data, char **envp);
 void	sort_environment(t_data *data);
+
+/*	String manipulations	*/
+
+char	*env_string(t_data *data, char *input);
+char	*partially_merge_str(char *original, int start, int len, char *newpart);
 
 /*	Utility functions	*/
 

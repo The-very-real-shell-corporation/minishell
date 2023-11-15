@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 16:05:51 by vincent       #+#    #+#                 */
-/*   Updated: 2023/11/15 16:06:11 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/15 18:00:43 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ void	print_env(t_mlist *list)
 
 void	print_list(t_mlist *list)
 {
-	int	i;
-
-	i = 0;
 	if (list == NULL)
 	{
 		puts("HALP CANT PRINT OMFG");
@@ -51,6 +48,5 @@ void	print_list(t_mlist *list)
 			// printf("Next:		%p\n", list->nx);
 		}
 		list = list->nx;
-		i++;
 	}
 }

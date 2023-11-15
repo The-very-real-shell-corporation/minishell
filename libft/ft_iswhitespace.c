@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/28 16:09:26 by vvan-der      #+#    #+#                 */
-/*   Updated: 2022/11/06 15:24:20 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/15 18:14:05 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int	ft_iswhitespace(int c)
 {
 	if ((c > 8 && c < 14) || c == 32)
-		return (1);
-	return (0);
+		return (true);
+	return (false);
 }
