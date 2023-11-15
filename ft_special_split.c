@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/14 14:31:00 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/15 18:00:11 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/15 20:25:20 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 static bool	token_chars(char c)
 {
-	char	values[] = {'|', '>', '<', 9, 10, 11, 12, 13, 32, '\0'};
+	char	*values;
 	int		i;
 
 	i = 0;
+	values = "|><";
 	while (values[i] != '\0')
 	{
-		if (values[i] == c)
+		if (values[i] == c || ft_iswhitespace(values[i]) == true)
 			return (true);
 		i++;
 	}
@@ -78,7 +79,7 @@ t_mlist	*ft_special_split(t_data *data, char *input)
 			len = get_length(&input[i]);
 		if (ft_iswhitespace(input[i + len]) == true)
 			len++;
-		node_addback(&res, new_node(data, mini_substring(data, &input[i], len)));
+		node_addback(&res, new_node(data, mini_shubstr(data, &input[i], len)));
 		if (len != 0)
 			i += len;
 		else

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/15 18:25:46 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/15 20:13:57 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,13 @@ bool	first_last(char *str, char c)
 	// 	}
 	// }
 } */
+
 static bool	quote_marks(char c)
 {
-	char	values[] = {'\'', '\"', '\0'};
+	char	*values;
 	int		i;
 
+	values = "\'\"";
 	i = 0;
 	while (values[i] != '\0')
 	{
@@ -97,7 +99,6 @@ char	*remove_char(char *str, char c)
 	}
 	return (res);
 }
-
 
 void	remove_quotes(t_data *data, t_mlist *node)
 {

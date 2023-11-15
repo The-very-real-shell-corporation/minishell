@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 16:00:43 by vincent       #+#    #+#                 */
-/*   Updated: 2023/11/15 18:27:43 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/15 20:16:33 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ static void	edit_quotes(bool *single_q, bool *double_q, char *str)
 	{
 		if (*single_q == true)
 			*single_q = false;
-		else if (*single_q == false	&& ft_strchr(&str[1], '\'') != NULL)
+		else if (*single_q == false && ft_strchr(&str[1], '\'') != NULL)
 			*single_q = true;
 	}
 	else if (str[0] == '\"' && *single_q == false)
 	{
 		if (*double_q == true)
 			*double_q = false;
-		else if (*double_q == false	&& ft_strchr(&str[1], '\"') != NULL)
+		else if (*double_q == false && ft_strchr(&str[1], '\"') != NULL)
 			*double_q = true;
 	}
 }
@@ -64,10 +64,10 @@ static char	*rewrite_string(t_data *data, char *original, int start)
 
 void	expand_dollar(t_data *data, char **str)
 {
-	bool	single_q;
-	bool	double_q;
-	char	*tmp;
-	int		i;
+	bool		single_q;
+	bool		double_q;
+	char		*tmp;
+	uint32_t	i;
 
 	single_q = false;
 	double_q = false;

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/15 17:57:33 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/15 20:24:52 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ bool	first_last(char *str, char c);
 int		ft_ministrcmp(char *str1, char *str2);
 void	analyze_input(t_data *data);
 void	tokenize_list(t_mlist *list);
-char	*mini_substring(t_data *data, char *str, int len);
+char	*mini_shubstr(t_data *data, char *str, int len);
 int		assign_token(char *str);
 
 /*	Pathfinding	*/
@@ -145,9 +145,9 @@ char	*partially_merge_str(char *original, int start, int len, char *newpart);
 /*	Utility functions	*/
 
 void	clean_up(t_data *data);
-void	free_2D(char **input);
+void	free_2d_(char **input);
 void	exit_error(t_data *data, char *msg);
-void	print_2Dcharray(char **array);
+void	print_2d_charray(char **array);
 char	**list_to_array(t_data *data ,t_mlist *list);
 
 #endif

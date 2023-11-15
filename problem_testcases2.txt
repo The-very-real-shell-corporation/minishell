@@ -11,7 +11,7 @@ e""""c"ho" just turns into echo
 	// struct dirent	*result;
 	// int i = 0;
 	
-/*	print_2Dcharray(data->path);
+/*	print_2d_charray(data->path);
 	directory = opendir(path[i]);
 	while (path[i] != NULL)
 	{

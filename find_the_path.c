@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/30 17:13:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/09 14:19:23 by lotse         ########   odam.nl         */
+/*   Updated: 2023/11/15 20:18:54 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,9 @@ bool	search_the_path(t_data *data, char **path)
 		i++;
 	}
 	chdir(data->cwd);
-	if (access(data->argv[0], X_OK) == 0)
-	{
-		if (execve(data->argv[0], data->argv, data->env_array) == -1)
-			printf("Error: could not execute\n");
-		return (true);
-	}
+	if (access(data->argv[0], X_OK) == 0 && \
+	execve(data->argv[0], data->argv, data->env_array) == -1)
+		return (printf("Error: could not execute\n"), true);
 	return (false);
 }
 
@@ -54,13 +51,13 @@ void	get_path_ready(t_data *data)
 		exit_error(data, "Split error\n");
 	while (data->path[i] != NULL)
 		i++;
-	data->real_path = ft_calloc((i + 1), sizeof(char *)); 
+	data->real_path = ft_calloc((i + 1), sizeof(char *));
 	i = 0;
 	while (data->path[i] != NULL)
 	{
 		data->real_path[i] = ft_strjoin(data->path[i], "/");
 		// if (data->real_path[i] == NULL)
-		// 	free_2D_array(data->real_path);
+		// 	free_2d__array(data->real_path);
 		i++;
 	}
 }

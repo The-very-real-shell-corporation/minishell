@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 18:29:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/09 09:46:57 by lotse         ########   odam.nl         */
+/*   Updated: 2023/11/15 20:11:14 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_2D(char **input)
+void	free_2d_(char **input)
 {
 	int	i;
 
@@ -31,13 +31,13 @@ void	free_2D(char **input)
 void	clean_up(t_data *data)
 {
 	if (data->path != NULL)
-		free_2D(data->path);
+		free_2d_(data->path);
 	if (data->real_path != NULL)
-		free_2D(data->real_path);
+		free_2d_(data->real_path);
 	if (data->argv != NULL)
-		free_2D(data->argv);
+		free_2d_(data->argv);
 	if (data->env_array != NULL)
-		free_2D(data->env_array);
+		free_2d_(data->env_array);
 	if (data->cwd != NULL)
 		free(data->cwd);
 	if (data->env != NULL)

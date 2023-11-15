@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 19:47:55 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/31 17:13:27 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/15 20:15:31 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	sort_environment(t_data *data)
 
 void	copy_environment(t_data *data, char **envp)
 {
-	int	i;
+	int		i;
 	t_mlist	*tmp;
 
 	i = 0;

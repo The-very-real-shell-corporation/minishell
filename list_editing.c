@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:03:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/15 16:06:43 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/15 20:25:35 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	delete_node(t_mlist *node)
 {
 	if (node->str != NULL)
 	{
-		// printf("Str about to be deleted: %s\n", node->str);
 		free(node->str);
 	}
 	free(node);

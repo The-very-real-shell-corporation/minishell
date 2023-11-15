@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 13:50:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/09 14:13:00 by lotse         ########   odam.nl         */
+/*   Updated: 2023/11/15 20:11:14 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_2Dcharray(char **array)
+void	print_2d_charray(char **array)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ char	**list_to_array(t_data *data ,t_mlist *list)
 	{
 		result[i] = ft_strdup2(data, list->str);
 		// if (result[i] == NULL)
-		// 	return (free_2Darray(result), NULL);
+		// 	return (free_2d_array(result), NULL);
 		list = list->nx;
 		i++;
 	}

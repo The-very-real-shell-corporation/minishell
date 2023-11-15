@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/31 17:47:54 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/15 20:14:57 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exit_builtin(t_data *data, char *msg)
 {
 	if (msg == NULL)
 	{
-		clean_up(data);	
+		clean_up(data);
 		exit(0);
 	}
 }
