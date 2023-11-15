@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 16:00:43 by vincent       #+#    #+#                 */
-/*   Updated: 2023/11/15 18:16:42 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/15 18:27:43 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,7 @@ void	expand_dollar(t_data *data, char **str)
 	tmp = *str;
 	while (tmp[i] != '\0')
 	{
-		if (tmp[i] == '$' && single_q == false && \
-		ft_iswhitespace(tmp[i + 1]) == false && tmp[i + 1] != '\0')
+		if (tmp[i] == '$' && single_q == false && tmp[i + 1] != '\0')
 		{
 			*str = rewrite_string(data, tmp, i);
 			expand_dollar(data, str);

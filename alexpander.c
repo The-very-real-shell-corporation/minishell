@@ -6,18 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/15 18:03:50 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/15 18:25:46 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* char	*variable_to_value(t_data *data, char **var)
-{
-	char	*value;
-
-	
-} */
 
 /* void	trim_n_free(t_data *data, t_mlist *node, char *c)
 {
@@ -86,10 +79,6 @@ static bool	quote_marks(char c)
 	return (false);
 }
 
-// char	*expand_single(t_data *data, char *str)
-
-
-
 char	*remove_char(char *str, char c)
 {
 	char	*res;
@@ -156,5 +145,4 @@ void	expansion_pack(t_data *data, char *input)
 		split = split->nx;
 	}
 	print_list(data->input);
-	exit(0);
 }
