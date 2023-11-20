@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/15 20:24:52 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/20 17:56:17 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h>
+# include <stdint.h>
 # include <sys/types.h>
 # include <termios.h>
 # include <sys/wait.h>
@@ -80,13 +81,13 @@ struct s_data
 
 /*	Built-ins	*/
 
-void	cd_builtin(char *path);
-void	echo_builtin(char *msg, bool n_flag);
-void	env_builtin(t_data *data);
-void	exit_builtin(t_data *data, char *msg);
-void	export_builtin(t_data *data, char *input);
-void	pwd_builtin(t_data *data);
-void	unset_builtin(t_data *data, char *input);
+int		cd_builtin(char *path);
+int		echo_builtin(char *msg, bool n_flag);
+int		env_builtin(t_data *data);
+int		exit_builtin(t_data *data, char *msg);
+int		export_builtin(t_data *data, char *input);
+int		pwd_builtin(t_data *data);
+int		unset_builtin(t_data *data, char *input);
 
 /*	Expander (dollar)	*/
 
@@ -112,7 +113,7 @@ size_t	list_size(t_mlist *list);
 /*	List functions (utility)	*/
 
 void	print_list(t_mlist *list);
-void	print_env(t_mlist *list);
+int		print_env(t_mlist *list);
 
 /*	Lexer	*/
 

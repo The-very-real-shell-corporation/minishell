@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/14 14:31:00 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/15 20:25:20 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/20 16:15:35 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static size_t	get_length(char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0' && token_chars(str[i]) == false)
+	while (str[i] != '\0' && token_chars(str[i]) == false && ft_iswhitespace(str[i]) == false)
 	{
 		if (str[i] == '\"' && ft_strchr(&str[i + 1], '\"') != NULL)
 		{

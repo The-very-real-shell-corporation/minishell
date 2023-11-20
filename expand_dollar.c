@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 16:00:43 by vincent       #+#    #+#                 */
-/*   Updated: 2023/11/15 20:16:33 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/20 19:15:51 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 static void	edit_quotes(bool *single_q, bool *double_q, char *str)
 {
-	if (str[0] == '\'' && *double_q == false)
+	if (*str == '\'' && *double_q == false)
 	{
 		if (*single_q == true)
 			*single_q = false;
 		else if (*single_q == false && ft_strchr(&str[1], '\'') != NULL)
 			*single_q = true;
 	}
-	else if (str[0] == '\"' && *single_q == false)
+	else if (*str == '\"' && *single_q == false)
 	{
 		if (*double_q == true)
 			*double_q = false;
@@ -62,6 +62,24 @@ static char	*rewrite_string(t_data *data, char *original, int start)
 	return (new_string);
 }
 
+static bool	expand_more(t_data *data, char *tmp, char **str, int i)
+{
+	if (tmp[i + 1] == '?')
+	{
+		if (i == 0 || tmp[i - 1] != '\\')
+		{
+			*str = partially_merge_str(tmp, i, 2, ft_itoa(data->exit_status));
+			return (true);
+		}
+	}
+	if (i == 0 || tmp[i - 1] != '\\')
+	{
+		*str = rewrite_string(data, tmp, i);
+		return (true);
+	}
+	return (false);
+}
+
 void	expand_dollar(t_data *data, char **str)
 {
 	bool		single_q;
@@ -77,9 +95,11 @@ void	expand_dollar(t_data *data, char **str)
 	{
 		if (tmp[i] == '$' && single_q == false && tmp[i + 1] != '\0')
 		{
-			*str = rewrite_string(data, tmp, i);
-			expand_dollar(data, str);
-			return ;
+			if (expand_more(data, tmp, str, i) == true)
+			{
+				expand_dollar(data, str);
+				return ;
+			}
 		}
 		edit_quotes(&single_q, &double_q, &tmp[i]);
 		i++;

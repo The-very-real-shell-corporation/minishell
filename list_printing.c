@@ -6,19 +6,16 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 16:05:51 by vincent       #+#    #+#                 */
-/*   Updated: 2023/11/15 20:11:40 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/20 17:59:17 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env(t_mlist *list)
+int	print_env(t_mlist *list)
 {
 	if (list == NULL)
-	{
-		puts("HALP CANT PRINT OMFG");
-		return ;
-	}
+		return (1);
 	list = node_first(list);
 	while (list != NULL)
 	{
@@ -26,13 +23,14 @@ void	print_env(t_mlist *list)
 			printf("%s\n", list->str);
 		list = list->nx;
 	}
+	return (0);
 }
 
 void	print_list(t_mlist *list)
 {
 	if (list == NULL)
 	{
-		puts("HALP CANT PRINT OMFG");
+		printf("Couldn't print empty list");
 		return ;
 	}
 	list = node_first(list);

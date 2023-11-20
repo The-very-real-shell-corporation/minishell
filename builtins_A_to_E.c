@@ -6,49 +6,62 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/15 20:14:57 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/20 18:09:56 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cd_builtin(char *path)
+int	cd_builtin(char *path)
 {
-	if (chdir(path) == -1)
+	int	exit_status;
+
+	exit_status = chdir(path);
+	if (exit_status == -1)
+	{
 		printf("Error: \"%s\" is not a directory\n", path);
+		return (126);
+	}
+	return (0);
 }
 
-void	echo_builtin(char *msg, bool n_flag)
+int	echo_builtin(char *msg, bool n_flag)
 {
+	if (msg == NULL)
+		return (1);
 	if (n_flag == false)
 		printf("%s\n", msg);
 	else
 		printf("%s", msg);
+	return (0);
 }
 
-void	env_builtin(t_data *data)
+int	env_builtin(t_data *data)
 {
-	print_env(data->env);
+	if (print_env(data->env) == -1)
+		exit_error(data, "env failed to print");
+	return (0);
 }
 
-void	exit_builtin(t_data *data, char *msg)
+int	exit_builtin(t_data *data, char *msg)
 {
 	if (msg == NULL)
 	{
 		clean_up(data);
 		exit(0);
 	}
+	return (0);
 }
 
-void	export_builtin(t_data *data, char *input)
+int	export_builtin(t_data *data, char *input)
 {
 	t_mlist	*tmp;
 
-	if (input == NULL)
+	if (input == NULL || *input == '\0')
 	{
 		sort_environment(data);
 		print_list(data->sorted_env);
-		return ;
+		return (0);
 	}
 	tmp = find_input(data->env, input);
 	if (tmp == NULL)
@@ -57,4 +70,5 @@ void	export_builtin(t_data *data, char *input)
 		replace_node(data, tmp, input);
 	sort_environment(data);
 	data->env = node_first(data->env);
+	return (0);
 }

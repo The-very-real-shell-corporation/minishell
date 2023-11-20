@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/14 20:40:08 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/20 18:11:20 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	exit_error(t_data *data, char *msg)
 
 void	initialize_data(t_data *data, char **envp)
 {
+	data->exit_status = 0;
 	data->input = NULL;
 	data->path = NULL;
 	data->real_path = NULL;
@@ -40,6 +41,7 @@ static void	parse_input(t_data *data, char *input)
 	// if (data->input != NULL)
 	// 	analyze_input(data);
 	data->argv = list_to_array(data, data->input);
+	print_2d_charray(data->argv);
 }
 
 /* static int	init_sigaction(struct sigaction *sa)
@@ -76,7 +78,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strncmp(line, "env", 3) == 0)
 			env_builtin(&data);
 		if (ft_strncmp(line, "export", 6) == 0)
-			export_builtin(&data, NULL);
+			export_builtin(&data, &line[7]);
 		if (ft_strncmp(line, "unset", 5) == 0)
 			unset_builtin(&data, &line[6]);
 		if (ft_strncmp(line, "exit", 4) == 0)
@@ -84,7 +86,8 @@ int	main(int argc, char **argv, char **envp)
 		id = fork();
 		if (id == 0)
 			search_the_path(&data, data.path);
-		wait(NULL);
+		wait(&data.exit_status);
+		printf("exit status: %d\n", data.exit_status);
 		add_history(line);
 		usleep(1000);
 	}

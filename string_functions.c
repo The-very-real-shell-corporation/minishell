@@ -29,10 +29,7 @@ char	*env_string(t_data *data, char *input)
 		str++;
 	if (*str == '=')
 		str++;
-	value = ft_calloc(ft_strlen(str) + 1, sizeof(char));
-	if (value == NULL)
-		exit_error(data, "malloc failed");
-	ft_strcpy(value, str);
+	value = ft_strdup2(data, str);
 	return (value);
 }
 
@@ -52,14 +49,4 @@ char	*partially_merge_str(char *original, int start, int len, char *newpart)
 	free(original);
 	free(newpart);
 	return (new);
-}
-
-int	ft_ministrcmp(char *str1, char *str2)
-{
-	size_t	i;
-
-	i = 0;
-	while (str1[i] != '\0' && str1[i] != '=' && str1[i] == str2[i])
-		i++;
-	return (str1[i] - str2[i]);
 }

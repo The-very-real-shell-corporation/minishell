@@ -6,7 +6,7 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/11/15 18:04:55 by vincent       ########   odam.nl          #
+#    Updated: 2023/11/20 18:54:20 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS	=	alexer.c \
 			list_printing.c \
 			main.c \
 			string_functions.c \
+			string_nav.c \
 			utilities_01.c \
 
 OBJDIR	= shobjects

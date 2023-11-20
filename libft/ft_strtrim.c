@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/28 17:00:20 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/14 14:34:18 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/20 18:25:56 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	*ft_strtrim(char *s1, char *set)
 		return (NULL);
 	while (s1[i] != '\0' && ft_strchr(set, s1[i]))
 		i++;
-	j = ft_strlen(&s1[i]) - 1;
+	j = ft_strlen(s1) - 1;
 	while (s1[j] != '\0' && ft_strchr(set, s1[j]))
 		j--;
-	return (ft_substr(s1, i, j));
+	return (ft_substr(s1, i, j - i + 1));
 }

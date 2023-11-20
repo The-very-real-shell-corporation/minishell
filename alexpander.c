@@ -6,82 +6,20 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/15 20:13:57 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/20 16:44:19 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* void	trim_n_free(t_data *data, t_mlist *node, char *c)
+static bool	is_quote(char c)
 {
-	char	*tmp;
-
-	tmp = node->str;
-	node->str = ft_strtrim(tmp, c);
-	if (node->str == NULL)
-		exit_error(data, "Malloc fail");
-	free(tmp);
-} */
-
-bool	first_last(char *str, char c)
-{
-	if (str[0] == c && str[ft_strlen(str) - 1] == c)
+	if (c == '\'' || c == '\"')
 		return (true);
 	return (false);
 }
 
-/* void	expand_string(t_data *data, t_mlist *node)
-{
-	char	*tmp;
-	char	*tmp2;
-	t_mlist	*env_res;
-
-	if (node->token == STRING_SQ)
-	{
-		trim_n_free(data, node, '\'');
-		return ;
-	}
-	if (node->token == STRING_DQ)
-		trim_n_free(data, node, '\"');
-	tmp = variable_to_value(data, ft_split(node->str, '$'));
-	if (node->str[ft_strlen(node->str) - 1] == '$')
-		tmp2 = ft_strjoin(tmp, "$");
-	// tmp = ft_strchr(node->str, '$');
-	// while (tmp != NULL)
-	// {
-	// 	tmp2 = variable_to_value(data, tmp);
-	// 	ft_strjoin()
-	// 	tmp = ft_strchr(tmp, '$');
-	// 	if (tmp + 1 == '\0')
-	// 		return ;
-	// 	env_res = find_input(data->env, tmp + 1);
-	// 	if (env_res != NULL)
-	// 	{
-	// 		*tmp = '\0';
-	// 		tmp = node->str;
-	// 		node->str = ft_strjoin(tmp, env_res->str);
-	// 		free(tmp);
-	// 	}
-	// }
-} */
-
-static bool	quote_marks(char c)
-{
-	char	*values;
-	int		i;
-
-	values = "\'\"";
-	i = 0;
-	while (values[i] != '\0')
-	{
-		if (values[i] == c)
-			return (true);
-		i++;
-	}
-	return (false);
-}
-
-char	*remove_char(char *str, char c)
+static char	*remove_quotes(char *str, char c)
 {
 	char	*res;
 	int		i;
@@ -100,33 +38,46 @@ char	*remove_char(char *str, char c)
 	return (res);
 }
 
-void	remove_quotes(t_data *data, t_mlist *node)
+void	expand_quotes(t_data *data, char **str)
 {
-	char	*str;
-	char	*tmp;
-	int		i;
+	char		*tmp;
+	uint32_t	i;
 
 	i = 0;
-	str = node->str;
-	tmp = NULL;
-	while (str[i] != '\0')
+	tmp = *str;
+	while (tmp[i] != '\0')
 	{
-		if (quote_marks(str[i]) == true)
+		if (is_quote(tmp[i]) == true)
 		{
-			if (ft_strchr(&str[i + 1], str[i]) != NULL)
-			{
-				tmp = remove_char(str, str[i]);
-				if (tmp == NULL)
-					exit_error(data, "malloc error");
-			}
-			break ;
+			*str = remove_quotes(tmp, tmp[i]);
+			if (*str == NULL)
+				exit_error(data, "malloc fail");
+			free(tmp);
+			return ;			
 		}
 		i++;
 	}
-	if (tmp != NULL)
+}
+
+static void	contract_list(t_data *data, t_mlist *list)
+{
+	size_t	i;
+	char	*tmp;
+
+	while (list != NULL)
 	{
-		node->str = tmp;
-		free(str);
+		i = ft_strlen(list->str);
+		tmp = list->str;
+		if (list->str[i - 1] != ' ' && list->nx != NULL)
+		{
+			list->str = ft_strjoin(tmp, list->nx->str);
+			if (list->str == NULL)
+				exit_error(data, "malloc error");
+			free(tmp);
+			unlink_node(list->nx);
+		}
+		else
+			list = list->nx;
 	}
 }
 
@@ -138,12 +89,17 @@ void	expansion_pack(t_data *data, char *input)
 	data->input = split;
 	if (split != NULL)
 		analyze_input(data);
+	puts("Before expo");
+	print_list(data->input);
 	while (split != NULL)
 	{
 		expand_dollar(data, &split->str);
-		// remove_quotes(data, split);
-		// expand_string(data, input);
+		expand_quotes(data, &split->str);
 		split = split->nx;
 	}
+	puts("After expo");
+	print_list(data->input);
+	contract_list(data, data->input);
+	puts("After contraction");
 	print_list(data->input);
 }
