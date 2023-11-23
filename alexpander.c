@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/21 18:34:46 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/23 21:35:48 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	expand_quotes(t_data *data, char **str)
 	tmp = *str;
 	while (tmp[i] != '\0')
 	{
-		if (is_quote(tmp[i]) == true)
+		if (is_quote(tmp[i]) == true && ft_strchr(&tmp[i + 1], tmp[i]) != NULL)
 		{
 			*str = remove_quotes(tmp, tmp[i]);
 			if (*str == NULL)

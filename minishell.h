@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/21 18:18:31 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/23 21:37:27 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef enum e_token
 {
 	INITIALIZED,
 	PIPE,
+	PIPELINE,
 	RE_INPUT,
 	RE_OUTPUT,
 	HEREDOC,
