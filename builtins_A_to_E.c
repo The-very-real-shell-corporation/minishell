@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/20 18:09:56 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/21 18:27:27 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,24 @@ int	exit_builtin(t_data *data, char *msg)
 int	export_builtin(t_data *data, char *input)
 {
 	t_mlist	*tmp;
+	char	*env_string;
 
 	if (input == NULL || *input == '\0')
 	{
+		clear_mlist(&data->sorted_env);
 		sort_environment(data);
 		print_list(data->sorted_env);
 		return (0);
 	}
-	tmp = find_input(data->env, input);
+	env_string = input;
+	dollar_in_env(data, input, &env_string);
+	if (env_string == NULL)
+		return (printf("Error: could not add \"%s\" to environment\n", input), 1);
+	tmp = find_input(data->env, env_string);
 	if (tmp == NULL)
-		node_addback(&data->env, new_node(data, input));
+		node_addback(&data->env, new_node(data, env_string));
 	else
-		replace_node(data, tmp, input);
-	sort_environment(data);
+		replace_node(data, tmp, env_string);
 	data->env = node_first(data->env);
 	return (0);
 }

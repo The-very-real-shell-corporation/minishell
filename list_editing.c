@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:03:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/15 20:25:35 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/21 18:26:30 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	clear_mlist(t_mlist **list)
 		*list = (*list)->nx;
 		delete_node(tmp);
 	}
-	list = NULL;
+	*list = NULL;
 }
 
 t_mlist	*find_input(t_mlist *env, char *input)

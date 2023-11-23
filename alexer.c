@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/14 20:53:08 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/21 12:15:29 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,6 @@ int	assign_token(char *str)
 		token = RE_INPUT;
 	else if (ft_strncmp(str, "|", 2) == 0)
 		token = PIPE;
-	else if (first_last(str, '\'') == true)
-		token = STRING_SQ;
-	else if (first_last(str, '\"') == true)
-		token = STRING_DQ;
 	else if (ft_strncmp(str, "-n", 3) == 0)
 		token = ECHO_FLAG;
 	else

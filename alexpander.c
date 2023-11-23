@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/20 16:44:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/21 18:34:46 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ static char	*remove_quotes(char *str, char c)
 	res = ft_calloc(ft_strlen(str) - 1, sizeof(char));
 	if (res == NULL)
 		return (NULL);
+	while (str[i] == c)
+		str++;
 	while (str[i] != '\0')
 	{
-		while (str[i] == c)
-			str++;
 		res[i] = str[i];
 		i++;
+		while (str[i] == c)
+			str++;
 	}
 	return (res);
 }
@@ -87,8 +89,8 @@ void	expansion_pack(t_data *data, char *input)
 
 	split = ft_special_split(data, input);
 	data->input = split;
-	if (split != NULL)
-		analyze_input(data);
+	if (split == NULL)
+		return ;
 	puts("Before expo");
 	print_list(data->input);
 	while (split != NULL)
@@ -97,9 +99,10 @@ void	expansion_pack(t_data *data, char *input)
 		expand_quotes(data, &split->str);
 		split = split->nx;
 	}
-	puts("After expo");
-	print_list(data->input);
+	// puts("After expo");
+	// print_list(data->input);
 	contract_list(data, data->input);
 	puts("After contraction");
 	print_list(data->input);
+	analyze_input(data);
 }

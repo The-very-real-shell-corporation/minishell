@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/04 15:23:55 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/19 14:08:58 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/21 17:35:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	ft_strcpy(char *dst, char *src)
 	size_t	i;
 
 	i = 0;
-	if (src == NULL || dst == NULL)
-		return ;
 	while (src[i])
 	{
 		dst[i] = src[i];

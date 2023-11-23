@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/20 18:11:20 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/21 18:41:36 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	initialize_data(t_data *data, char **envp)
 static void	parse_input(t_data *data, char *input)
 {
 	expansion_pack(data, input);
-	// if (data->input != NULL)
-	// 	analyze_input(data);
+	if (data->input == NULL)
+		return ;
 	data->argv = list_to_array(data, data->input);
 	print_2d_charray(data->argv);
 }
@@ -78,7 +78,9 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strncmp(line, "env", 3) == 0)
 			env_builtin(&data);
 		if (ft_strncmp(line, "export", 6) == 0)
+		{
 			export_builtin(&data, &line[7]);
+		}
 		if (ft_strncmp(line, "unset", 5) == 0)
 			unset_builtin(&data, &line[6]);
 		if (ft_strncmp(line, "exit", 4) == 0)

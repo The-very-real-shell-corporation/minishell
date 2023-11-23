@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/20 17:56:17 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/21 18:18:31 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ typedef enum e_token
 	APPEND,
 	WORD,
 	COMMAND,
-	STRING_SQ,
-	STRING_DQ,
 	ECHO_FLAG,
 	B_CD,
 	B_ECHO,
@@ -142,6 +140,7 @@ void	sort_environment(t_data *data);
 
 char	*env_string(t_data *data, char *input);
 char	*partially_merge_str(char *original, int start, int len, char *newpart);
+void	dollar_in_env(t_data *data, char *input, char **env_string);
 
 /*	Utility functions	*/
 

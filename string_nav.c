@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/20 15:53:40 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/20 15:54:41 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/21 16:22:41 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,3 +28,4 @@ int	ft_ministrcmp(char *str1, char *str2)
 		i++;
 	return (str1[i] - str2[i]);
 }
+

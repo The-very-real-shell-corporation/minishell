@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 19:47:55 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/15 20:15:31 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/21 18:24:06 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ void	sort_environment(t_data *data)
 	bool	direction;
 
 	tmp2 = data->env;
-	direction = LEFT;
 	if (data->env == NULL)
 		return ;
 	tmp = new_node(data, data->env->str);
 	data->env = data->env->nx;
+	direction = LEFT;
 	while (data->env != NULL)
 	{
 		tmp = find_position(data->env->str, tmp, &direction);
 		if (direction == LEFT)
 			insert_node(&tmp->pv, &tmp, new_node(data, data->env->str));
-		else
+		else if (direction == RIGHT)
 			insert_node(&tmp, &tmp->nx, new_node(data, data->env->str));
 		data->env = data->env->nx;
 	}
