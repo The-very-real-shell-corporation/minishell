@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/21 18:41:36 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/27 20:23:53 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,62 +19,64 @@ void	exit_error(t_data *data, char *msg)
 	exit(EXIT_FAILURE);
 }
 
-void	initialize_data(t_data *data, char **envp)
+void	signal_handler(int signal, siginfo_t *info, void *context)
 {
-	data->exit_status = 0;
-	data->input = NULL;
-	data->path = NULL;
-	data->real_path = NULL;
-	data->argv = NULL;
-	data->env_array = NULL;
-	data->cwd = NULL;
-	data->env = NULL;
-	data->sorted_env = NULL;
-	data->input = NULL;
-	copy_environment(data, envp);
-	get_path_ready(data);
+	struct termios	t_erm;
+	// t_data	*data;
+	(void)info;
+	(void)context;
+	// data = (t_data *)context;
+	if (info->si_pid == 0 && signal == SIGINT)
+		write(1, "\n", 1);
+	else if (signal == SIGINT)
+	{
+		// printf("\n");
+		// rl_replace_line("\n", STDOUT_FILENO);
+		// rl_replace_line("\n", STDOUT_FILENO);
+		write(STDOUT_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	if (info->si_pid == 0 && signal == SIGQUIT)
+		write(1, "\nJOVIIIII", 9);
+	else if (signal == SIGQUIT)
+	{
+		// write(1, "\nsouvlaki", 9);
+		rl_on_new_line();
+		rl_redisplay();
+		tcsetattr(STDOUT_FILENO, )
+	}
 }
-
-static void	parse_input(t_data *data, char *input)
-{
-	expansion_pack(data, input);
-	if (data->input == NULL)
-		return ;
-	data->argv = list_to_array(data, data->input);
-	print_2d_charray(data->argv);
-}
-
-/* static int	init_sigaction(struct sigaction *sa)
-{
-	sigemptyset(&sa->sa_mask);
-	sa->sa_flags = SA_NODEFER | SA_SIGINFO;
-	sa->sa_handler = SIG_IGN;
-	sa->sa_sigaction = &signal_handler;
-	return (0);
-} */
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_data	data;
-	pid_t	id;
-	// struct sigaction	sa;
+	// pid_t	id;
+	struct sigaction	sa;
 	// char	*test;
 
 	(void)argv;
-	(void)argc;
-	// init_sigaction(&sa);
+	if (argc != 1)
+		return (printf("Please insert input after starting minishell"), 1);
 	initialize_data(&data, envp);
-	// sigaction(SIGQUIT, &sa, NULL);
+	init_sigaction(&sa);
 	data.cwd = getcwd(NULL, 0);
+	sigaction(SIGINT, &sa, NULL);	// ctrl c
+	sigaction(SIGQUIT, &sa, NULL);	// ctrl '\'
+	// signal(SIGQUIT, SIG_IGN);
 	while (INFINITY)
 	{
 		line = readline("Much wow: ");
 		if (line == NULL)
-			exit_error(&data, "Readline failed");
+		{
+			clean_up(&data);
+			exit(0);
+		}
+			// exit_error(&data, "Readline failed");
 		parse_input(&data, line);
 		if (ft_strncmp(line, "cd", 2) == 0)
-			cd_builtin(data.argv[1]);
+			cd_builtin(&data, data.argv[1]);
 		if (ft_strncmp(line, "env", 3) == 0)
 			env_builtin(&data);
 		if (ft_strncmp(line, "export", 6) == 0)
@@ -85,10 +87,19 @@ int	main(int argc, char **argv, char **envp)
 			unset_builtin(&data, &line[6]);
 		if (ft_strncmp(line, "exit", 4) == 0)
 			exit_builtin(&data, NULL);
-		id = fork();
-		if (id == 0)
-			search_the_path(&data, data.path);
-		wait(&data.exit_status);
+		// id = fork();
+		// if (id == 0)
+		// {
+		// 	search_the_path(&data, data.path);
+		// 	// signal(SIGQUIT, simple_handler);
+		// 	// signal(SIGINT, simple_handler);
+		// }
+		// // else
+		// // {
+		// 	// signal(SIGQUIT, simple_handler);
+		// 	// signal(SIGINT, simple_handler);
+		// // }
+		// wait(&data.exit_status);
 		printf("exit status: %d\n", data.exit_status);
 		add_history(line);
 		usleep(1000);

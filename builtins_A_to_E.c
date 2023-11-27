@@ -6,22 +6,31 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/21 18:27:27 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/27 16:39:07 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	cd_builtin(char *path)
+int	cd_builtin(t_data *data, char *path)
 {
 	int	exit_status;
+	char	*tmp;
 
+	tmp = getcwd(NULL, 0);
+	if (tmp == NULL)
+		exit_error(data, "getcwd failed");
 	exit_status = chdir(path);
 	if (exit_status == -1)
 	{
+		free(tmp);
 		printf("Error: \"%s\" is not a directory\n", path);
 		return (126);
 	}
+	change_env_var(data, "OLDPWD=", tmp);
+	change_env_var(data, "PWD=", getcwd(NULL, 0));
+	// change_env_var(data, ft_strdup2(data, "OLDPWD="), tmp);
+	// change_env_var(data, ft_strdup2(data, "PWD="), getcwd(NULL, 0));
 	return (0);
 }
 

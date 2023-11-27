@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/23 21:37:27 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/27 17:12:26 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <readline/history.h>
 # include <dirent.h>
 # include <stdint.h>
+# include <signal.h>
 # include <sys/types.h>
 # include <termios.h>
 # include <sys/wait.h>
@@ -80,7 +81,7 @@ struct s_data
 
 /*	Built-ins	*/
 
-int		cd_builtin(char *path);
+int		cd_builtin(t_data *data, char *path);
 int		echo_builtin(char *msg, bool n_flag);
 int		env_builtin(t_data *data);
 int		exit_builtin(t_data *data, char *msg);
@@ -88,9 +89,19 @@ int		export_builtin(t_data *data, char *input);
 int		pwd_builtin(t_data *data);
 int		unset_builtin(t_data *data, char *input);
 
+/*	Environment stuff	*/
+
+void	change_env_var(t_data *data, char *var, char *new_value);
+
 /*	Expander (dollar)	*/
 
 void	expand_dollar(t_data *data, char **str);
+
+/*	Initialization	*/
+
+void	parse_input(t_data *data, char *input);
+void	initialize_data(t_data *data, char **envp);
+int		init_sigaction(struct sigaction *sa);
 
 /*	List functions (editing)	*/
 
@@ -136,6 +147,10 @@ t_mlist	*ft_shell_list_split(t_data *data, char *input);
 void	get_path_ready(t_data *data);
 void	copy_environment(t_data *data, char **envp);
 void	sort_environment(t_data *data);
+
+/*	Signals	*/
+
+void	signal_handler(int signal, siginfo_t *info, void *context);
 
 /*	String manipulations	*/
 

@@ -6,7 +6,7 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/11/21 17:57:10 by vvan-der      ########   odam.nl          #
+#    Updated: 2023/11/27 18:08:51 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ LIBFT	= libft
 LIBS	= $(LIBFT)/libft.a #/usr/lib/x86_64-linux-gnu/libreadline.a
 RM		= rm -rf
 CC		= cc # changed it to cc
-CFLAGS	= -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra -g
+#CFLAGS	+= -fsanitize=address
 HEADERS	= #-I/usr/include/readline
 L_FLAGS	= -lreadline #-L/usr/local/lib #-I/usr/local/include #-L/Users/$(USER)/.brew/opt/readline/lib
 
@@ -30,6 +31,7 @@ SRCS	=	alexer.c \
 			expand_dollar.c \
 			find_the_path.c \
 			ft_special_split.c \
+			initialize.c \
 			list_editing.c \
 			list_navigate.c \
 			list_printing.c \
