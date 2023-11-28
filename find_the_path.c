@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/30 17:13:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/15 20:18:54 by vincent       ########   odam.nl         */
+/*   Updated: 2023/11/28 18:38:44 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ bool	search_the_path(t_data *data, char **path)
 	chdir(data->cwd);
 	if (access(data->argv[0], X_OK) == 0 && \
 	execve(data->argv[0], data->argv, data->env_array) == -1)
+	{
 		return (printf("Error: could not execute\n"), true);
+	}
 	return (false);
 }
 

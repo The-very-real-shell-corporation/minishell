@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 13:50:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/27 16:31:39 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/28 18:52:37 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,3 +47,14 @@ char	**list_to_array(t_data *data ,t_mlist *list)
 	return (result);
 }
 
+bool	everythingiswhitespace(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0' && ft_iswhitespace(str[i]) == true)
+		i++;
+	if (str[i] == '\0')
+		return (true);
+	return (false);
+}

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/27 17:12:26 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/28 21:16:44 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <dirent.h>
 # include <stdint.h>
 # include <signal.h>
+# include <sys/ioctl.h>
 # include <sys/types.h>
 # include <termios.h>
 # include <sys/wait.h>
@@ -101,7 +102,8 @@ void	expand_dollar(t_data *data, char **str);
 
 void	parse_input(t_data *data, char *input);
 void	initialize_data(t_data *data, char **envp);
-int		init_sigaction(struct sigaction *sa);
+// void	init_sigint(struct sigaction *sa);
+// void	init_sigquit(struct sigaction *sa);
 
 /*	List functions (editing)	*/
 
@@ -150,7 +152,10 @@ void	sort_environment(t_data *data);
 
 /*	Signals	*/
 
-void	signal_handler(int signal, siginfo_t *info, void *context);
+void	set_signals(void);
+void	unset_signals(void);
+void	signals_for_kids(void);
+void	signal_int_handler(int sig);
 
 /*	String manipulations	*/
 
@@ -165,5 +170,6 @@ void	free_2d_(char **input);
 void	exit_error(t_data *data, char *msg);
 void	print_2d_charray(char **array);
 char	**list_to_array(t_data *data ,t_mlist *list);
+bool	everythingiswhitespace(char *str);
 
 #endif
