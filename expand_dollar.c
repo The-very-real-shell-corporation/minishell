@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 16:00:43 by vincent       #+#    #+#                 */
-/*   Updated: 2023/11/20 19:15:51 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/04 20:47:19 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ static char	*rewrite_string(t_data *data, char *original, int start)
 		exit_error(data, "malloc fail");
 	ft_strlcpy(variable, &original[start + 1], len + 1);
 	value = env_string(data, variable);
+	if (value == NULL)
+	{
+		free(variable);
+		exit_error(data, "malloc fail");
+	}
+	free(variable);
 	new_string = partially_merge_str(original, start, len + 1, value);
 	if (new_string == NULL)
 		exit_error(data, "malloc fail");
@@ -69,6 +75,8 @@ static bool	expand_more(t_data *data, char *tmp, char **str, int i)
 		if (i == 0 || tmp[i - 1] != '\\')
 		{
 			*str = partially_merge_str(tmp, i, 2, ft_itoa(data->exit_status));
+			if (*str == NULL)
+				exit_error(data, "malloc fail");
 			return (true);
 		}
 	}

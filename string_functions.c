@@ -41,7 +41,11 @@ char	*partially_merge_str(char *original, int start, int len, char *newpart)
 	newpart_len = ft_strlen(newpart);
 	new = ft_calloc(ft_strlen(original) - len + newpart_len + 1, sizeof(char));
 	if (new == NULL)
+	{
+		free(original);
+		free(newpart);
 		return (NULL);
+	}
 	original[start] = '\0';
 	ft_strcpy(new, original);
 	ft_strcpy(&new[start], newpart);

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/28 14:15:46 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/04 16:01:29 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ void	analyze_input(t_data *data)
 {
 	if (data->input == NULL)
 		printf("%s\n", "error: invalid input");
-	tokenize_list(data->input);
+	else
+		tokenize_list(data->input);
 }

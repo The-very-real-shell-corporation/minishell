@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/28 21:04:00 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/04 18:21:43 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,12 @@ void	initialize_data(t_data *data, char **envp)
 	data->cwd = NULL;
 	data->env = NULL;
 	data->sorted_env = NULL;
-	data->input = NULL;
 	copy_environment(data, envp);
-	get_path_ready(data);
 }
 
 void	parse_input(t_data *data, char *input)
 {
+	get_path_ready(data);
 	if (everythingiswhitespace(input) == true)
 		data->input = NULL;
 	else
@@ -39,19 +38,3 @@ void	parse_input(t_data *data, char *input)
 	data->argv = list_to_array(data, data->input);
 	print_2d_charray(data->argv);
 }
-
-// void	init_sigint(struct sigaction *sa)
-// {
-// 	sigemptyset(&sa->sa_mask);
-// 	sa->sa_flags = SA_NODEFER | SA_SIGINFO;
-// 	// sa->sa_handler = SIG_IGN;
-// 	sa->sa_sigaction = &signal_int_handler;
-// }
-
-// void	init_sigquit(struct sigaction *sa)
-// {
-// 	sigemptyset(&sa->sa_mask);
-// 	sa->sa_flags = SA_NODEFER | SA_SIGINFO;
-// 	sa->sa_handler = SIG_IGN;
-// 	// sa->sa_sigaction = &signal_quit_handler;
-// }

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 19:47:55 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/27 16:38:55 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/04 21:10:45 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	copy_environment(t_data *data, char **envp)
 	tmp = NULL;
 	while (envp[i] != NULL)
 	{
-		node_addback(&tmp, new_node(data, envp[i]));
+		node_addback(&tmp, new_node(data, ft_strdup2(data, envp[i])));
 		i++;
 	}
 	data->env = tmp;
@@ -86,6 +86,5 @@ void	change_env_var(t_data *data, char *var, char *new_value)
 		tmp->str = ft_strjoin(var, new_value);
 		free(temp);
 	}
-	// free(var);
 	free(new_value);
 }

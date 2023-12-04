@@ -6,7 +6,7 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/11/28 21:08:15 by akasiota      ########   odam.nl          #
+#    Updated: 2023/12/04 18:13:18 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBS	= $(LIBFT)/libft.a #/usr/lib/x86_64-linux-gnu/libreadline.a
 RM		= rm -rf
 CC		= cc # changed it to cc
 CFLAGS	= -Wall -Werror -Wextra -g
-CFLAGS	+= -fsanitize=address
+#CFLAGS	+= -fsanitize=address
 HEADERS	= #-I/usr/include/readline
 L_FLAGS	= -lreadline #-L/usr/local/lib #-I/usr/local/include #-L/Users/$(USER)/.brew/opt/readline/lib
 

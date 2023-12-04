@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/30 17:13:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/28 18:38:44 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/04 20:31:10 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ bool	search_the_path(t_data *data, char **path)
 	char	*directory;
 
 	i = 0;
-	data->cwd = getcwd(NULL, 0);
 	data->env_array = list_to_array(data, data->env);
 	while (path[i] != NULL)
 	{
@@ -46,11 +45,17 @@ bool	search_the_path(t_data *data, char **path)
 void	get_path_ready(t_data *data)
 {
 	int		i;
+	char	*tmp;
 
 	i = 0;
-	data->path = ft_split(getenv("PATH"), ':'); // change "PATH" to the Path variable in our environment
+	tmp = env_string(data, "PATH");
+	data->path = ft_split(tmp, ':');
 	if (data->path == NULL)
+	{
+		free(tmp);
 		exit_error(data, "Split error\n");
+	}
+	free(tmp);
 	while (data->path[i] != NULL)
 		i++;
 	data->real_path = ft_calloc((i + 1), sizeof(char *));
@@ -58,8 +63,8 @@ void	get_path_ready(t_data *data)
 	while (data->path[i] != NULL)
 	{
 		data->real_path[i] = ft_strjoin(data->path[i], "/");
-		// if (data->real_path[i] == NULL)
-		// 	free_2d__array(data->real_path);
+		if (data->real_path[i] == NULL)
+			exit_error(data, "strjoin failed");
 		i++;
 	}
 }

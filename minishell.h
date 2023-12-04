@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/28 21:16:44 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/04 18:17:29 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ struct s_data
 	char	**argv;
 	char	**env_array;
 	char	*cwd;
+	char	*line;
 	t_mlist	*env;
 	t_mlist	*sorted_env;
 	t_mlist	*input;
@@ -166,6 +167,8 @@ void	dollar_in_env(t_data *data, char *input, char **env_string);
 /*	Utility functions	*/
 
 void	clean_up(t_data *data);
+void	loop_clean(t_data *data);
+void	free_and_null(void *variable);
 void	free_2d_(char **input);
 void	exit_error(t_data *data, char *msg);
 void	print_2d_charray(char **array);

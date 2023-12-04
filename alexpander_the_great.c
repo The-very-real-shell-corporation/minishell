@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   alexpander.c                                       :+:    :+:            */
+/*   alexpander_the_great.c                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/28 14:21:11 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/04 20:52:12 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ void	expand_quotes(t_data *data, char **str)
 		{
 			*str = remove_quotes(tmp, tmp[i]);
 			if (*str == NULL)
+			{
+				free(tmp);
 				exit_error(data, "malloc fail");
+			}
 			free(tmp);
 			return ;			
 		}
@@ -70,11 +73,14 @@ static void	contract_list(t_data *data, t_mlist *list)
 	{
 		i = ft_strlen(list->str);
 		tmp = list->str;
-		if (list->str[i - 1] != ' ' && list->nx != NULL)
+		if (i > 0 && list->str[i - 1] != ' ' && list->nx != NULL)
 		{
 			list->str = ft_strjoin(tmp, list->nx->str);
 			if (list->str == NULL)
+			{
+				free(tmp);
 				exit_error(data, "malloc error");
+			}
 			free(tmp);
 			unlink_node(list->nx);
 		}
