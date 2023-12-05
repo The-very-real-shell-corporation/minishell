@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:03:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/04 21:14:02 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/05 23:00:17 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ t_mlist	*new_node(t_data *data, char *word)
 	new = malloc(sizeof(t_mlist));
 	if (new == NULL)
 		exit_error(data, "List malloc failed");
-	if (word == NULL)
-		new->str = NULL;
-	else
-		new->str = word; // make sure everything is allocated before it gets in new_node
+	new->str = word; // make sure everything is allocated before it gets in new_node
 	new->token = INITIALIZED;
 	new->nx = NULL;
 	new->pv = NULL;
@@ -31,7 +28,7 @@ t_mlist	*new_node(t_data *data, char *word)
 
 void	node_addback(t_mlist **list, t_mlist *new_node)
 {
-	if (!*list)
+	if (*list == NULL)
 		*list = new_node;
 	else
 	{
@@ -42,7 +39,7 @@ void	node_addback(t_mlist **list, t_mlist *new_node)
 	}
 }
 
-void	insert_node(t_mlist **node1, t_mlist **node2, t_mlist *new)
+/* void	insert_node(t_mlist **node1, t_mlist **node2, t_mlist *new)
 {
 	new->pv = *node1;
 	new->nx = *node2;
@@ -50,6 +47,24 @@ void	insert_node(t_mlist **node1, t_mlist **node2, t_mlist *new)
 		(*node1)->nx = new;
 	if (*node2 != NULL && *node2 != new)
 		(*node2)->pv = new;
+	// if (node1 != NULL && node1 != new)
+	// 	new->pv->nx = new;
+	// if (node2 != NULL && node2 != new)
+	// 	new->nx->pv = new;
+} */
+
+void	insert_node(t_mlist *node1, t_mlist *node2, t_mlist *new)
+{
+	new->pv = node1;
+	new->nx = node2;
+	if (node1 != NULL)
+		node1->nx = new;
+	if (node2 != NULL)
+		node2->pv = new;
+	// if (node1 != NULL && node1 != new)
+	// 	new->pv->nx = new;
+	// if (node2 != NULL && node2 != new)
+	// 	new->nx->pv = new;
 }
 
 void	delete_node(t_mlist *node)
@@ -57,7 +72,6 @@ void	delete_node(t_mlist *node)
 	if (node->str != NULL)
 	{
 		free(node->str);
-		node->str = NULL;
 	}
 	free(node);
 }
@@ -72,7 +86,6 @@ void	clear_mlist(t_mlist **list)
 		*list = (*list)->nx;
 		delete_node(tmp);
 	}
-	*list = NULL;
 }
 
 t_mlist	*find_input(t_mlist *env, char *input)
@@ -102,6 +115,6 @@ void	unlink_node(t_mlist *node)
 
 void	replace_node(t_data *data, t_mlist *node, char *input)
 {
-	insert_node(&node->pv, &node, new_node(data, input));
+	insert_node(node->pv, node, new_node(data, ft_strdup2(data, input)));
 	unlink_node(node);
 }

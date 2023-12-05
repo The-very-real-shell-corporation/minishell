@@ -6,7 +6,7 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/12/04 18:13:18 by vvan-der      ########   odam.nl          #
+#    Updated: 2023/12/05 15:44:58 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS	=	alexer.c \
 			builtins_F_to_Z.c \
 			clean_up.c \
 			environment.c \
+			execute.c \
 			expand_dollar.c \
 			find_the_path.c \
 			ft_special_split.c \

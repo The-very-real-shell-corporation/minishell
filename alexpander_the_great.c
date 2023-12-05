@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/04 20:52:12 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/05 18:00:35 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,11 @@ static void	contract_list(t_data *data, t_mlist *list)
 			unlink_node(list->nx);
 		}
 		else
+		{
+			if (list->str[i - 1] == ' ')
+				list->str[i - 1] = '\0';
 			list = list->nx;
+		}
 	}
 }
 
@@ -97,18 +101,13 @@ void	expansion_pack(t_data *data, char *input)
 	data->input = split;
 	if (split == NULL)
 		return ;
-	puts("Before expo");
-	print_list(data->input);
 	while (split != NULL)
 	{
 		expand_dollar(data, &split->str);
 		expand_quotes(data, &split->str);
 		split = split->nx;
 	}
-	// puts("After expo");
-	// print_list(data->input);
 	contract_list(data, data->input);
-	puts("After contraction");
-	print_list(data->input);
+	// print_list(data->input);
 	analyze_input(data);
 }

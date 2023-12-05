@@ -6,11 +6,22 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/04 18:21:43 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/05 19:15:47 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	assign_function_ptrs(t_data *data)
+{
+	data->fn[B_CD] = &cd_builtin;
+	data->fn[B_ECHO] = &echo_builtin;
+	data->fn[B_ENV] = &env_builtin;
+	data->fn[B_EXIT] = &exit_builtin;
+	data->fn[B_EXPORT] = &export_builtin;
+	data->fn[B_PWD] = &pwd_builtin;
+	data->fn[B_UNSET] = &unset_builtin;
+}
 
 void	initialize_data(t_data *data, char **envp)
 {
@@ -24,6 +35,7 @@ void	initialize_data(t_data *data, char **envp)
 	data->env = NULL;
 	data->sorted_env = NULL;
 	copy_environment(data, envp);
+	assign_function_ptrs(data);
 }
 
 void	parse_input(t_data *data, char *input)

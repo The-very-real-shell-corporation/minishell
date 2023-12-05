@@ -6,16 +6,17 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 16:35:26 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/20 18:10:10 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/05 16:17:08 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pwd_builtin(t_data *data)
+int	pwd_builtin(t_data *data, char **args)
 {
 	char	*out;
 
+	(void)args;
 	out = getcwd(NULL, 0);
 	if (out != NULL)
 	{
@@ -27,17 +28,21 @@ int	pwd_builtin(t_data *data)
 	return (0);
 }
 
-int	unset_builtin(t_data *data, char *input)
+int	unset_builtin(t_data *data, char **args)
 {
 	t_mlist	*tmp;
 
-	if (input == NULL)
+	if (*args == NULL)
 	{
 		printf("Please provide a variable to unset\n");
 		return (0);
 	}
-	tmp = find_input(data->env, input);
-	if (tmp != NULL)
-		unlink_node(tmp);
+	while (*args != NULL)
+	{
+		tmp = find_input(data->env, *args);
+		if (tmp != NULL)
+			unlink_node(tmp);
+		args++;
+	}
 	return (0);
 }

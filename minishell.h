@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/04 18:17:29 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/05 22:47:19 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ typedef struct s_data	t_data;
 
 typedef enum e_token
 {
+	B_CD,
+	B_ECHO,
+	B_ENV,
+	B_EXIT,
+	B_EXPORT,
+	B_PWD,
+	B_UNSET,
 	INITIALIZED,
 	PIPE,
 	PIPELINE,
@@ -49,14 +56,7 @@ typedef enum e_token
 	APPEND,
 	WORD,
 	COMMAND,
-	ECHO_FLAG,
-	B_CD,
-	B_ECHO,
-	B_ENV,
-	B_EXIT,
-	B_EXPORT,
-	B_PWD,
-	B_UNSET
+	ECHO_FLAG
 }	t_token;
 
 typedef struct s_mlist
@@ -76,6 +76,7 @@ struct s_data
 	char	**env_array;
 	char	*cwd;
 	char	*line;
+	int		(*fn[7])(t_data *, char **);
 	t_mlist	*env;
 	t_mlist	*sorted_env;
 	t_mlist	*input;
@@ -83,17 +84,23 @@ struct s_data
 
 /*	Built-ins	*/
 
-int		cd_builtin(t_data *data, char *path);
-int		echo_builtin(char *msg, bool n_flag);
-int		env_builtin(t_data *data);
-int		exit_builtin(t_data *data, char *msg);
-int		export_builtin(t_data *data, char *input);
-int		pwd_builtin(t_data *data);
-int		unset_builtin(t_data *data, char *input);
+int		cd_builtin(t_data *data, char **args);
+int		echo_builtin(t_data *data, char **args);
+int		env_builtin(t_data *data, char **args);
+int		exit_builtin(t_data *data, char **args);
+int		export_builtin(t_data *data, char **args);
+int		pwd_builtin(t_data *data, char **args);
+int		unset_builtin(t_data *data, char **args);
 
 /*	Environment stuff	*/
 
 void	change_env_var(t_data *data, char *var, char *new_value);
+
+/*	Execution	*/
+
+void	execute(t_data *data);
+void	fork_stuff(t_data *data);
+bool	run_builtins(t_data *data);
 
 /*	Expander (dollar)	*/
 
@@ -103,15 +110,13 @@ void	expand_dollar(t_data *data, char **str);
 
 void	parse_input(t_data *data, char *input);
 void	initialize_data(t_data *data, char **envp);
-// void	init_sigint(struct sigaction *sa);
-// void	init_sigquit(struct sigaction *sa);
 
 /*	List functions (editing)	*/
 
 void	clear_mlist(t_mlist **list);
 t_mlist	*new_node(t_data *data, char *word);
 void	delete_node(t_mlist *node);
-void	insert_node(t_mlist **node1, t_mlist **node2, t_mlist *new);
+void	insert_node(t_mlist *node1, t_mlist *node2, t_mlist *new);
 void	node_addback(t_mlist **list, t_mlist *new_node);
 void	replace_node(t_data *data, t_mlist *node, char *input);
 void	unlink_node(t_mlist *node);
