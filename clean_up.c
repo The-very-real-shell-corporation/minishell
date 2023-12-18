@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 18:29:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/05 19:05:35 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/18 15:26:48 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,6 @@ void	clean_up(t_data *data)
 		free_2d_(data->env_array);
 	if (data->cwd != NULL)
 		free_and_null((void *)data->cwd);
-	// if (data->cwd != NULL)
-	// {
-	// 	free(data->cwd);
-	// 	data->cwd = NULL;
-	// }
 	if (data->env != NULL)
 		clear_mlist(&data->env);
 	if (data->sorted_env != NULL)
@@ -82,11 +77,6 @@ void	loop_clean(t_data *data)
 		free_2d_(data->env_array);
 	if (data->cwd != NULL)
 		free_and_null((void *)data->cwd);
-	// if (data->cwd != NULL)
-	// {
-	// 	free(data->cwd);
-	// 	data->cwd = NULL;
-	// }
 	if (data->input != NULL)
 		clear_mlist(&data->input);
 	data->input = NULL;

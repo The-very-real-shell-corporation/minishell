@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/05 18:42:16 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/18 20:47:01 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **envp)
 		if (data.cwd == NULL)
 			exit_error(&data, "cwd failed");
 		set_signals();
-		data.line = readline("Much wow: ");
+		data.line = readline("WE SHELL SEE: ");
 		if (data.line == NULL)
 		{
 			clean_up(&data);

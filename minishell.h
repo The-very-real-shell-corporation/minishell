@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/05 22:47:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/18 17:32:13 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ typedef enum e_token
 	APPEND,
 	WORD,
 	COMMAND,
-	ECHO_FLAG
+	ECHO_FLAG,
+	UNDERSCORE
 }	t_token;
 
 typedef struct s_mlist
@@ -101,10 +102,16 @@ void	change_env_var(t_data *data, char *var, char *new_value);
 void	execute(t_data *data);
 void	fork_stuff(t_data *data);
 bool	run_builtins(t_data *data);
+void	execute_command(t_data *data, char *directory);
 
 /*	Expander (dollar)	*/
 
 void	expand_dollar(t_data *data, char **str);
+
+/*	Forking	*/
+
+pid_t	create_fork(t_data *data);
+void	wait_for_process(t_data *data, pid_t id);
 
 /*	Initialization	*/
 
@@ -145,7 +152,7 @@ int		assign_token(char *str);
 
 /*	Pathfinding	*/
 
-bool	search_the_path(t_data *data, char **path);
+void	search_the_path(t_data *data, char **path);
 
 /*	Parser functions	*/
 

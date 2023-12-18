@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/30 17:13:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/04 20:31:10 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/18 19:58:31 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	search_the_path(t_data *data, char **path)
+void	search_the_path(t_data *data, char **path)
 {
 	int		i;
 	char	*directory;
@@ -26,20 +26,14 @@ bool	search_the_path(t_data *data, char **path)
 		{
 			directory = ft_strjoin(data->real_path[i], data->argv[0]);
 			chdir(data->cwd);
-			if (execve(directory, data->argv, data->env_array) == -1)
-				printf("Error: could not execute\n");
-			free(directory);
-			return (true);
+			execute_command(data, directory);
 		}
 		i++;
 	}
 	chdir(data->cwd);
-	if (access(data->argv[0], X_OK) == 0 && \
-	execve(data->argv[0], data->argv, data->env_array) == -1)
-	{
-		return (printf("Error: could not execute\n"), true);
-	}
-	return (false);
+	if (access(data->argv[0], X_OK) == 0)
+		execute_command(data, ft_strdup(data->argv[0]));
+	exit(EXIT_FAILURE); // look up a smart exit status
 }
 
 void	get_path_ready(t_data *data)

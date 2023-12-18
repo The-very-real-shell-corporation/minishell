@@ -1,0 +1,3 @@
+export what='$312'
+expand $ up to /
+export hi=123 -> export hi2$hi=7 should change to hi2123=7

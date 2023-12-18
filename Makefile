@@ -6,7 +6,7 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/12/05 15:44:58 by vvan-der      ########   odam.nl          #
+#    Updated: 2023/12/18 15:20:31 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,12 @@ NAME	= minishell
 NAME2	= minishell2
 USER	= vvan-der
 LIBFT	= libft
-LIBS	= $(LIBFT)/libft.a #/usr/lib/x86_64-linux-gnu/libreadline.a
+LIBS	= $(LIBFT)/libft.a
 RM		= rm -rf
 CC		= cc # changed it to cc
 CFLAGS	= -Wall -Werror -Wextra -g
-#CFLAGS	+= -fsanitize=address
-HEADERS	= #-I/usr/include/readline
-L_FLAGS	= -lreadline #-L/usr/local/lib #-I/usr/local/include #-L/Users/$(USER)/.brew/opt/readline/lib
+CFLAGS	+= -fsanitize=address
+L_FLAGS	= -lreadline
 
 SRCS	=	alexer.c \
 			alexpander_the_great.c \
@@ -30,6 +29,7 @@ SRCS	=	alexer.c \
 			environment.c \
 			execute.c \
 			expand_dollar.c \
+			forks.c \
 			find_the_path.c \
 			ft_special_split.c \
 			initialize.c \
@@ -37,6 +37,7 @@ SRCS	=	alexer.c \
 			list_navigate.c \
 			list_printing.c \
 			main.c \
+			pipes.c \
 			signals.c \
 			string_functions.c \
 			string_nav.c \
@@ -52,7 +53,7 @@ $(LIBS):
 	$(MAKE) -C $(LIBFT)
 
 $(OBJDIR)/%.o : %.c
-	$(CC) -c $(CFLAGS) $(HEADERS) -o $@ $^
+	$(CC) -c $(CFLAGS) -o $@ $^
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)

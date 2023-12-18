@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/05 21:26:57 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/18 20:33:01 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,17 @@ int	cd_builtin(t_data *data, char **args)
 
 int	echo_builtin(t_data *data, char **args)
 {
-	(void)data;
-	// check for "-n"
+	bool	n_flag;
+
 	if (*args == NULL)
 		return (-1);
+	n_flag = false;
+	if (*args != NULL && ft_strncmp("-n", *args, 3) == 0)
+	{
+		n_flag = true;
+		args++;
+	}
+	(void)data;
 	while (*args != NULL)
 	{
 		printf("%s", *args);
@@ -47,8 +54,8 @@ int	echo_builtin(t_data *data, char **args)
 			printf(" ");
 		args++;
 	}
-	// if (n_flag == false)
-	// 	printf("\n");
+	if (n_flag == false)
+		printf("\n");
 	return (0);
 }
 
@@ -93,7 +100,7 @@ int	export_builtin(t_data *data, char **args)
 			printf("Error: could not add \"%s\" to environment\n", *args);
 		tmp = find_input(data->env, env_string);
 		if (tmp == NULL)
-			node_addback(&data->env, new_node(data, env_string));
+			node_addback(&data->env, new_node(data, ft_strdup2(data, env_string)));
 		else
 			replace_node(data, tmp, env_string);
 		data->env = node_first(data->env);
