@@ -6,7 +6,7 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/12/18 15:20:31 by vvan-der      ########   odam.nl          #
+#    Updated: 2023/12/21 16:10:17 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS	=	alexer.c \
 			forks.c \
 			find_the_path.c \
 			ft_special_split.c \
+			heredoc.c \
 			initialize.c \
 			list_editing.c \
 			list_navigate.c \

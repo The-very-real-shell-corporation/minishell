@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/18 17:32:13 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/21 18:47:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <signal.h>
 # include <stdbool.h>
 # include <ctype.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h>
@@ -70,6 +71,7 @@ typedef struct s_mlist
 
 struct s_data
 {
+	int		heredocs; // do this in parent
 	int		exit_status;
 	char	**path;
 	char	**real_path;
@@ -112,6 +114,10 @@ void	expand_dollar(t_data *data, char **str);
 
 pid_t	create_fork(t_data *data);
 void	wait_for_process(t_data *data, pid_t id);
+
+/*	Heredoc	*/
+
+void	whatsup_doc(t_data *data, char *delim);
 
 /*	Initialization	*/
 

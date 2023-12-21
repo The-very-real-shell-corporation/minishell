@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/05 19:15:47 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/21 18:26:33 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	assign_function_ptrs(t_data *data)
 void	initialize_data(t_data *data, char **envp)
 {
 	data->exit_status = 0;
+	data->heredocs = 0;
 	data->input = NULL;
 	data->path = NULL;
 	data->real_path = NULL;

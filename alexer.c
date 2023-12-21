@@ -6,11 +6,26 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/18 14:52:08 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/21 16:14:05 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static bool	contains_heredoc(t_mlist **input)
+{
+	t_mlist	*tmp;
+
+	tmp = *input;
+	while (*input != NULL)
+	{
+		if ((*input)->token == HEREDOC)
+			return (true);
+		*input = (*input)->nx;
+	}
+	*input = tmp;
+	return (false);
+}
 
 static void	assign_command_token(t_mlist *node, char *str)
 {
@@ -68,7 +83,7 @@ void	tokenize_list(t_mlist *list)
 	while (list != NULL)
 	{
 		list->token = assign_token(list->str);
-		if (list->pv->token == HEREDOC)
+		if (list->pv->token == HEREDOC && list->token == WORD)
 			list->token = HEREDOC_DELIM;
 		if (list->pv->token == PIPE)
 			assign_command_token(list, list->str);
@@ -83,4 +98,9 @@ void	analyze_input(t_data *data)
 		printf("%s\n", "error: invalid input");
 	else
 		tokenize_list(data->input);
+	if (contains_heredoc(&data->input) == true)
+	{
+		whatsup_doc(data, data->input->nx->str);
+	}
+	data->input = node_first(data->input);
 }
