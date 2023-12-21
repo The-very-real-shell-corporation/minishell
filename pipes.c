@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 14:42:47 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/21 21:09:44 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,51 @@ size_t	pipeline_size(t_mlist *input)
 	return (i);
 }
 
+int	**create_pipe_fds(t_data *data, size_t n)
+{
+	int		**fds;
+	size_t	i;
+
+	i = 0;
+	fds = ft_calloc(n + 1, sizeof(int*));
+	if (fds == NULL)
+		exit_error(data, "malloc failed");
+	while (fds != NULL)
+	{
+		fds[i] = ft_calloc(2, sizeof(int));
+		if (fds[i] == NULL)
+			exit_error(data, "malloc failed");
+		i++;
+	}
+	data->pipe_fds = fds;
+}
+
+void	create_pipes(t_data *data, int **pipe_fds)
+{
+	while (pipe_fds != NULL)
+	{
+		if (pipe(*pipe_fds) == -1)
+			exit_error(data, "pipe failed to pipe");
+		pipe_fds++;
+	}
+}
+
+// Modify this one
+// void	set_pipes(t_data *data, pid_t id,)
+// {
+// 	if (id == 0)
+// 	{
+// 		if (dup2(fd[x], pipe_fd) == -1)
+// 			exit_error(data, "dup2 failed");
+// 		close(fd[0]);
+// 		close(fd[1]);
+// 		// go do something
+// 		exit(0);
+// 	}
+// 	close(fd[0]);
+// 	close(fd[1]);
+// }
+
 void	set_pipes(t_data *data, pid_t id, int fd[], int pipe_fd, int x)
 {
 	if (id == 0)
@@ -41,32 +86,6 @@ void	set_pipes(t_data *data, pid_t id, int fd[], int pipe_fd, int x)
 	close(fd[1]);
 }
 
-int	**create_pipe_fds(t_data *data, size_t n)
-{
-	int		**fds;
-	size_t	i;
-
-	i = 0;
-	fds = ft_calloc(n + 1, sizeof(int*));
-	if (fds == NULL)
-		exit_error(data, "malloc failed");
-	while (fds != NULL)
-	{
-		fds[i] = ft_calloc(2, sizeof(int));
-		i++;
-	}
-	data->pipe_fds = fds;
-}
-
-void	create_pipes(t_data *data, int **pipe_fds)
-{
-	while (pipe_fds != NULL)
-	{
-		if (pipe(*pipe_fds) == -1)
-			exit_error(data, "pipe failed to pipe");
-		pipe_fds++;
-	}
-}
 
 void	pipe_input(t_data *data, int func)
 {

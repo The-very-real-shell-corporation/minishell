@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 14:26:21 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/21 20:17:21 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	initialize_data(t_data *data, char **envp)
 	data->sorted_env = NULL;
 	data->pipelines = NULL;
 	data->pipe_fds = NULL;
+	data->pids = NULL;
 	copy_environment(data, envp);
 	assign_function_ptrs(data);
 }

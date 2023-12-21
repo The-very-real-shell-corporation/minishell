@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/18 20:47:01 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/21 20:31:16 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 			return (0);
 		}
 		parse_input(&data, data.line);
-		execute(&data);
+		execute(&data, data.pipelines, data.pids);
 		add_history(data.line);
 		loop_clean(&data);
 	}

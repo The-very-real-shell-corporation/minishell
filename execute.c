@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 17:42:19 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/21 20:41:23 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,6 @@ void	execute_command(t_data *data, char *directory)
 	free(directory);
 	clean_up(data);
 	exit(EXIT_FAILURE); // look up a smart exit status
-}
-
-void	fork_stuff(t_data *data)
-{
-	pid_t	id;
-
-	id = create_fork(data);
-	if (id == 0)
-		search_the_path(data, data->path);
-	wait_for_process(data, id);
 }
 
 bool	run_builtins(t_data *data)
@@ -59,13 +49,14 @@ bool	run_builtins_pip(t_data *data, t_mlist *pipelines)
 }
 
 
-void	execute(t_data *data, t_mlist *pipelines)
+void	execute(t_data *data, t_mlist *pipelines, pid_t	*pids)
 {
-	// pid_t	id;
 	size_t	n;
+	size_t	i;
 
 	// if (data->input->token = stuff)
 	// 	data->input = data->input->nx;
+	i = 0;
 	n = list_size(pipelines);
 	while (pipelines != NULL)
 	{
@@ -73,6 +64,11 @@ void	execute(t_data *data, t_mlist *pipelines)
 		{
 			create_pipe_fds(data, n);
 			create_pipes(data, data->pipe_fds);
+			fork_stuff_pip(data, pipelines, data->pids, n);
+			while (i < n)
+			{
+				
+			}
 		}
 		if (run_builtins(data) == false)
 			fork_stuff(data);

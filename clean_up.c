@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 18:29:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 14:27:34 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/21 20:18:21 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	clean_up(t_data *data)
 		clear_mlist(&data->pipelines);
 	if (data->pipe_fds != NULL)
 		free_2d_(data->pipe_fds);
+	if (data->pids != NULL)
+		free(data->pids);
 	data->input = NULL;
 	data->path = NULL;
 	data->real_path = NULL;
@@ -68,6 +70,7 @@ void	clean_up(t_data *data)
 	data->sorted_env = NULL;
 	data->pipelines = NULL;
 	data->pipe_fds = NULL;
+	data->pids = NULL;
 }
 
 void	loop_clean(t_data *data)
@@ -89,6 +92,8 @@ void	loop_clean(t_data *data)
 		clear_mlist(&data->pipelines);
 	if (data->pipe_fds != NULL)
 		free_2d_(data->pipe_fds);
+	if (data->pids != NULL)
+		free(data->pids);
 	data->input = NULL;
 	data->path = NULL;
 	data->real_path = NULL;
@@ -97,4 +102,5 @@ void	loop_clean(t_data *data)
 	data->cwd = NULL;
 	data->pipelines = NULL;
 	data->pipe_fds = NULL;
+	data->pids = NULL;
 }

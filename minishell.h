@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 17:41:25 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/21 20:43:34 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ struct s_data
 	char	*line;
 	int		(*fn[7])(t_data *, char **);
 	int		**pipe_fds;
+	int		*pids;
 	t_mlist	*env;
 	t_mlist	*sorted_env;
 	t_mlist	*input;
@@ -103,7 +104,7 @@ void	change_env_var(t_data *data, char *var, char *new_value);
 /*	Execution	*/
 
 // void	execute(t_data *data);
-void	execute(t_data *data, t_mlist *pipelines);
+void	execute(t_data *data, t_mlist *pipelines, pid_t *pids);
 void	fork_stuff(t_data *data);
 bool	run_builtins(t_data *data);
 void	execute_command(t_data *data, char *directory);
@@ -158,6 +159,8 @@ int		assign_token(char *str);
 /*	Pathfinding	*/
 
 void	search_the_path(t_data *data, char **path);
+void	search_the_path_pip(t_data *data, t_mlist *pipelines, char **path)
+
 
 /*	Parser functions	*/
 
