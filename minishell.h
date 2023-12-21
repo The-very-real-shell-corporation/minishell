@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/18 17:32:13 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/21 14:26:07 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef enum e_token
 
 typedef struct s_mlist
 {
+	char			**pipeline; // check for freeing memory
 	char			*str;
 	t_token			token;
 	struct s_mlist	*nx;
@@ -78,9 +79,11 @@ struct s_data
 	char	*cwd;
 	char	*line;
 	int		(*fn[7])(t_data *, char **);
+	int		**pipe_fds;
 	t_mlist	*env;
 	t_mlist	*sorted_env;
 	t_mlist	*input;
+	t_mlist	*pipelines;
 };
 
 /*	Built-ins	*/
@@ -99,7 +102,8 @@ void	change_env_var(t_data *data, char *var, char *new_value);
 
 /*	Execution	*/
 
-void	execute(t_data *data);
+// void	execute(t_data *data);
+void	execute(t_data *data, t_mlist *pipelines);
 void	fork_stuff(t_data *data);
 bool	run_builtins(t_data *data);
 void	execute_command(t_data *data, char *directory);
@@ -122,6 +126,7 @@ void	initialize_data(t_data *data, char **envp);
 
 void	clear_mlist(t_mlist **list);
 t_mlist	*new_node(t_data *data, char *word);
+t_mlist	*new_node_pipeline(t_data *data, char **args);
 void	delete_node(t_mlist *node);
 void	insert_node(t_mlist *node1, t_mlist *node2, t_mlist *new);
 void	node_addback(t_mlist **list, t_mlist *new_node);
@@ -163,6 +168,11 @@ void	get_path_ready(t_data *data);
 void	copy_environment(t_data *data, char **envp);
 void	sort_environment(t_data *data);
 
+/* Pipes */
+
+size_t	pipeline_size(t_mlist *tmp);
+
+
 /*	Signals	*/
 
 void	set_signals(void);
@@ -185,6 +195,7 @@ void	free_2d_(char **input);
 void	exit_error(t_data *data, char *msg);
 void	print_2d_charray(char **array);
 char	**list_to_array(t_data *data ,t_mlist *list);
+void	list_to_array_for_pip(t_data *data ,t_mlist *input, t_mlist **pipelines);
 bool	everythingiswhitespace(char *str);
 
 #endif

@@ -6,13 +6,25 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/18 17:35:05 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/21 14:42:47 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// echo "hi what" | wc -l
+// Get the pipeline size and keep track of the position
+size_t	pipeline_size(t_mlist *input)
+{
+	size_t	i;
+
+	i = 0;
+	while (input != NULL && (input)->token != PIPE)
+	{
+		i++;
+		input = (input)->nx;
+	}
+	return (i);
+}
 
 void	set_pipes(t_data *data, pid_t id, int fd[], int pipe_fd, int x)
 {
@@ -29,10 +41,31 @@ void	set_pipes(t_data *data, pid_t id, int fd[], int pipe_fd, int x)
 	close(fd[1]);
 }
 
-void	create_pipe(t_data *data, int fd[])
+int	**create_pipe_fds(t_data *data, size_t n)
 {
-	if (pipe(fd) == -1)
-		exit_error(data, "pipe failed to pipe");
+	int		**fds;
+	size_t	i;
+
+	i = 0;
+	fds = ft_calloc(n + 1, sizeof(int*));
+	if (fds == NULL)
+		exit_error(data, "malloc failed");
+	while (fds != NULL)
+	{
+		fds[i] = ft_calloc(2, sizeof(int));
+		i++;
+	}
+	data->pipe_fds = fds;
+}
+
+void	create_pipes(t_data *data, int **pipe_fds)
+{
+	while (pipe_fds != NULL)
+	{
+		if (pipe(*pipe_fds) == -1)
+			exit_error(data, "pipe failed to pipe");
+		pipe_fds++;
+	}
 }
 
 void	pipe_input(t_data *data, int func)

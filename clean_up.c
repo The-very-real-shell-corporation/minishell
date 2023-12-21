@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 18:29:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/18 15:26:48 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/21 14:27:34 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ void	clean_up(t_data *data)
 		clear_mlist(&data->sorted_env);
 	if (data->input != NULL)
 		clear_mlist(&data->input);
+	if (data->pipelines != NULL)
+		clear_mlist(&data->pipelines);
+	if (data->pipe_fds != NULL)
+		free_2d_(data->pipe_fds);
 	data->input = NULL;
 	data->path = NULL;
 	data->real_path = NULL;
@@ -61,7 +65,9 @@ void	clean_up(t_data *data)
 	data->env_array = NULL;
 	data->cwd = NULL;
 	data->env = NULL;
-	data->sorted_env = NULL;	
+	data->sorted_env = NULL;
+	data->pipelines = NULL;
+	data->pipe_fds = NULL;
 }
 
 void	loop_clean(t_data *data)
@@ -79,10 +85,16 @@ void	loop_clean(t_data *data)
 		free_and_null((void *)data->cwd);
 	if (data->input != NULL)
 		clear_mlist(&data->input);
+	if (data->pipelines != NULL)
+		clear_mlist(&data->pipelines);
+	if (data->pipe_fds != NULL)
+		free_2d_(data->pipe_fds);
 	data->input = NULL;
 	data->path = NULL;
 	data->real_path = NULL;
 	data->argv = NULL;
 	data->env_array = NULL;
 	data->cwd = NULL;
+	data->pipelines = NULL;
+	data->pipe_fds = NULL;
 }

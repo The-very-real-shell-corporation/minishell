@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/18 19:58:42 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/21 14:42:49 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,29 @@ bool	run_builtins(t_data *data)
 	return (false);		
 }
 
-void	execute(t_data *data)
+
+
+void	execute(t_data *data, t_mlist *pipelines)
+{
+	// pid_t	id;
+	size_t	n;
+
+	// if (data->input->token = stuff)
+	// 	data->input = data->input->nx;
+	n = list_size(pipelines);
+	while (pipelines != NULL)
+	{
+		if (n > 1)
+		{
+			create_pipe_fds(data, n);
+			create_pipes(data, data->pipe_fds);
+		}
+		if (run_builtins(data) == false)
+			fork_stuff(data);
+	}
+}
+
+/* void	execute(t_data *data)
 {
 	// pid_t	id;
 
@@ -52,4 +74,4 @@ void	execute(t_data *data)
 	// 	data->input = data->input->nx;
 	if (run_builtins(data) == false)
 		fork_stuff(data);
-}
+} */

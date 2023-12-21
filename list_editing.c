@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:03:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/18 14:31:05 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/21 13:19:00 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,23 @@ t_mlist	*new_node(t_data *data, char *word)
 	new = malloc(sizeof(t_mlist));
 	if (new == NULL)
 		exit_error(data, "List malloc failed");
+	new->pipeline = NULL;
 	new->str = word; // make sure everything is allocated before it gets in new_node
+	new->token = INITIALIZED;
+	new->nx = NULL;
+	new->pv = NULL;
+	return (new);
+}
+
+t_mlist	*new_node_pipeline(t_data *data, char **args)
+{
+	t_mlist	*new;
+
+	new = malloc(sizeof(t_mlist));
+	if (new == NULL)
+		exit_error(data, "List malloc failed");
+	new->pipeline = args; // make sure everything is allocated before it gets in new_node
+	new->str = NULL;
 	new->token = INITIALIZED;
 	new->nx = NULL;
 	new->pv = NULL;
@@ -51,6 +67,10 @@ void	insert_node(t_mlist *node1, t_mlist *node2, t_mlist *new)
 
 void	delete_node(t_mlist *node)
 {
+	if (node->pipeline != NULL)
+	{
+		free_2d_(node->pipeline);
+	}
 	if (node->str != NULL)
 	{
 		free(node->str);
