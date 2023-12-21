@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 14:26:07 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/21 17:41:25 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	initialize_data(t_data *data, char **envp);
 
 void	clear_mlist(t_mlist **list);
 t_mlist	*new_node(t_data *data, char *word);
-t_mlist	*new_node_pipeline(t_data *data, char **args);
+t_mlist	*new_node_pipeline(t_data *data, char **args, t_token tolkien);
 void	delete_node(t_mlist *node);
 void	insert_node(t_mlist *node1, t_mlist *node2, t_mlist *new);
 void	node_addback(t_mlist **list, t_mlist *new_node);

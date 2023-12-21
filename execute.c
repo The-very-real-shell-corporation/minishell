@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 14:42:49 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/21 17:42:19 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,19 @@ bool	run_builtins(t_data *data)
 	return (false);		
 }
 
+bool	run_builtins_pip(t_data *data, t_mlist *pipelines)
+{
+	t_token	token;
+
+	token = pipelines->token;
+	if (token <= 6)
+	{
+		write(STDOUT_FILENO, "HEYAAAA\n", 9);
+		data->fn[token](data, &data->argv[1]);
+		return (true);
+	}
+	return (false);		
+}
 
 
 void	execute(t_data *data, t_mlist *pipelines)
