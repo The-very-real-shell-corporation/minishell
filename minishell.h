@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 20:43:34 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/27 18:25:27 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@
 
 typedef struct s_data	t_data;
 
-#define INFINITY 1
+#define INFINITY	1
+#define EXEC_ERR	10000
 
 #define LEFT 0
 #define RIGHT 1
@@ -116,6 +117,7 @@ void	expand_dollar(t_data *data, char **str);
 /*	Forking	*/
 
 pid_t	create_fork(t_data *data);
+void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n);
 void	wait_for_process(t_data *data, pid_t id);
 
 /*	Initialization	*/
@@ -159,7 +161,7 @@ int		assign_token(char *str);
 /*	Pathfinding	*/
 
 void	search_the_path(t_data *data, char **path);
-void	search_the_path_pip(t_data *data, t_mlist *pipelines, char **path)
+void	search_the_path_pip(t_data *data, t_mlist *pipelines, char **path);
 
 
 /*	Parser functions	*/
@@ -174,6 +176,8 @@ void	sort_environment(t_data *data);
 /* Pipes */
 
 size_t	pipeline_size(t_mlist *tmp);
+void	create_pipe_fds(t_data *data, size_t n);
+void	create_pipes(t_data *data, int **pipe_fds);
 
 
 /*	Signals	*/
@@ -194,7 +198,7 @@ void	dollar_in_env(t_data *data, char *input, char **env_string);
 void	clean_up(t_data *data);
 void	loop_clean(t_data *data);
 void	free_and_null(void *variable);
-void	free_2d_(char **input);
+void	free_2d_(void **input);
 void	exit_error(t_data *data, char *msg);
 void	print_2d_charray(char **array);
 char	**list_to_array(t_data *data ,t_mlist *list);

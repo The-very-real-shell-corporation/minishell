@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/30 17:13:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 20:44:54 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/27 17:13:25 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	search_the_path(t_data *data, char **path)
 	chdir(data->cwd);
 	if (access(data->argv[0], X_OK) == 0)
 		execute_command(data, ft_strdup(data->argv[0]));
-	exit(EXIT_FAILURE); // look up a smart exit status
+	// exit(EXIT_FAILURE); // look up a smart exit status
 }
 
 void	search_the_path_pip(t_data *data, t_mlist *pipelines, char **path)
@@ -57,7 +57,7 @@ void	search_the_path_pip(t_data *data, t_mlist *pipelines, char **path)
 	chdir(data->cwd);
 	if (access(data->argv[0], X_OK) == 0)
 		execute_command(data, ft_strdup(pipelines->pipeline[0]));
-	exit(EXIT_FAILURE); // look up a smart exit status
+	// exit(EXIT_FAILURE); // look up a smart exit status
 }
 
 void	get_path_ready(t_data *data)

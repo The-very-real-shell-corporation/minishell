@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 20:55:49 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/27 18:25:17 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	wait_for_process(t_data *data, pid_t id)
 	if (WEXITSTATUS(data->exit_status) == EXIT_FAILURE)
 	{
 		write(STDOUT_FILENO, "Couldn't find path\n", 20);
-		// return ;
+		return ;
 	}
-	if (WEXITSTATUS(data->exit_status) == EXIT_FAILURE)
+	if (WEXITSTATUS(data->exit_status) == EXEC_ERR)
 	{
 		write(STDOUT_FILENO, "Error: could not execute\n", 26);
 		return ;
@@ -95,6 +95,8 @@ void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n)
 	while (i < n)
 	{
 		pids[i] = create_fork(data);
+		if (pids[i] == 0)
+			break ;
 		i++;
 	}
 	i = 0;

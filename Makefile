@@ -6,7 +6,7 @@
 #    By: vvan-der <vvan-der@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/21 16:24:27 by vvan-der      #+#    #+#                  #
-#    Updated: 2023/12/21 13:27:02 by akasiota      ########   odam.nl          #
+#    Updated: 2023/12/27 18:59:25 by lotse         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBS	= $(LIBFT)/libft.a
 RM		= rm -rf
 CC		= cc # changed it to cc
 CFLAGS	= -Wall -Werror -Wextra -g
-# CFLAGS	+= -fsanitize=address
+CFLAGS	+= -fsanitize=address
 L_FLAGS	= -lreadline
 
 SRCS	=	alexer.c \

@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 18:29:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 20:18:21 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/27 13:32:03 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_2d_(char **input)
+void	free_2d_(void **input)
 {
 	int	i;
 
@@ -39,13 +39,13 @@ void	clean_up(t_data *data)
 	if (data->line != NULL)
 		free_and_null((void *)data->line);
 	if (data->path != NULL)
-		free_2d_(data->path);
+		free_2d_((void **)data->path);
 	if (data->real_path != NULL)
-		free_2d_(data->real_path);
+		free_2d_((void **)data->real_path);
 	if (data->argv != NULL)
-		free_2d_(data->argv);
+		free_2d_((void **)data->argv);
 	if (data->env_array != NULL)
-		free_2d_(data->env_array);
+		free_2d_((void **)data->env_array);
 	if (data->cwd != NULL)
 		free_and_null((void *)data->cwd);
 	if (data->env != NULL)
@@ -57,7 +57,7 @@ void	clean_up(t_data *data)
 	if (data->pipelines != NULL)
 		clear_mlist(&data->pipelines);
 	if (data->pipe_fds != NULL)
-		free_2d_(data->pipe_fds);
+		free_2d_((void **)data->pipe_fds);
 	if (data->pids != NULL)
 		free(data->pids);
 	data->input = NULL;
@@ -77,13 +77,13 @@ void	loop_clean(t_data *data)
 {
 	free_and_null((void *)data->line);
 	if (data->path != NULL)
-		free_2d_(data->path);
+		free_2d_((void **)data->path);
 	if (data->real_path != NULL)
-		free_2d_(data->real_path);
+		free_2d_((void **)data->real_path);
 	if (data->argv != NULL)
-		free_2d_(data->argv);
+		free_2d_((void **)data->argv);
 	if (data->env_array != NULL)
-		free_2d_(data->env_array);
+		free_2d_((void **)data->env_array);
 	if (data->cwd != NULL)
 		free_and_null((void *)data->cwd);
 	if (data->input != NULL)
@@ -91,7 +91,7 @@ void	loop_clean(t_data *data)
 	if (data->pipelines != NULL)
 		clear_mlist(&data->pipelines);
 	if (data->pipe_fds != NULL)
-		free_2d_(data->pipe_fds);
+		free_2d_((void **)data->pipe_fds);
 	if (data->pids != NULL)
 		free(data->pids);
 	data->input = NULL;
