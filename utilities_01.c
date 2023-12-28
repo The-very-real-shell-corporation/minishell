@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 13:50:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/05 16:34:46 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/27 16:52:12 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,61 @@ void	print_2d_charray(char **array)
 	printf("String [%d]: %s\n", i, array[i]);
 }
 
-char	**list_to_array(t_data *data ,t_mlist *list)
+void	list_to_array_for_pip(t_data *data ,t_mlist *input, t_mlist **pipelines)
+{
+	t_mlist	*pip;
+	char 	**result;
+	char	*tmp;
+	size_t	i;
+	t_token	tolkien;
+
+	pip = NULL; // use as tmp
+	while (input != NULL)
+	{
+		printf("input->str: %s\n", input->str);
+		result = ft_calloc((pipeline_size(input) + 1), sizeof(char *));
+		if (result == NULL)
+			exit_error(data, "malloc failed");
+		i = 0;
+		while (input != NULL)
+		{
+			if (input->token == PIPE)
+			{
+				input = input->nx;
+				break ;
+			}
+			if (i == 0)
+				tolkien = input->token;
+			result[i] = ft_strdup2(data, input->str);
+			tmp = result[i];
+			result[i] = ft_strtrim(tmp, " "); 
+			free(tmp);
+			input = input->nx;
+			i++;
+		}
+		node_addback(&pip, new_node_pipeline(data, result, tolkien));
+		print_2d_charray(result);
+	}
+	*pipelines = pip;
+}
+
+char	**list_to_array(t_data *data ,t_mlist *input)
 {
 	char 	**result;
 	char	*tmp;
 	size_t	i;
 
-	result = ft_calloc((list_size(list) + 1), sizeof(char *));
+	result = ft_calloc((list_size(input) + 1), sizeof(char *));
 	if (result == NULL)
 		return (NULL);
 	i = 0;
-	while (list != NULL)
+	while (input != NULL)
 	{
-		result[i] = ft_strdup2(data, list->str);
+		result[i] = ft_strdup2(data, input->str);
 		tmp = result[i];
 		result[i] = ft_strtrim(tmp, " ");
 		free(tmp);
-		list = list->nx;
+		input = input->nx;
 		i++;
 	}
 	return (result);

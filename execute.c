@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/18 19:58:42 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/27 17:17:02 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,7 @@ void	execute_command(t_data *data, char *directory)
 	execve(directory, data->argv, data->env_array);
 	free(directory);
 	clean_up(data);
-	exit(EXIT_FAILURE); // look up a smart exit status
-}
-
-void	fork_stuff(t_data *data)
-{
-	pid_t	id;
-
-	id = create_fork(data);
-	if (id == 0)
-		search_the_path(data, data->path);
-	wait_for_process(data, id);
+	exit(EXEC_ERR); // look up a smart exit status
 }
 
 bool	run_builtins(t_data *data)
@@ -44,7 +34,48 @@ bool	run_builtins(t_data *data)
 	return (false);		
 }
 
-void	execute(t_data *data)
+bool	run_builtins_pip(t_data *data, t_mlist *pipelines)
+{
+	t_token	token;
+
+	token = pipelines->token;
+	if (token <= 6)
+	{
+		write(STDOUT_FILENO, "HEYAAAA\n", 9);
+		data->fn[token](data, pipelines->pipeline);
+		return (true);
+	}
+	return (false);		
+}
+
+
+void	execute(t_data *data, t_mlist *pipelines, pid_t	*pids)
+{
+	size_t	n;
+
+	// if (data->input->token = stuff)
+	// 	data->input = data->input->nx;
+	n = list_size(pipelines);
+	printf("n: %zu\n", n);
+	
+	// while (pipelines != NULL)
+	// {
+		if (n > 1)
+		{
+			create_pipe_fds(data, n);
+			create_pipes(data, data->pipe_fds);
+			fork_stuff_pip(data, pipelines, pids, n);
+		}
+		else if (run_builtins_pip(data, pipelines) == false)
+		{
+			puts("elif\n");
+			fork_stuff(data);
+		}
+		// pipelines = pipelines->nx;
+	// }
+}
+
+/* void	execute(t_data *data)
 {
 	// pid_t	id;
 
@@ -52,4 +83,4 @@ void	execute(t_data *data)
 	// 	data->input = data->input->nx;
 	if (run_builtins(data) == false)
 		fork_stuff(data);
-}
+} */

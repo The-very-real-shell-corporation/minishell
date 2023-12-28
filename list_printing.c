@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 16:05:51 by vincent       #+#    #+#                 */
-/*   Updated: 2023/12/11 18:36:45 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/21 14:05:59 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	print_env(t_mlist *list)
 	return (0);
 }
 
-void	print_list(t_mlist *list)
+/* void	print_list(t_mlist *list)
 {
 	FILE* file;
 	int i = 0;
@@ -53,4 +53,25 @@ void	print_list(t_mlist *list)
 	}
 	fprintf(file, "this many lines: %d\n\n", i);
 	fclose(file);
+} */
+
+void	print_list(t_mlist *list)
+{
+	int i = 0;
+
+	if (list == NULL)
+	{
+		printf("Couldn't print empty list");
+		return ;
+	}
+	list = node_first(list);
+	while (list != NULL)
+	{
+		if (list->str != NULL)
+		{
+			i++;
+			printf("%s\n", list->str);
+		}
+		list = list->nx;
+	}
 }
