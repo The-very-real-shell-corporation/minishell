@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/27 17:17:02 by lotse         ########   odam.nl         */
+/*   Updated: 2023/12/28 14:21:22 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,7 @@ bool	run_builtins(t_data *data)
 	return (false);		
 }
 
-bool	run_builtins_pip(t_data *data, t_mlist *pipelines)
-{
-	t_token	token;
-
-	token = pipelines->token;
-	if (token <= 6)
-	{
-		write(STDOUT_FILENO, "HEYAAAA\n", 9);
-		data->fn[token](data, pipelines->pipeline);
-		return (true);
-	}
-	return (false);		
-}
-
-
-void	execute(t_data *data, t_mlist *pipelines, pid_t	*pids)
+void	execute_pip(t_data *data, t_mlist *pipelines, pid_t	*pids)
 {
 	size_t	n;
 
@@ -62,7 +47,7 @@ void	execute(t_data *data, t_mlist *pipelines, pid_t	*pids)
 	// {
 		if (n > 1)
 		{
-			create_pipe_fds(data, n);
+			create_pipe_fds(data, n - 1);
 			create_pipes(data, data->pipe_fds);
 			fork_stuff_pip(data, pipelines, pids, n);
 		}

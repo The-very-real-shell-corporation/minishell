@@ -6,16 +6,16 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 18:29:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/27 13:32:03 by lotse         ########   odam.nl         */
+/*   Updated: 2023/12/28 13:49:09 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	unlink_files(t_data *data)
-{
-	char	*tmp;
-}
+// static void	unlink_files(t_data *data)
+// {
+// 	char	*tmp;
+// }
 
 void	free_2d_(void **input)
 {
@@ -73,7 +73,7 @@ void	clean_up(t_data *data)
 	data->cwd = NULL;
 	data->env = NULL;
 	data->sorted_env = NULL;
-	unlink_files(data);
+	// unlink_files(data);
 	data->pipelines = NULL;
 	data->pipe_fds = NULL;
 	data->pids = NULL;

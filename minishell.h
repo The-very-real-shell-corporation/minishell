@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/27 18:25:27 by lotse         ########   odam.nl         */
+/*   Updated: 2023/12/28 14:27:21 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ struct s_data
 	char	*line;
 	int		(*fn[7])(t_data *, char **);
 	int		**pipe_fds;
-	int		*pids;
+	pid_t	*pids;
 	t_mlist	*env;
 	t_mlist	*sorted_env;
 	t_mlist	*input;
@@ -107,7 +107,7 @@ void	change_env_var(t_data *data, char *var, char *new_value);
 /*	Execution	*/
 
 // void	execute(t_data *data);
-void	execute(t_data *data, t_mlist *pipelines, pid_t *pids);
+void	execute(t_data *data, t_mlist *pipelines, pid_t *pids); // 2 versions in execute.c
 void	fork_stuff(t_data *data);
 bool	run_builtins(t_data *data);
 void	execute_command(t_data *data, char *directory);
@@ -119,7 +119,6 @@ void	expand_dollar(t_data *data, char **str);
 /*	Forking	*/
 
 pid_t	create_fork(t_data *data);
-void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n);
 void	wait_for_process(t_data *data, pid_t id);
 
 /*	Heredoc	*/
@@ -135,7 +134,6 @@ void	initialize_data(t_data *data, char **envp);
 
 void	clear_mlist(t_mlist **list);
 t_mlist	*new_node(t_data *data, char *word);
-t_mlist	*new_node_pipeline(t_data *data, char **args, t_token tolkien);
 void	delete_node(t_mlist *node);
 void	insert_node(t_mlist *node1, t_mlist *node2, t_mlist *new);
 void	node_addback(t_mlist **list, t_mlist *new_node);
@@ -167,7 +165,6 @@ int		assign_token(char *str);
 /*	Pathfinding	*/
 
 void	search_the_path(t_data *data, char **path);
-void	search_the_path_pip(t_data *data, t_mlist *pipelines, char **path);
 
 
 /*	Parser functions	*/
@@ -181,9 +178,15 @@ void	sort_environment(t_data *data);
 
 /* Pipes */
 
-size_t	pipeline_size(t_mlist *tmp);
-void	create_pipe_fds(t_data *data, size_t n);
+pid_t	create_fork_pip(t_data *data);
 void	create_pipes(t_data *data, int **pipe_fds);
+void	create_pipe_fds(t_data *data, size_t n);
+void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n);
+void	list_to_array_for_pip(t_data *data ,t_mlist *input, t_mlist **pipelines);
+t_mlist	*new_node_pipeline(t_data *data, char **args, t_token tolkien);
+size_t	pipeline_size(t_mlist *tmp);
+bool	run_builtins_pip(t_data *data, t_mlist *pipelines);
+void	search_the_path_pip(t_data *data, t_mlist *pipelines, char **path);
 
 
 /*	Signals	*/
@@ -208,7 +211,6 @@ void	free_2d_(void **input);
 void	exit_error(t_data *data, char *msg);
 void	print_2d_charray(char **array);
 char	**list_to_array(t_data *data ,t_mlist *list);
-void	list_to_array_for_pip(t_data *data ,t_mlist *input, t_mlist **pipelines);
 bool	everythingiswhitespace(char *str);
 
 #endif

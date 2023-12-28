@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/19 13:03:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/27 13:35:44 by lotse         ########   odam.nl         */
+/*   Updated: 2023/12/28 14:28:37 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,6 @@ t_mlist	*new_node(t_data *data, char *word)
 	new->pipeline = NULL;
 	new->str = word; // make sure everything is allocated before it gets in new_node
 	new->token = INITIALIZED;
-	new->nx = NULL;
-	new->pv = NULL;
-	return (new);
-}
-
-t_mlist	*new_node_pipeline(t_data *data, char **args, t_token tolkien)
-{
-	t_mlist	*new;
-
-	new = malloc(sizeof(t_mlist));
-	if (new == NULL)
-		exit_error(data, "List malloc failed");
-	new->pipeline = args; // make sure everything is allocated before it gets in new_node
-	new->str = NULL;
-	new->token = tolkien;
 	new->nx = NULL;
 	new->pv = NULL;
 	return (new);
