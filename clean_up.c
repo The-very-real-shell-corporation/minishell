@@ -12,6 +12,11 @@
 
 #include "minishell.h"
 
+static void	unlink_files(t_data *data)
+{
+	char	*tmp;
+}
+
 void	free_2d_(void **input)
 {
 	int	i;
@@ -68,6 +73,7 @@ void	clean_up(t_data *data)
 	data->cwd = NULL;
 	data->env = NULL;
 	data->sorted_env = NULL;
+	unlink_files(data);
 	data->pipelines = NULL;
 	data->pipe_fds = NULL;
 	data->pids = NULL;

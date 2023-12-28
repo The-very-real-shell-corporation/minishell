@@ -26,6 +26,7 @@ void	assign_function_ptrs(t_data *data)
 void	initialize_data(t_data *data, char **envp)
 {
 	data->exit_status = 0;
+	data->heredocs = 0;
 	data->input = NULL;
 	data->path = NULL;
 	data->real_path = NULL;

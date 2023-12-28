@@ -19,6 +19,7 @@
 # include <signal.h>
 # include <stdbool.h>
 # include <ctype.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h>
@@ -72,6 +73,7 @@ typedef struct s_mlist
 
 struct s_data
 {
+	int		heredocs; // do this in parent
 	int		exit_status;
 	char	**path;
 	char	**real_path;
@@ -119,6 +121,10 @@ void	expand_dollar(t_data *data, char **str);
 pid_t	create_fork(t_data *data);
 void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n);
 void	wait_for_process(t_data *data, pid_t id);
+
+/*	Heredoc	*/
+
+void	whatsup_doc(t_data *data, char *delim);
 
 /*	Initialization	*/
 

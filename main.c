@@ -16,6 +16,7 @@ void	exit_error(t_data *data, char *msg)
 {
 	clean_up(data);
 	ft_putstr_fd(msg, STDERR_FILENO);
+	write(STDERR_FILENO, "\n", 1);
 	exit(EXIT_FAILURE);
 }
 
@@ -37,6 +38,7 @@ int	main(int argc, char **argv, char **envp)
 		if (data.line == NULL)
 		{
 			clean_up(&data);
+			printf("exit\n");
 			return (0);
 		}
 		parse_input(&data, data.line);
