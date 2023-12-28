@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/28 14:28:45 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/28 15:52:08 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n)
 {
 	t_mlist	*tmp;
 	size_t	i;
+	size_t	j;
 
 	tmp = pipelines;
 	i = 0;
@@ -187,19 +188,45 @@ void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n)
 		exit_error(data, "malloc failed");
 	while (i < n)
 	{
+		j = 0;
 		pids[i] = create_fork(data);
 		if (pids[i] == 0)
-			break ;
-		i++;
-	}
-	i = 0;
-	while (i < n)
-	{
-		if (pids[i] == 0)
+		{
+			// check and finish the closings
+			while (j + i < n - 1)
+			{
+				close(data->pipe_fds[j][0]);
+				j++;
+			}
+			j = 0;
+			while (i > 0 && j < n - 1)
+			{
+				if (j != i)
+					close(data->pipe_fds[j][1]);
+				j++;
+			}
+			// while ()
+			if (i > 0)
+			{
+				if (dup2(data->pipe_fds[i - 1][0], STDIN_FILENO) == -1)
+					exit_error(data, "dup2 failed");
+				close(STDIN_FILENO);
+			}
+			if (i < n - 1)
+			{
+				if (dup2(data->pipe_fds[i][1], STDOUT_FILENO) == -1)
+					exit_error(data, "dup2 failed");
+				close(STDOUT_FILENO);
+			}
 			search_the_path_pip(data, pipelines, data->path);
+			// close(data->pipe_fds[i][0]);
+			// close(data->pipe_fds[i][1]);
+			return ;
+		}
 		i++;
 		pipelines = pipelines->nx;
 	}
+	i = 0;
 	pipelines = tmp;
 	i = 0;
 	while (i < n)
