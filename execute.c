@@ -6,15 +6,15 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/28 14:21:22 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/29 13:24:30 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_command(t_data *data, char *directory)
+void	execute_command(t_data *data, char *directory, char **args)
 {
-	execve(directory, data->argv, data->env_array);
+	execve(directory, args, data->env_array);
 	free(directory);
 	clean_up(data);
 	exit(EXEC_ERR); // look up a smart exit status
@@ -45,17 +45,17 @@ void	execute_pip(t_data *data, t_mlist *pipelines, pid_t	*pids)
 	
 	// while (pipelines != NULL)
 	// {
-		if (n > 1)
-		{
-			create_pipe_fds(data, n - 1);
-			create_pipes(data, data->pipe_fds);
-			fork_stuff_pip(data, pipelines, pids, n);
-		}
-		else if (run_builtins_pip(data, pipelines) == false)
-		{
-			puts("elif\n");
-			fork_stuff(data);
-		}
+	if (n > 1)
+	{
+		create_pipe_fds(data, n - 1);
+		create_pipes(data, data->pipe_fds);
+		fork_stuff_pip(data, pipelines, pids, n);
+	}
+	else if (run_builtins_pip(data, pipelines) == false)
+	{
+		puts("elif\n");
+		fork_stuff(data);
+	}
 		// pipelines = pipelines->nx;
 	// }
 }

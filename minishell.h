@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/28 14:27:21 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/29 13:20:47 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	change_env_var(t_data *data, char *var, char *new_value);
 void	execute(t_data *data, t_mlist *pipelines, pid_t *pids); // 2 versions in execute.c
 void	fork_stuff(t_data *data);
 bool	run_builtins(t_data *data);
-void	execute_command(t_data *data, char *directory);
+void	execute_command(t_data *data, char *directory, char **args);
 
 /*	Expander (dollar)	*/
 
@@ -181,6 +181,7 @@ void	sort_environment(t_data *data);
 pid_t	create_fork_pip(t_data *data);
 void	create_pipes(t_data *data, int **pipe_fds);
 void	create_pipe_fds(t_data *data, size_t n);
+void	execute_pip(t_data *data, t_mlist *pipelines, pid_t	*pids);
 void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n);
 void	list_to_array_for_pip(t_data *data ,t_mlist *input, t_mlist **pipelines);
 t_mlist	*new_node_pipeline(t_data *data, char **args, t_token tolkien);

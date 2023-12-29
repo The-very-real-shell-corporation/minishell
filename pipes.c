@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/28 15:52:08 by akasiota      ########   odam.nl         */
+/*   Updated: 2023/12/29 13:37:11 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,13 +151,13 @@ void	search_the_path_pip(t_data *data, t_mlist *pipelines, char **path)
 		{
 			directory = ft_strjoin(data->real_path[i], pipelines->pipeline[0]);
 			chdir(data->cwd);
-			execute_command(data, directory);
+			execute_command(data, directory, pipelines->pipeline);
 		}
 		i++;
 	}
 	chdir(data->cwd);
 	if (access(data->argv[0], X_OK) == 0)
-		execute_command(data, ft_strdup(pipelines->pipeline[0]));
+		execute_command(data, ft_strdup(pipelines->pipeline[0]), pipelines->pipeline);
 	// exit(EXIT_FAILURE); // look up a smart exit status
 }
 
@@ -192,35 +192,28 @@ void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n)
 		pids[i] = create_fork(data);
 		if (pids[i] == 0)
 		{
-			// check and finish the closings
-			while (j + i < n - 1)
+			while (j < n - 1)
 			{
-				close(data->pipe_fds[j][0]);
-				j++;
-			}
-			j = 0;
-			while (i > 0 && j < n - 1)
-			{
+				if (j != i - 1) // change to int counters? It doesn't seem to matter
+					close(data->pipe_fds[j][0]);
 				if (j != i)
 					close(data->pipe_fds[j][1]);
 				j++;
 			}
-			// while ()
 			if (i > 0)
 			{
 				if (dup2(data->pipe_fds[i - 1][0], STDIN_FILENO) == -1)
 					exit_error(data, "dup2 failed");
-				close(STDIN_FILENO);
+				close(data->pipe_fds[i - 1][0]);
 			}
 			if (i < n - 1)
 			{
 				if (dup2(data->pipe_fds[i][1], STDOUT_FILENO) == -1)
 					exit_error(data, "dup2 failed");
-				close(STDOUT_FILENO);
+				close(data->pipe_fds[i][1]);
 			}
-			search_the_path_pip(data, pipelines, data->path);
-			// close(data->pipe_fds[i][0]);
-			// close(data->pipe_fds[i][1]);
+			// if (run_builtins_pip(data, pipelines) == false)
+				search_the_path_pip(data, pipelines, data->path);
 			return ;
 		}
 		i++;
@@ -228,7 +221,6 @@ void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n)
 	}
 	i = 0;
 	pipelines = tmp;
-	i = 0;
 	while (i < n)
 	{
 		wait_for_process(data, pids[i]);
