@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/29 13:20:47 by lotse         ########   odam.nl         */
+/*   Updated: 2024/01/04 15:40:46 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # include <termios.h>
 # include <sys/wait.h>
 # include "libft/libft.h"
+
+# include "errno.h"
+# include "sys/select.h"
 
 typedef struct s_data	t_data;
 
@@ -178,14 +181,15 @@ void	sort_environment(t_data *data);
 
 /* Pipes */
 
+void	close_pipes(int **pipe_fds);
 pid_t	create_fork_pip(t_data *data);
-void	create_pipes(t_data *data, int **pipe_fds);
 void	create_pipe_fds(t_data *data, size_t n);
 void	execute_pip(t_data *data, t_mlist *pipelines, pid_t	*pids);
 void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n);
 void	list_to_array_for_pip(t_data *data ,t_mlist *input, t_mlist **pipelines);
 t_mlist	*new_node_pipeline(t_data *data, char **args, t_token tolkien);
-size_t	pipeline_size(t_mlist *tmp);
+void	open_pipes(t_data *data, int **pipe_fds);
+size_t	pipelines_size(t_mlist *tmp);
 bool	run_builtins_pip(t_data *data, t_mlist *pipelines);
 void	search_the_path_pip(t_data *data, t_mlist *pipelines, char **path);
 
@@ -213,5 +217,7 @@ void	exit_error(t_data *data, char *msg);
 void	print_2d_charray(char **array);
 char	**list_to_array(t_data *data ,t_mlist *list);
 bool	everythingiswhitespace(char *str);
+
+void print_open_fds();
 
 #endif

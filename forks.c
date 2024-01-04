@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/28 14:19:11 by akasiota      ########   odam.nl         */
+/*   Updated: 2024/01/04 20:34:59 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ void	wait_for_process(t_data *data, pid_t id)
 	waitpid(id, &data->exit_status, 0);
 	if (WEXITSTATUS(data->exit_status) == EXIT_FAILURE)
 	{
-		write(STDOUT_FILENO, "Couldn't find path\n", 20);
+		write(STDERR_FILENO, data->argv[0], ft_strlen(data->argv[0]));
+		write(STDERR_FILENO, " :command not found\n", 21);
 		return ;
 	}
 	if (WEXITSTATUS(data->exit_status) == EXEC_ERR)
 	{
-		write(STDOUT_FILENO, "Error: could not execute\n", 26);
+		write(STDERR_FILENO, data->argv[0], ft_strlen(data->argv[0]));
+		write(STDERR_FILENO, " :could not execute\n", 21);
 		return ;
 	}
 	if (WIFSIGNALED(data->exit_status) != 0)

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/29 13:37:11 by lotse         ########   odam.nl         */
+/*   Updated: 2024/01/04 20:38:56 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_mlist	*new_node_pipeline(t_data *data, char **args, t_token tolkien)
 }
 
 // Get the pipeline size and keep track of the position
-size_t	pipeline_size(t_mlist *input)
+size_t	pipelines_size(t_mlist *input)
 {
 	size_t	i;
 
@@ -52,8 +52,8 @@ void	list_to_array_for_pip(t_data *data ,t_mlist *input, t_mlist **pipelines)
 	pip = NULL; // use as tmp
 	while (input != NULL)
 	{
-		printf("input->str: %s\n", input->str);
-		result = ft_calloc((pipeline_size(input) + 1), sizeof(char *));
+		// printf("input->str: %s\n", input->str);
+		result = ft_calloc((pipelines_size(input) + 1), sizeof(char *));
 		if (result == NULL)
 			exit_error(data, "malloc failed");
 		i = 0;
@@ -98,7 +98,7 @@ void	create_pipe_fds(t_data *data, size_t n)
 	data->pipe_fds = fds;
 }
 
-void	create_pipes(t_data *data, int **pipe_fds)
+void	open_pipes(t_data *data, int **pipe_fds)
 {	int i = 0;	
 	while (pipe_fds[i] != NULL)
 	{
@@ -108,20 +108,31 @@ void	create_pipes(t_data *data, int **pipe_fds)
 	}
 }
 
-void	set_pipes(t_data *data, pid_t id, int fd[], int pipe_fd, int x)
+void	close_pipes(int **pipe_fds)
 {
-	if (id == 0)
+	int	i = 0;
+	while (pipe_fds[i] != NULL)
 	{
-		if (dup2(fd[x], pipe_fd) == -1)
-			exit_error(data, "dup2 failed");
-		close(fd[0]);
-		close(fd[1]);
-		// go do something
-		exit(0);
+		close(pipe_fds[i][0]);
+		close(pipe_fds[i][1]);
+		i++;
 	}
-	close(fd[0]);
-	close(fd[1]);
 }
+
+// void	set_pipes(t_data *data, pid_t id, int fd[], int pipe_fd, int x)
+// {
+// 	if (id == 0)
+// 	{
+// 		if (dup2(fd[x], pipe_fd) == -1)
+// 			exit_error(data, "dup2 failed");
+// 		close(fd[0]);
+// 		close(fd[1]);
+// 		// go do something
+// 		exit(0);
+// 	}
+// 	close(fd[0]);
+// 	close(fd[1]);
+// }
 
 bool	run_builtins_pip(t_data *data, t_mlist *pipelines)
 {
@@ -131,7 +142,7 @@ bool	run_builtins_pip(t_data *data, t_mlist *pipelines)
 	if (token <= 6)
 	{
 		write(STDOUT_FILENO, "HEYAAAA\n", 9);
-		data->fn[token](data, pipelines->pipeline);
+		data->fn[token](data, &pipelines->pipeline[1]);
 		return (true);
 	}
 	return (false);		
@@ -152,6 +163,8 @@ void	search_the_path_pip(t_data *data, t_mlist *pipelines, char **path)
 			directory = ft_strjoin(data->real_path[i], pipelines->pipeline[0]);
 			chdir(data->cwd);
 			execute_command(data, directory, pipelines->pipeline);
+			puts("here!");
+
 		}
 		i++;
 	}
@@ -195,24 +208,32 @@ void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n)
 			while (j < n - 1)
 			{
 				if (j != i - 1) // change to int counters? It doesn't seem to matter
+				{
+					// printf("before: closing %zu[0]\n", j);
 					close(data->pipe_fds[j][0]);
+				}
 				if (j != i)
+				{
+					// printf("before: closing %zu[1]\n", j);
 					close(data->pipe_fds[j][1]);
+				}
 				j++;
 			}
 			if (i > 0)
 			{
 				if (dup2(data->pipe_fds[i - 1][0], STDIN_FILENO) == -1)
 					exit_error(data, "dup2 failed");
+				// printf("after: closing %zu[0]\n", i - 1);
 				close(data->pipe_fds[i - 1][0]);
 			}
 			if (i < n - 1)
 			{
 				if (dup2(data->pipe_fds[i][1], STDOUT_FILENO) == -1)
 					exit_error(data, "dup2 failed");
+				// printf("after: closing %zu[1]\n", i);
 				close(data->pipe_fds[i][1]);
 			}
-			// if (run_builtins_pip(data, pipelines) == false)
+			if (run_builtins_pip(data, pipelines) == false)
 				search_the_path_pip(data, pipelines, data->path);
 			return ;
 		}
@@ -228,34 +249,11 @@ void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n)
 	}
 }
 
-// Modify this one
-// void	set_pipes(t_data *data, pid_t id,)
-// {
-// 	if (id == 0)
-// 	{
-// 		if (dup2(fd[x], pipe_fd) == -1)
-// 			exit_error(data, "dup2 failed");
-// 		close(fd[0]);
-// 		close(fd[1]);
-// 		// go do something
-// 		exit(0);
-// 	}
-// 	close(fd[0]);
-// 	close(fd[1]);
-// }
-
-// void	pipe_input(t_data *data, int func)
-// {
-// 	pid_t	id1;
-// 	pid_t	id2;
-// 	int		fd[2];
-
-// 	(void)func;
-// 	create_pipes(data, fd);
-// 	id1 = create_fork(data);
-// 	set_pipes(data, id1, fd, STDOUT_FILENO, 1);
-// 	id2 = create_fork(data);
-// 	set_pipes(data, id2, fd, STDIN_FILENO, 0);
-// 	wait_for_process(data, id1);
-// 	wait_for_process(data, id2);
-// }
+void print_open_fds() {
+    int fd;
+    for (fd = 0; fd < FD_SETSIZE; fd++) {
+        if (fcntl(fd, F_GETFD) != -1 || errno != EBADF) {
+            printf("File descriptor %d is open.\n", fd);
+        }
+    }
+}
