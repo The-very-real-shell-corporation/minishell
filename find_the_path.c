@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/30 17:13:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/04 20:35:53 by akasiota      ########   odam.nl         */
+/*   Updated: 2024/01/06 13:43:39 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,19 @@ void	search_the_path(t_data *data, char **path)
 	while (path[i] != NULL)
 	{
 		chdir(path[i]);
-		if (access(data->argv[0], X_OK) != 0)
-			exit(EXEC_ERR);
-		directory = ft_strjoin(data->real_path[i], data->argv[0]);
-		chdir(data->cwd);
-		execute_command(data, directory, data->argv);
-		i++;
+		if (access(data->argv[0], X_OK) == 0)
+		{
+			directory = ft_strjoin(data->real_path[i], data->argv[0]);
+			chdir(data->cwd);
+			execute_command(data, directory, data->argv);
+			i++;
+		}
+			// exit(EXEC_ERR);
 	}
 	chdir(data->cwd);
-	if (access(data->argv[0], X_OK) != 0)
-		exit(EXEC_ERR);	
-	execute_command(data, ft_strdup(data->argv[0]), data->argv);
+	if (access(data->argv[0], X_OK) == 0)
+		execute_command(data, ft_strdup(data->argv[0]), data->argv);
+	exit(EXIT_FAILURE);	
 }
 
 void	get_path_ready(t_data *data)
