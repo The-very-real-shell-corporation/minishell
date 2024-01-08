@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 14:04:10 by akasiota      ########   odam.nl         */
+/*   Updated: 2024/01/08 19:40:42 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ int	export_builtin(t_data *data, char **args)
 			printf("Error: could not add \"%s\" to environment\n", *args);
 		tmp = find_input(data->env, env_string);
 		if (tmp == NULL)
-			node_addback(&data->env, new_node(data, ft_strdup2(data, env_string)));
+			node_addback(&data->env, \
+			new_node(data, ft_strdup2(data, env_string), NULL, INITIALIZED));
 		else
 			replace_node(data, tmp, env_string);
 		data->env = node_first(data->env);

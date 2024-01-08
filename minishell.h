@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/04 15:40:46 by akasiota      ########   odam.nl         */
+/*   Updated: 2024/01/08 19:39:52 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@
 # include <termios.h>
 # include <sys/wait.h>
 # include "libft/libft.h"
-
-# include "errno.h"
-# include "sys/select.h"
 
 typedef struct s_data	t_data;
 
@@ -136,7 +133,7 @@ void	initialize_data(t_data *data, char **envp);
 /*	List functions (editing)	*/
 
 void	clear_mlist(t_mlist **list);
-t_mlist	*new_node(t_data *data, char *word);
+t_mlist	*new_node(t_data *data, char *word, char **args, t_token tolkien);
 void	delete_node(t_mlist *node);
 void	insert_node(t_mlist *node1, t_mlist *node2, t_mlist *new);
 void	node_addback(t_mlist **list, t_mlist *new_node);
@@ -181,15 +178,14 @@ void	sort_environment(t_data *data);
 
 /* Pipes */
 
+void	build_pipeline(t_data *data, t_mlist *input, t_token tolkien);
 void	close_pipes(int **pipe_fds);
-pid_t	create_fork_pip(t_data *data);
-void	create_pipe_fds(t_data *data, size_t n);
+void	copy_pipe_fds(t_data *data, int **pipe_fds, int pos, int pipes);
+void	create_pipe_fds(t_data *data, int pipes);
 void	execute_pip(t_data *data, t_mlist *pipelines, pid_t	*pids);
-void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n);
-void	list_to_array_for_pip(t_data *data ,t_mlist *input, t_mlist **pipelines);
-t_mlist	*new_node_pipeline(t_data *data, char **args, t_token tolkien);
+void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, int n);
 void	open_pipes(t_data *data, int **pipe_fds);
-size_t	pipelines_size(t_mlist *tmp);
+size_t	pipeline_size(t_mlist *tmp);
 bool	run_builtins_pip(t_data *data, t_mlist *pipelines);
 void	search_the_path_pip(t_data *data, t_mlist *pipelines, char **path);
 
@@ -217,7 +213,5 @@ void	exit_error(t_data *data, char *msg);
 void	print_2d_charray(char **array);
 char	**list_to_array(t_data *data ,t_mlist *list);
 bool	everythingiswhitespace(char *str);
-
-void print_open_fds();
 
 #endif

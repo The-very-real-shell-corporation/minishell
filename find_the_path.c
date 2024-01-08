@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/30 17:13:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/06 13:43:39 by lotse         ########   odam.nl         */
+/*   Updated: 2024/01/08 20:08:39 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ void	search_the_path(t_data *data, char **path)
 			directory = ft_strjoin(data->real_path[i], data->argv[0]);
 			chdir(data->cwd);
 			execute_command(data, directory, data->argv);
-			i++;
 		}
-			// exit(EXEC_ERR);
+		i++;
 	}
 	chdir(data->cwd);
 	if (access(data->argv[0], X_OK) == 0)

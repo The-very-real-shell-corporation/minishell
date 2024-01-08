@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/27 16:54:25 by lotse         ########   odam.nl         */
+/*   Updated: 2024/01/08 15:40:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	parse_input(t_data *data, char *input)
 	if (data->input == NULL)
 		return ;
 	data->argv = list_to_array(data, data->input);
-	list_to_array_for_pip(data, data->input, &data->pipelines);
+	build_pipeline(data, data->input, data->input->token);
 	// print_list(data->input);
 	// print_2d_charray(data->argv);
 }

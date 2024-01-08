@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/04 20:36:19 by akasiota      ########   odam.nl         */
+/*   Updated: 2024/01/08 18:17:20 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ bool	run_builtins(t_data *data)
 
 void	execute_pip(t_data *data, t_mlist *pipelines, pid_t	*pids)
 {
-	size_t	n;
+	int	pipes;
 
-	n = list_size(pipelines);
-	// printf("n: %zu\n", n);
-	if (n > 1)
+	pipes = (int)list_size(pipelines) - 1;
+	// printf("n: %zu\n", pipes);
+	if (pipes > 0)
 	{
-		create_pipe_fds(data, n - 1);
+		create_pipe_fds(data, pipes);
 		open_pipes(data, data->pipe_fds);
-		fork_stuff_pip(data, pipelines, pids, n);
+		fork_stuff_pip(data, pipelines, pids, pipes);
 		close_pipes(data->pipe_fds);
 	}
 	else if (run_builtins_pip(data, pipelines) == false)

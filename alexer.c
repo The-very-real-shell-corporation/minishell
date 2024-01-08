@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 16:14:05 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/08 15:23:26 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	tokenize_list(t_mlist *list)
 	list = tmp;
 }
 
-void	analyze_input(t_data *data)
+void	analyze_input(t_data *data) // add something for multiple pipes in a row?
 {
 	if (data->input == NULL)
 		printf("%s\n", "error: invalid input");
