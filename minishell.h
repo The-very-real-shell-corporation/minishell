@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 18:47:57 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/04 15:40:46 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,13 @@
 # include <sys/wait.h>
 # include "libft/libft.h"
 
+# include "errno.h"
+# include "sys/select.h"
+
 typedef struct s_data	t_data;
 
-#define INFINITY 1
+#define INFINITY	1
+#define EXEC_ERR	10000
 
 #define LEFT 0
 #define RIGHT 1
@@ -63,6 +67,7 @@ typedef enum e_token
 
 typedef struct s_mlist
 {
+	char			**pipeline; // check for freeing memory
 	char			*str;
 	t_token			token;
 	struct s_mlist	*nx;
@@ -80,9 +85,12 @@ struct s_data
 	char	*cwd;
 	char	*line;
 	int		(*fn[7])(t_data *, char **);
+	int		**pipe_fds;
+	pid_t	*pids;
 	t_mlist	*env;
 	t_mlist	*sorted_env;
 	t_mlist	*input;
+	t_mlist	*pipelines;
 };
 
 /*	Built-ins	*/
@@ -101,10 +109,11 @@ void	change_env_var(t_data *data, char *var, char *new_value);
 
 /*	Execution	*/
 
-void	execute(t_data *data);
+// void	execute(t_data *data);
+void	execute(t_data *data, t_mlist *pipelines, pid_t *pids); // 2 versions in execute.c
 void	fork_stuff(t_data *data);
 bool	run_builtins(t_data *data);
-void	execute_command(t_data *data, char *directory);
+void	execute_command(t_data *data, char *directory, char **args);
 
 /*	Expander (dollar)	*/
 
@@ -160,6 +169,7 @@ int		assign_token(char *str);
 
 void	search_the_path(t_data *data, char **path);
 
+
 /*	Parser functions	*/
 
 char	**ft_shell_split(char *s);
@@ -168,6 +178,21 @@ t_mlist	*ft_shell_list_split(t_data *data, char *input);
 void	get_path_ready(t_data *data);
 void	copy_environment(t_data *data, char **envp);
 void	sort_environment(t_data *data);
+
+/* Pipes */
+
+void	close_pipes(int **pipe_fds);
+pid_t	create_fork_pip(t_data *data);
+void	create_pipe_fds(t_data *data, size_t n);
+void	execute_pip(t_data *data, t_mlist *pipelines, pid_t	*pids);
+void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, size_t n);
+void	list_to_array_for_pip(t_data *data ,t_mlist *input, t_mlist **pipelines);
+t_mlist	*new_node_pipeline(t_data *data, char **args, t_token tolkien);
+void	open_pipes(t_data *data, int **pipe_fds);
+size_t	pipelines_size(t_mlist *tmp);
+bool	run_builtins_pip(t_data *data, t_mlist *pipelines);
+void	search_the_path_pip(t_data *data, t_mlist *pipelines, char **path);
+
 
 /*	Signals	*/
 
@@ -187,10 +212,12 @@ void	dollar_in_env(t_data *data, char *input, char **env_string);
 void	clean_up(t_data *data);
 void	loop_clean(t_data *data);
 void	free_and_null(void *variable);
-void	free_2d_(char **input);
+void	free_2d_(void **input);
 void	exit_error(t_data *data, char *msg);
 void	print_2d_charray(char **array);
 char	**list_to_array(t_data *data ,t_mlist *list);
 bool	everythingiswhitespace(char *str);
+
+void print_open_fds();
 
 #endif

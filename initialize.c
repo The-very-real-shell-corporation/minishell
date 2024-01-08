@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 18:26:33 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/27 16:54:25 by lotse         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ void	initialize_data(t_data *data, char **envp)
 	data->cwd = NULL;
 	data->env = NULL;
 	data->sorted_env = NULL;
+	data->pipelines = NULL;
+	data->pipe_fds = NULL;
+	data->pids = NULL;
 	copy_environment(data, envp);
 	assign_function_ptrs(data);
 }
@@ -49,5 +52,7 @@ void	parse_input(t_data *data, char *input)
 	if (data->input == NULL)
 		return ;
 	data->argv = list_to_array(data, data->input);
-	print_2d_charray(data->argv);
+	list_to_array_for_pip(data, data->input, &data->pipelines);
+	// print_list(data->input);
+	// print_2d_charray(data->argv);
 }

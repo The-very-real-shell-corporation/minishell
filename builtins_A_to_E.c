@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/18 20:33:01 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/12/21 14:04:10 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,12 @@ int	export_builtin(t_data *data, char **args)
 
 	if (*args == NULL || **args == '\0')
 	{
-		printf("pointer: %p\n", data->sorted_env);
+		// printf("pointer: %p\n", data->sorted_env);
 		sort_environment(data);
-		printf("pointer (2): %p\n", data->sorted_env);
+		// printf("pointer (2): %p\n", data->sorted_env);
 		print_list(data->sorted_env);
 		clear_mlist(&data->sorted_env);
-		printf("pointer (3): %p\n", data->sorted_env);
+		// printf("pointer (3): %p\n", data->sorted_env);
 		return (0);
 	}
 	while (*args != NULL)
