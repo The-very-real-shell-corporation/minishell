@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/30 17:13:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/08 20:08:39 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/09 18:57:39 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	search_the_path(t_data *data, char **path)
 		chdir(path[i]);
 		if (access(data->argv[0], X_OK) == 0)
 		{
-			directory = ft_strjoin(data->real_path[i], data->argv[0]);
+			directory = ft_strjoin2(data, data->real_path[i], data->argv[0]);
 			chdir(data->cwd);
 			execute_command(data, directory, data->argv);
 		}
@@ -32,8 +32,8 @@ void	search_the_path(t_data *data, char **path)
 	}
 	chdir(data->cwd);
 	if (access(data->argv[0], X_OK) == 0)
-		execute_command(data, ft_strdup(data->argv[0]), data->argv);
-	exit(EXIT_FAILURE);	
+		execute_command(data, ft_strdup2(data, data->argv[0]), data->argv);
+	exit(EXIT_FAILURE);
 }
 
 void	get_path_ready(t_data *data)
@@ -42,23 +42,19 @@ void	get_path_ready(t_data *data)
 	char	*tmp;
 
 	i = 0;
-	tmp = env_string(data, "PATH");
+	tmp = envp_string(data, ft_strdup2(data, "PATH"));
 	data->path = ft_split(tmp, ':');
 	if (data->path == NULL)
 	{
 		free(tmp);
-		exit_error(data, "Split error\n");
+		exit_error(data, "Split error");
 	}
 	free(tmp);
-	while (data->path[i] != NULL)
-		i++;
-	data->real_path = ft_calloc((i + 1), sizeof(char *));
-	i = 0;
+	data->real_path = ft_calloc(ptr_array_size((void **)data->path) \
+						+ 1, sizeof(char *));
 	while (data->path[i] != NULL)
 	{
-		data->real_path[i] = ft_strjoin(data->path[i], "/");
-		if (data->real_path[i] == NULL)
-			exit_error(data, "strjoin failed");
+		data->real_path[i] = ft_strjoin2(data, data->path[i], "/");
 		i++;
 	}
 }

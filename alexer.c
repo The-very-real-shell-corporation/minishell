@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/08 15:23:26 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/09 20:44:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,31 +68,20 @@ int	assign_token(char *str)
 	return (token);
 }
 
-void	tokenize_list(t_mlist *list)
+void	tokenize_list(t_mlist *in)
 {
-	t_mlist	*tmp;
-
-	tmp = list;
-	if (list != NULL)
+	while (in != NULL)
 	{
-		list->token = assign_token(list->str);
-		if (list->token != HEREDOC)
-			assign_command_token(list, list->str);
-		list = list->nx;
+		in->token = assign_token(in->str);
+		if (in->pv != NULL && in->pv->token == HEREDOC && in->token == WORD)
+			in->token = HEREDOC_DELIM;
+		if ((in->pv == NULL && in->token != HEREDOC) || in->pv->token == PIPE)
+			assign_command_token(in, in->str);
+		in = in->nx;
 	}
-	while (list != NULL)
-	{
-		list->token = assign_token(list->str);
-		if (list->pv->token == HEREDOC && list->token == WORD)
-			list->token = HEREDOC_DELIM;
-		if (list->pv->token == PIPE)
-			assign_command_token(list, list->str);
-		list = list->nx;
-	}
-	list = tmp;
 }
 
-void	analyze_input(t_data *data) // add something for multiple pipes in a row?
+void	analyze_input(t_data *data)
 {
 	if (data->input == NULL)
 		printf("%s\n", "error: invalid input");

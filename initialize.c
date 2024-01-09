@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/08 15:40:22 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/09 17:09:53 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	assign_function_ptrs(t_data *data)
+static void	assign_function_ptrs(t_data *data)
 {
 	data->fn[B_CD] = &cd_builtin;
 	data->fn[B_ECHO] = &echo_builtin;
@@ -25,19 +25,7 @@ void	assign_function_ptrs(t_data *data)
 
 void	initialize_data(t_data *data, char **envp)
 {
-	data->exit_status = 0;
-	data->heredocs = 0;
-	data->input = NULL;
-	data->path = NULL;
-	data->real_path = NULL;
-	data->argv = NULL;
-	data->env_array = NULL;
-	data->cwd = NULL;
-	data->env = NULL;
-	data->sorted_env = NULL;
-	data->pipelines = NULL;
-	data->pipe_fds = NULL;
-	data->pids = NULL;
+	ft_bzero(data, sizeof(t_data));
 	copy_environment(data, envp);
 	assign_function_ptrs(data);
 }

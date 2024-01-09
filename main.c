@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/04 20:38:30 by akasiota      ########   odam.nl         */
+/*   Updated: 2024/01/09 15:24:11 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	if (argc != 1)
-		return (printf("Please insert input after starting minishell"), 1);
+		return (printf("Please insert input AFTER starting minishell"), 1);
 	initialize_data(&data, envp);
 	while (INFINITY)
 	{

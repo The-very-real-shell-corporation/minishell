@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 12:43:28 by akasiota      ########   odam.nl         */
+/*   Updated: 2024/01/09 20:19:46 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	expand_quotes(t_data *data, char **str)
 				exit_error(data, "malloc fail");
 			}
 			free(tmp);
-			return ;			
+			return ;
 		}
 		i++;
 	}
@@ -75,12 +75,7 @@ static void	contract_list(t_data *data, t_mlist *list)
 		tmp = list->str;
 		if (i > 0 && list->str[i - 1] != ' ' && list->nx != NULL)
 		{
-			list->str = ft_strjoin(tmp, list->nx->str);
-			if (list->str == NULL)
-			{
-				free(tmp);
-				exit_error(data, "malloc error");
-			}
+			list->str = ft_strjoin2(data, tmp, list->nx->str);
 			free(tmp);
 			unlink_node(list->nx);
 		}
@@ -108,6 +103,5 @@ void	expansion_pack(t_data *data, char *input)
 		split = split->nx;
 	}
 	contract_list(data, data->input);
-	// print_list(data->input);
 	analyze_input(data);
 }

@@ -12,13 +12,13 @@
 
 #include "minishell.h"
 
-char	*env_string(t_data *data, char *input)
+char	*envp_string(t_data *data, char *input)
 {
 	char	*value;
 	t_mlist	*tmp;
 	char	*str;
 
-	str = ft_strjoin(input, "=");
+	str = ft_strjoin2(data, input, ft_strdup2(data, "="));
 	tmp = find_input(data->env, str);
 	free(str);
 	if (tmp == NULL)
@@ -80,7 +80,8 @@ void	dollar_in_env(t_data *data, char *input, char **env_string)
 
 	i = 1;
 	tmp = ft_strchr(input, '=');
-	if (tmp != NULL && ft_strchr(input, '$') != NULL && ft_strchr(input, '$') < tmp)
+	if (tmp != NULL && ft_strchr(input, '$') != NULL \
+		&& ft_strchr(input, '$') < tmp)
 		*env_string = NULL;
 	else if (tmp != NULL && ft_strchr(tmp, '$') != NULL)
 	{

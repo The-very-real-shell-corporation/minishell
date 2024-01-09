@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 19:47:55 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/08 19:43:05 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/09 16:44:28 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,31 +33,28 @@ t_mlist	*find_position(char *str, t_mlist *list, bool *direction)
 	return (list);
 }
 
-void	sort_environment(t_data *data)
+t_mlist	*sort_environment(t_data *data, t_mlist *env)
 {
-	t_mlist	*tmp;
-	t_mlist	*tmp2;
+	t_mlist	*sorted_env;
 	bool	direction;
 
 	if (data->env == NULL)
-		return ;
-	tmp2 = node_first(data->env);
-	tmp = new_node(data, ft_strdup2(data, data->env->str), NULL, INITIALIZED);
-	data->env = data->env->nx;
+		return (NULL);
+	sorted_env = new_node(data, ft_strdup2(data, env->str), NULL, INITIALIZED);
+	env = env->nx;
 	direction = LEFT;
-	while (data->env != NULL)
+	while (env != NULL)
 	{
-		tmp = find_position(data->env->str, tmp, &direction);
+		sorted_env = find_position(env->str, sorted_env, &direction);
 		if (direction == LEFT)
-			insert_node(tmp->pv, tmp, \
-			new_node(data, ft_strdup2(data, data->env->str), NULL, INITIALIZED));
+			insert_node(sorted_env->pv, sorted_env, \
+			new_node(data, ft_strdup2(data, env->str), NULL, INITIALIZED));
 		else if (direction == RIGHT)
-			insert_node(tmp, tmp->nx, \
-			new_node(data, ft_strdup2(data, data->env->str), NULL, INITIALIZED));
-		data->env = data->env->nx;
+			insert_node(sorted_env, sorted_env->nx, \
+			new_node(data, ft_strdup2(data, env->str), NULL, INITIALIZED));
+		env = env->nx;
 	}
-	data->sorted_env = node_first(tmp);
-	data->env = tmp2;
+	return (node_first(sorted_env));
 }
 
 void	copy_environment(t_data *data, char **envp)
@@ -71,7 +68,8 @@ void	copy_environment(t_data *data, char **envp)
 	tmp = NULL;
 	while (envp[i] != NULL)
 	{
-		node_addback(&tmp, new_node(data, ft_strdup2(data, envp[i]), NULL, INITIALIZED));
+		node_addback(&tmp, new_node(data, \
+		ft_strdup2(data, envp[i]), NULL, INITIALIZED));
 		i++;
 	}
 	data->env = tmp;
@@ -80,14 +78,12 @@ void	copy_environment(t_data *data, char **envp)
 void	change_env_var(t_data *data, char *var, char *new_value)
 {
 	t_mlist	*tmp;
-	char	*temp;
 
 	tmp = find_input(data->env, var);
 	if (tmp != NULL)
 	{
-		temp = tmp->str;
-		tmp->str = ft_strjoin(var, new_value);
-		free(temp);
+		free(tmp->str);
+		tmp->str = ft_strjoin2(data, var, new_value);
 	}
 	free(new_value);
 }

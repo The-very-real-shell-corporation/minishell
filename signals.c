@@ -6,26 +6,25 @@
 /*   By: akasiota <akasiota@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/28 15:16:19 by akasiota      #+#    #+#                 */
-/*   Updated: 2023/12/04 15:43:57 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/09 15:25:12 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-void	set_signals()
+void	set_signals(void)
 {
 	signal(SIGINT, &signal_int_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	unset_signals()
+void	unset_signals(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	signals_for_kids()
+void	signals_for_kids(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);

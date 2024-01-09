@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 13:50:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/28 14:20:02 by akasiota      ########   odam.nl         */
+/*   Updated: 2024/01/09 19:09:07 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_2d_charray(char **array)
 	printf("String [%d]: %s\n", i, array[i]);
 }
 
-char	**list_to_array(t_data *data ,t_mlist *input)
+char	**list_to_array(t_data *data, t_mlist *input)
 {
 	char 	**result;
 	char	*tmp;

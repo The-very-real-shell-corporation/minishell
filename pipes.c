@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/08 20:57:52 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/09 17:50:07 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ bool	run_builtins_pip(t_data *data, t_mlist *pipelines)
 			chdir(path[i]);
 			if (access(data->argv[0], X_OK) == 0)
 			{
-				directory = ft_strjoin(data->real_path[i], pipelines->pipeline[0]);
+				directory = ft_strjoin2(data, data->real_path[i], pipelines->pipeline[0]);
 				chdir(data->cwd);
 				execute_command(data, directory, pipelines->pipeline);
 			}
@@ -92,7 +92,7 @@ void	search_the_path_pip(t_data *data, t_mlist *pipelines, char **path)
 		chdir(path[i]);
 		if (access(data->argv[0], X_OK) == 0)
 		{
-			directory = ft_strjoin(data->real_path[i], pipelines->pipeline[0]);
+			directory = ft_strjoin2(data, data->real_path[i], pipelines->pipeline[0]);
 			chdir(data->cwd);
 			execute_command(data, directory, pipelines->pipeline);
 		}
@@ -148,7 +148,7 @@ void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, int pipes)
 		pids[i] = create_fork(data);
 		if (pids[i] == 0)
 		{
-			free(pids);
+			// free(pids);
 			close_extra_fds(data->pipe_fds, i, pipes);
 			copy_pipe_fds(data, data->pipe_fds, i, pipes);
 			if (run_builtins_pip(data, pipelines) == false)
@@ -158,6 +158,7 @@ void	fork_stuff_pip(t_data *data, t_mlist *pipelines, pid_t *pids, int pipes)
 		i++;
 		pipelines = pipelines->nx;
 	}
+	close_pipes(data->pipe_fds);
 	while (i > 0)
 	{
 		i--;

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/08 19:39:52 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/09 19:10:36 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ struct s_data
 	int		**pipe_fds;
 	pid_t	*pids;
 	t_mlist	*env;
-	t_mlist	*sorted_env;
 	t_mlist	*input;
 	t_mlist	*pipelines;
 };
@@ -103,6 +102,7 @@ int		unset_builtin(t_data *data, char **args);
 /*	Environment stuff	*/
 
 void	change_env_var(t_data *data, char *var, char *new_value);
+t_mlist	*sort_environment(t_data *data, t_mlist *env);
 
 /*	Execution	*/
 
@@ -174,7 +174,6 @@ t_mlist	*ft_special_split(t_data *data, char *input);
 t_mlist	*ft_shell_list_split(t_data *data, char *input);
 void	get_path_ready(t_data *data);
 void	copy_environment(t_data *data, char **envp);
-void	sort_environment(t_data *data);
 
 /* Pipes */
 
@@ -199,7 +198,7 @@ void	signal_int_handler(int sig);
 
 /*	String manipulations	*/
 
-char	*env_string(t_data *data, char *input);
+char	*envp_string(t_data *data, char *input);
 char	*partially_merge_str(char *original, int start, int len, char *newpart);
 void	dollar_in_env(t_data *data, char *input, char **env_string);
 
@@ -207,11 +206,11 @@ void	dollar_in_env(t_data *data, char *input, char **env_string);
 
 void	clean_up(t_data *data);
 void	loop_clean(t_data *data);
-void	free_and_null(void *variable);
-void	free_2d_(void **input);
+void	free_2d_(void ***input);
 void	exit_error(t_data *data, char *msg);
 void	print_2d_charray(char **array);
 char	**list_to_array(t_data *data ,t_mlist *list);
 bool	everythingiswhitespace(char *str);
+int		ptr_array_size(void **array);
 
 #endif

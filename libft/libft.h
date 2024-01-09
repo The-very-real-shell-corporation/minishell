@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 16:30:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/10/10 18:09:27 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/09 19:10:25 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char		*ft_strdup(char *s1);
 char		*ft_strdup2(t_data *data, char *s1);
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));
 char		*ft_strjoin(const char *s1, const char *s2);
+char		*ft_strjoin2(t_data *data, char *s1, char *s2);
 size_t		ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t		ft_strlen(const char *s);

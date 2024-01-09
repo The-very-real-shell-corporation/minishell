@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/14 14:31:00 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/08 19:43:14 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/09 18:33:21 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static size_t	get_length(char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0' && token_chars(str[i]) == false && ft_iswhitespace(str[i]) == false)
+	while (str[i] != '\0' && token_chars(str[i]) == false \
+		&& ft_iswhitespace(str[i]) == false)
 	{
 		if (str[i] == '\"' && ft_strchr(&str[i + 1], '\"') != NULL)
 		{
@@ -67,10 +68,10 @@ t_mlist	*ft_special_split(t_data *data, char *input)
 	int		len;
 
 	i = 0;
-	len = 0;
 	res = NULL;
 	while (input[i] != '\0')
 	{
+		len = 0;
 		while (input[i] != '\0' && ft_iswhitespace(input[i]) == true)
 			i++;
 		if (token_chars(input[i]) == true)
@@ -79,10 +80,10 @@ t_mlist	*ft_special_split(t_data *data, char *input)
 			len = get_length(&input[i]);
 		if (ft_iswhitespace(input[i + len]) == true)
 			len++;
-		node_addback(&res, new_node(data, mini_shubstr(data, &input[i], len), NULL, INITIALIZED));
-		if (len != 0)
-			i += len;
-		else if (input[i] != '\0')
+		node_addback(&res, \
+		new_node(data, mini_shubstr(data, &input[i], len), NULL, INITIALIZED));
+		i += len;
+		if (input[i] != '\0')
 			i++;
 	}
 	return (res);
