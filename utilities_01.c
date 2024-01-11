@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 13:50:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/09 19:09:07 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/11 20:31:32 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,19 @@ void	print_2d_charray(char **array)
 	printf("String [%d]: %s\n", i, array[i]);
 }
 
-char	**list_to_array(t_data *data, t_mlist *input)
+char	**list_to_array(t_data *data, t_mlist *input, t_token tolkien)
 {
-	char 	**result;
+	char	**result;
 	char	*tmp;
 	size_t	i;
 
-	result = ft_calloc((list_size(input) + 1), sizeof(char *));
-	if (result == NULL)
-		return (NULL);
+	result = ft_calloc2(data, (list_size(input, tolkien) + 1), sizeof(char *));
 	i = 0;
-	while (input != NULL)
+	while (input != NULL && input->token != tolkien)
 	{
 		result[i] = ft_strdup2(data, input->str);
 		tmp = result[i];
-		result[i] = ft_strtrim(tmp, " ");
+		result[i] = ft_strtrim2(data, tmp, " ");
 		free(tmp);
 		input = input->nx;
 		i++;

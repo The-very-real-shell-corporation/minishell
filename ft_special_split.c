@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/14 14:31:00 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/09 18:33:21 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/11 20:13:46 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_mlist	*ft_special_split(t_data *data, char *input)
 			len++;
 		node_addback(&res, \
 		new_node(data, mini_shubstr(data, &input[i], len), NULL, INITIALIZED));
-		i += len;
+		i += len - 1;
 		if (input[i] != '\0')
 			i++;
 	}

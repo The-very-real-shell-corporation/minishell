@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/09 16:39:12 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/11 15:30:30 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ int	echo_builtin(t_data *data, char **args)
 int	env_builtin(t_data *data, char **args)
 {
 	(void)args;
+	if (data->env == NULL)
+		return (0);
+	print_list(data->env);
 	if (print_env(data->env) == -1)
 		exit_error(data, "env failed to print");
 	return (0);

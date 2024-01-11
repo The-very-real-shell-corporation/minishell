@@ -33,7 +33,10 @@ char	*envp_string(t_data *data, char *input)
 	return (value);
 }
 
-char	*partially_merge_str(char *original, int start, int len, char *newpart)
+/*	Takes the new part to overwrite a set part of the original string, 
+	returning a brand new string with the changes, used in expansion	*/
+
+char	*remake_str(char *original, int start, int len, char *newpart)
 {
 	char	*new;
 	int		newpart_len;
@@ -61,9 +64,7 @@ char	*mini_shubstr(t_data *data, char *str, int len)
 	int		i;
 
 	i = 0;
-	word = ft_calloc((len + 1), sizeof(char));
-	if (word == NULL)
-		exit_error(data, "Malloc error");
+	word = ft_calloc2(data, len + 1, sizeof(char));
 	while (i < len)
 	{
 		word[i] = str[i];
@@ -94,7 +95,7 @@ void	dollar_in_env(t_data *data, char *input, char **env_string)
 		}
 		if (tmp2[i] == '\0')
 			return (free(tmp2));
-		*env_string = partially_merge_str(tmp2, i, 1, ft_strdup2(data, "\\$"));
+		*env_string = remake_str(tmp2, i, 1, ft_strdup2(data, "\\$"));
 		dollar_in_env(data, *env_string, env_string);
 	}
 }

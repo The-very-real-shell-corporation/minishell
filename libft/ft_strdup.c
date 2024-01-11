@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 19:36:15 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/11/20 16:22:46 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/11 18:39:28 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ char	*ft_strdup2(t_data *data, char *s1)
 {
 	char	*s2;
 
-	s2 = ft_calloc((ft_strlen(s1) + 1), sizeof(char));
-	if (s2 == NULL)
-		exit_error(data, "Strdup malloc failed");
+	s2 = ft_calloc2(data, (ft_strlen(s1) + 1), sizeof(char));
 	ft_strcpy(s2, s1);
 	return (s2);
 }

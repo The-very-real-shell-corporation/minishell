@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 16:35:26 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/04 17:17:29 by akasiota      ########   odam.nl         */
+/*   Updated: 2024/01/11 15:27:43 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,10 @@ int	pwd_builtin(t_data *data, char **args)
 
 	(void)args;
 	out = getcwd(NULL, 0);
-	if (out != NULL)
-	{
-		// printf("%s\n", out);
-		write(1, out, ft_strlen(out));
-		write(1, "\n", 2);
-		free(out);
-	}
-	else
+	if (out == NULL)
 		exit_error(data, "Pwd determining failed\n");
+	printf("%s\n", out);
+	free(out);
 	return (0);
 }
 

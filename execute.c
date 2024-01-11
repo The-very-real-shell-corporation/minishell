@@ -6,60 +6,67 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/08 18:17:20 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/11 21:00:19 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static bool	try_pipeless(t_data *data, t_mlist *pipeline)
+{
+	if (pipeline->nx == NULL)
+	{
+		if (run_builtins(data, pipeline) == false)
+			fork_stuff(data);
+		return (true);
+	}
+	return (false);
+}
+
 void	execute_command(t_data *data, char *directory, char **args)
 {
-	execve(directory, args, data->env_array);
+	if (execve(directory, args, data->env_array) == -1)
+		exit_error(data, "execve failed");
 	free(directory);
 	clean_up(data);
 	exit(EXIT_FAILURE); // look up a smart exit status
 }
 
-bool	run_builtins(t_data *data)
+bool	run_builtins(t_data *data, t_mlist *p)
 {
-	t_token	token;
-
-	token = data->input->token;
-	if (token <= 6)
+	if (p->token <= 6)
 	{
-		write(STDOUT_FILENO, "HEYAAAA\n", 9);
-		data->fn[token](data, &data->argv[1]);
+		data->fn[p->token](data, &p->pipeline[1]);
 		return (true);
 	}
-	return (false);		
+	return (false);
 }
 
-void	execute_pip(t_data *data, t_mlist *pipelines, pid_t	*pids)
+void	execute(t_data *data, t_mlist *pipelines, pid_t	*pids)
 {
-	int	pipes;
+	int	i;
 
-	pipes = (int)list_size(pipelines) - 1;
-	// printf("n: %zu\n", pipes);
-	if (pipes > 0)
+	i = 0;
+	if (try_pipeless(data, pipelines) == true)
+		return ;
+	pids = ft_calloc2(data, list_size(pipelines, DUMMY), sizeof(pid_t));
+	while (pipelines != NULL)
 	{
-		create_pipe_fds(data, pipes);
-		open_pipes(data, data->pipe_fds);
-		fork_stuff_pip(data, pipelines, pids, pipes);
-		close_pipes(data->pipe_fds);
+		if (pipelines->pv == NULL)
+			open_pipe(data, 0);
+		else if (pipelines->nx == NULL)
+			open_pipe(data, 1);
+		else
+			open_pipe(data, 2);
+		pids[i] = fork_pipe(data, pipelines);
+		close_main_fds(data->pipe_fds);
+		i++;
+		pipelines = pipelines->nx;
 	}
-	else if (run_builtins_pip(data, pipelines) == false)
+	while (i > 0)
 	{
-		puts("elif\n");
-		fork_stuff(data);
+		i--;
+		wait_for_process(data, pids[i]);
+		printf("exit status: %d\n", data->exit_status);
 	}
 }
-
-/* void	execute(t_data *data)
-{
-	// pid_t	id;
-
-	// if (data->input->token = stuff)
-	// 	data->input = data->input->nx;
-	if (run_builtins(data) == false)
-		fork_stuff(data);
-} */

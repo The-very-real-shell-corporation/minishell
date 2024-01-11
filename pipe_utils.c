@@ -6,72 +6,74 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/08 19:46:35 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/08 19:48:58 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/11 20:36:32 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	pipeline_size(t_mlist *input)
+static void	open_single_pipe(t_data *data, int *fd)
 {
-	size_t	i;
-
-	i = 0;
-	while (input != NULL && (input)->token != PIPE) 
-	{
-		i++;
-		input = (input)->nx;
-	}
-	return (i);
+	if (pipe(fd) == -1)
+		exit_error(data, "pipe not piping");
 }
 
-void	create_pipe_fds(t_data *data, int pipes)
+void	open_pipe(t_data *data, int pipes)
 {
-	int	**fds;
-	int	i;
+	int	*fd[2];
 
-	i = 0;
-	fds = ft_calloc(pipes + 1, sizeof(int*));
-	if (fds == NULL)
-		exit_error(data, "malloc failed");
-	while (i < pipes)
+	fd[0] = data->pipe_fds[0];
+	fd[1] = data->pipe_fds[1];
+	if (pipes == 0)
 	{
-		fds[i] = ft_calloc(2, sizeof(int));
-		if (fds[i] == NULL)
-			exit_error(data, "malloc failed");
-		i++;
+		open_single_pipe(data, fd[0]);
+		fd[1][0] = -1;
+		fd[1][1] = -1;
 	}
-	data->pipe_fds = fds;
-}
-
-void	open_pipes(t_data *data, int **pipe_fds)
-{
-	int i;
-
-	i = 0;	
-	while (pipe_fds[i] != NULL)
+	if (pipes == 1)
 	{
-		if (pipe(pipe_fds[i]) == -1)
-		{
-			while (i >= 0)
-			{
-				close(pipe_fds[i][0]);
-				close(pipe_fds[i][1]);
-				i--;
-			}
-			exit_error(data, "pipe failed to pipe");
-		}
-		i++;
+		fd[1][0] = fd[0][0];
+		fd[1][1] = fd[0][1];
+		fd[0][0] = -1;
+		fd[0][1] = -1;
+	}
+	if (pipes == 2)
+	{
+		fd[1][0] = fd[0][0];
+		fd[1][1] = fd[0][1];
+		open_single_pipe(data, fd[0]);
 	}
 }
 
-void	close_pipes(int **pipe_fds)
+void	close_extra_fds(int pipe_fds[2][2])
 {
-	int	i = 0;
-	while (pipe_fds[i] != NULL)
+	if (pipe_fds[0][0] != -1)
+		close(pipe_fds[0][0]);
+	if (pipe_fds[1][1] != -1)
+		close(pipe_fds[1][1]);
+}
+
+void	copy_pipe_fds(t_data *data, int pipe_fds[2][2])
+{
+	if (pipe_fds[0][0] != -1)
 	{
-		close(pipe_fds[i][0]);
-		close(pipe_fds[i][1]);
-		i++;
+		if (dup2(pipe_fds[0][1], STDOUT_FILENO) == -1)
+			exit_error(data, "dup2 failed");
+		close(data->pipe_fds[0][1]);
+	}
+	if (pipe_fds[1][0] != -1)
+	{
+		if (dup2(pipe_fds[1][0], STDIN_FILENO) == -1)
+			exit_error(data, "dup2 failed");
+		close(data->pipe_fds[1][0]);
+	}
+}
+
+void	close_main_fds(int pipe_fds[2][2])
+{
+	if (pipe_fds[1][0] != -1)
+	{
+		close(pipe_fds[1][0]);
+		close(pipe_fds[1][1]);
 	}
 }

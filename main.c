@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/09 15:24:11 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/11 15:36:58 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **envp)
 		parse_input(&data, data.line);
 		if (data.input != NULL)
 		{
-			execute_pip(&data, data.pipelines, data.pids);
+			execute(&data, data.pipelines, data.pids);
 			add_history(data.line);
 		}
 		loop_clean(&data);

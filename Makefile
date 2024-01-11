@@ -12,12 +12,11 @@
 # **************************************************************************** #
 
 NAME	= minishell
-NAME2	= minishell2
 USER	= vvan-der
 LIBFT	= libft
 LIBS	= $(LIBFT)/libft.a
 RM		= rm -rf
-CC		= cc # changed it to cc
+CC		= cc
 CFLAGS	= -Wall -Werror -Wextra -g
 # CFLAGS	+= -fsanitize=address
 L_FLAGS	= -lreadline
@@ -35,9 +34,10 @@ SRCS	=	alexer.c \
 			ft_special_split.c \
 			heredoc.c \
 			initialize.c \
-			list_editing.c \
+			list_adding.c \
 			list_navigate.c \
 			list_printing.c \
+			list_removal.c \
 			main.c \
 			pipe_utils.c \
 			pipes.c \

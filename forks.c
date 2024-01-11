@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/04 20:34:59 by akasiota      ########   odam.nl         */
+/*   Updated: 2024/01/11 20:55:14 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	wait_for_process(t_data *data, pid_t id)
 	if (WEXITSTATUS(data->exit_status) == EXIT_FAILURE)
 	{
 		write(STDERR_FILENO, data->argv[0], ft_strlen(data->argv[0]));
-		write(STDERR_FILENO, " :command not found\n", 21);
+		write(STDERR_FILENO, ": command not found\n", 21);
 		return ;
 	}
 	if (WEXITSTATUS(data->exit_status) == EXEC_ERR)
 	{
 		write(STDERR_FILENO, data->argv[0], ft_strlen(data->argv[0]));
-		write(STDERR_FILENO, " :could not execute\n", 21);
+		write(STDERR_FILENO, ": could not execute\n", 21);
 		return ;
 	}
 	if (WIFSIGNALED(data->exit_status) != 0)
@@ -36,7 +36,7 @@ void	wait_for_process(t_data *data, pid_t id)
 		}	
 		else if (WTERMSIG(data->exit_status) == SIGQUIT)
 		{	
-			write(STDOUT_FILENO, "CORE DUMPED MOTHAFUCKA\n", 23);
+			write(STDOUT_FILENO, "My core dumped, ouchie\n", 23);
 			data->exit_status = 128 + WTERMSIG(data->exit_status);
 		}
 	}
@@ -66,6 +66,6 @@ void	fork_stuff(t_data *data)
 
 	id = create_fork(data);
 	if (id == 0)
-		search_the_path(data, data->path);
+		search_the_path(data, data->pipelines, data->path);
 	wait_for_process(data, id);
 }

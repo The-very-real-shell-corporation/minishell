@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 18:29:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/09 18:19:51 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/11 20:16:15 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	free_and_null(void **variable)
+void	free_and_null(void **variable)
 {
 	free(*variable);
 	*variable = NULL;
@@ -46,7 +46,6 @@ void	loop_clean(t_data *data)
 	free_and_null((void **)&data->cwd);
 	clear_mlist(&data->input);
 	clear_mlist(&data->pipelines);
-	free_2d_((void ***)&data->pipe_fds);
 	free_and_null((void **)&data->pids);
 }
 

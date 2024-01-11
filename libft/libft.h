@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 16:30:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/09 19:10:25 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/11 18:33:32 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdarg.h>
 # include "../minishell.h"
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 typedef struct s_list
 {
@@ -48,6 +48,7 @@ int			ft_toupper(int c);
 
 void		ft_bzero(void *str, size_t n);
 void		*ft_calloc(size_t count, size_t size);
+void		*ft_calloc2(t_data *data, size_t count, size_t size);
 char		*ft_realloc(t_data *data, char *str, size_t size);
 void		*ft_memchr(const void *s, int c, size_t n);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
@@ -60,6 +61,7 @@ void		*ft_memset(void *b, int c, size_t len);
 long double	ft_ato_double(const char *str);
 int			ft_atoi(const char *str);
 char		*ft_itoa(int n);
+char		*ft_itoa2(t_data *data, int n);
 long double	ft_pow_fl(long double number, int power);
 long long	ft_pow(int number, int power);
 int			ft_writoa(int n);
@@ -96,6 +98,7 @@ int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char		*ft_strrchr(const char *s, int c);
 char		*ft_strtrim(char *s1, char *set);
+char		*ft_strtrim2(t_data *data, char *s1, char *set);
 char		*ft_substr(const char *s, unsigned int start, size_t len);
 char		*ft_tolower_str(char *str);
 int			ft_putstrlen_fd(char *s, int fd);

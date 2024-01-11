@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/09 20:19:46 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/11 20:11:19 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,13 @@ static bool	is_quote(char c)
 	return (false);
 }
 
-static char	*remove_quotes(char *str, char c)
+static char	*remove_quotes(t_data *data, char *str, char c)
 {
 	char	*res;
 	int		i;
 
 	i = 0;
-	res = ft_calloc(ft_strlen(str) - 1, sizeof(char));
-	if (res == NULL)
-		return (NULL);
+	res = ft_calloc2(data,ft_strlen(str) - 1, sizeof(char));
 	while (str[i] == c)
 		str++;
 	while (str[i] != '\0')
@@ -51,12 +49,7 @@ void	expand_quotes(t_data *data, char **str)
 	{
 		if (is_quote(tmp[i]) == true && ft_strchr(&tmp[i + 1], tmp[i]) != NULL)
 		{
-			*str = remove_quotes(tmp, tmp[i]);
-			if (*str == NULL)
-			{
-				free(tmp);
-				exit_error(data, "malloc fail");
-			}
+			*str = remove_quotes(data, tmp, tmp[i]);
 			free(tmp);
 			return ;
 		}
@@ -96,6 +89,7 @@ void	expansion_pack(t_data *data, char *input)
 	data->input = split;
 	if (split == NULL)
 		return ;
+	print_list(split);
 	while (split != NULL)
 	{
 		expand_dollar(data, &split->str);

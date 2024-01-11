@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/21 14:48:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2023/12/21 18:48:15 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/11 14:45:29 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*create_filename(t_data *data, int *value)
 	char	*tmp;
 
 	(data->heredocs)++; // nonsense -> do it in parent
-	tmp = ft_itoa(data->heredocs);
+	tmp = ft_itoa2(data, data->heredocs);
 	if (tmp == NULL)
 	{
 		*value = 5;

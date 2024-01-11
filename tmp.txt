@@ -1,1 +1,788 @@
-leprechaun
+leprechaunecho 
+prev: (nil)
+curr: 0x146d460
+next: 0x146d4b0
+hi 
+prev: 0x146d460
+curr: 0x146d4b0
+next: 0x146d500
+what 
+prev: 0x146d4b0
+curr: 0x146d500
+next: 0x146d550
+when 
+prev: 0x146d500
+curr: 0x146d550
+next: 0x146d5a0
+where
+prev: 0x146d550
+curr: 0x146d5a0
+next: (nil)
+this many lines: 5
+
+this many lines: 0
+
+echo 
+prev: (nil)
+curr: 0x146d330
+next: 0x146d380
+what 
+prev: 0x146d330
+curr: 0x146d380
+next: 0x146d3d0
+| 
+prev: 0x146d380
+curr: 0x146d3d0
+next: 0x146d420
+how 
+prev: 0x146d3d0
+curr: 0x146d420
+next: 0x146d470
+what 
+prev: 0x146d420
+curr: 0x146d470
+next: 0x146d4c0
+| 
+prev: 0x146d470
+curr: 0x146d4c0
+next: 0x146d510
+what 
+prev: 0x146d4c0
+curr: 0x146d510
+next: 0x146d560
+what
+prev: 0x146d510
+curr: 0x146d560
+next: (nil)
+this many lines: 8
+
+echo 
+prev: (nil)
+curr: 0x1604460
+next: 0x16044b0
+hi
+prev: 0x1604460
+curr: 0x16044b0
+next: (nil)
+this many lines: 2
+
+echo 
+prev: (nil)
+curr: 0x905470
+next: 0x9054c0
+hi 
+prev: 0x905470
+curr: 0x9054c0
+next: 0x905510
+| 
+prev: 0x9054c0
+curr: 0x905510
+next: 0x905560
+what 
+prev: 0x905510
+curr: 0x905560
+next: 0x9055b0
+when 
+prev: 0x905560
+curr: 0x9055b0
+next: 0x905600
+where 
+prev: 0x9055b0
+curr: 0x905600
+next: 0x905650
+how
+prev: 0x905600
+curr: 0x905650
+next: (nil)
+this many lines: 7
+
+echo 
+prev: (nil)
+curr: 0x1068470
+next: 0x10684c0
+hi 
+prev: 0x1068470
+curr: 0x10684c0
+next: 0x1068510
+what 
+prev: 0x10684c0
+curr: 0x1068510
+next: 0x1068560
+when 
+prev: 0x1068510
+curr: 0x1068560
+next: 0x10685b0
+where 
+prev: 0x1068560
+curr: 0x10685b0
+next: 0x1068600
+|
+prev: 0x10685b0
+curr: 0x1068600
+next: (nil)
+this many lines: 6
+
+echo 
+prev: (nil)
+curr: 0x1f564e0
+next: 0x1f56530
+hi 
+prev: 0x1f564e0
+curr: 0x1f56530
+next: 0x1f56580
+| 
+prev: 0x1f56530
+curr: 0x1f56580
+next: 0x1f565d0
+what 
+prev: 0x1f56580
+curr: 0x1f565d0
+next: 0x1f56620
+when 
+prev: 0x1f565d0
+curr: 0x1f56620
+next: 0x1f56670
+where 
+prev: 0x1f56620
+curr: 0x1f56670
+next: 0x1f566c0
+how 
+prev: 0x1f56670
+curr: 0x1f566c0
+next: 0x1f56710
+| 
+prev: 0x1f566c0
+curr: 0x1f56710
+next: 0x1f56760
+aekjfl;ajse 
+prev: 0x1f56710
+curr: 0x1f56760
+next: 0x1f567b0
+f 
+prev: 0x1f56760
+curr: 0x1f567b0
+next: 0x1f56800
+|
+prev: 0x1f567b0
+curr: 0x1f56800
+next: (nil)
+this many lines: 11
+
+echo 
+prev: (nil)
+curr: 0x45d4e0
+next: 0x45d530
+hi 
+prev: 0x45d4e0
+curr: 0x45d530
+next: 0x45d580
+| 
+prev: 0x45d530
+curr: 0x45d580
+next: 0x45d5d0
+what 
+prev: 0x45d580
+curr: 0x45d5d0
+next: 0x45d620
+when 
+prev: 0x45d5d0
+curr: 0x45d620
+next: 0x45d670
+where 
+prev: 0x45d620
+curr: 0x45d670
+next: 0x45d6c0
+how 
+prev: 0x45d670
+curr: 0x45d6c0
+next: 0x45d710
+| 
+prev: 0x45d6c0
+curr: 0x45d710
+next: 0x45d760
+aekjfl;ajse 
+prev: 0x45d710
+curr: 0x45d760
+next: 0x45d7b0
+f 
+prev: 0x45d760
+curr: 0x45d7b0
+next: 0x45d800
+|
+prev: 0x45d7b0
+curr: 0x45d800
+next: (nil)
+this many lines: 11
+
+echo 
+prev: (nil)
+curr: 0x23cb460
+next: 0x23cb4b0
+hi 
+prev: 0x23cb460
+curr: 0x23cb4b0
+next: 0x23cb500
+| 
+prev: 0x23cb4b0
+curr: 0x23cb500
+next: 0x23cb550
+cat
+prev: 0x23cb500
+curr: 0x23cb550
+next: (nil)
+this many lines: 4
+
+this many lines: 0
+
+echo 
+prev: (nil)
+curr: 0x23cb440
+next: 0x23cb490
+hi
+prev: 0x23cb440
+curr: 0x23cb490
+next: (nil)
+this many lines: 2
+
+this many lines: 0
+
+echo 
+prev: (nil)
+curr: 0x23ab460
+next: 0x23ab4b0
+hi
+prev: 0x23ab460
+curr: 0x23ab4b0
+next: (nil)
+this many lines: 2
+
+this many lines: 0
+
+echo 
+prev: (nil)
+curr: 0x23ab430
+next: 0x23ab480
+hi 
+prev: 0x23ab430
+curr: 0x23ab480
+next: 0x23ab4d0
+| 
+prev: 0x23ab480
+curr: 0x23ab4d0
+next: 0x23ab520
+cat
+prev: 0x23ab4d0
+curr: 0x23ab520
+next: (nil)
+this many lines: 4
+
+this many lines: 0
+
+this many lines: 0
+
+echo 
+prev: (nil)
+curr: 0x2017460
+next: 0x20174b0
+hi
+prev: 0x2017460
+curr: 0x20174b0
+next: (nil)
+this many lines: 2
+
+this many lines: 0
+
+echo 
+prev: (nil)
+curr: 0x2017430
+next: 0x2017480
+hi 
+prev: 0x2017430
+curr: 0x2017480
+next: 0x20174d0
+| 
+prev: 0x2017480
+curr: 0x20174d0
+next: 0x2017520
+cat
+prev: 0x20174d0
+curr: 0x2017520
+next: (nil)
+this many lines: 4
+
+this many lines: 0
+
+this many lines: 0
+
+echo 
+prev: (nil)
+curr: 0x178b460
+next: 0x178b4b0
+hi
+prev: 0x178b460
+curr: 0x178b4b0
+next: (nil)
+this many lines: 2
+
+echo 
+prev: (nil)
+curr: 0x178b460
+next: 0x178b4b0
+hi 
+prev: 0x178b460
+curr: 0x178b4b0
+next: 0x178b500
+| 
+prev: 0x178b4b0
+curr: 0x178b500
+next: 0x178c620
+cat
+prev: 0x178b500
+curr: 0x178c620
+next: (nil)
+this many lines: 4
+
+echo 
+prev: (nil)
+curr: 0x178b2a0
+next: 0x178b2f0
+hi 
+prev: 0x178b2a0
+curr: 0x178b2f0
+next: 0x178b340
+| 
+prev: 0x178b2f0
+curr: 0x178b340
+next: 0x178b390
+cat 
+prev: 0x178b340
+curr: 0x178b390
+next: 0x178b3e0
+| 
+prev: 0x178b390
+curr: 0x178b3e0
+next: 0x178b430
+ls
+prev: 0x178b3e0
+curr: 0x178b430
+next: (nil)
+this many lines: 6
+
+norminette 
+prev: (nil)
+curr: 0x178c950
+next: 0x178c9a0
+execute.c
+prev: 0x178c950
+curr: 0x178c9a0
+next: (nil)
+this many lines: 2
+
+echo 
+prev: (nil)
+curr: 0x1539460
+next: 0x15394b0
+hi
+prev: 0x1539460
+curr: 0x15394b0
+next: (nil)
+this many lines: 2
+
+echo 
+prev: (nil)
+curr: 0x1539460
+next: 0x15394b0
+hi 
+prev: 0x1539460
+curr: 0x15394b0
+next: 0x1539500
+| 
+prev: 0x15394b0
+curr: 0x1539500
+next: 0x153a620
+cat
+prev: 0x1539500
+curr: 0x153a620
+next: (nil)
+this many lines: 4
+
+echo 
+prev: (nil)
+curr: 0x15392a0
+next: 0x15392f0
+hi 
+prev: 0x15392a0
+curr: 0x15392f0
+next: 0x1539340
+| 
+prev: 0x15392f0
+curr: 0x1539340
+next: 0x1539390
+cat 
+prev: 0x1539340
+curr: 0x1539390
+next: 0x15393e0
+| 
+prev: 0x1539390
+curr: 0x15393e0
+next: 0x1539430
+ls
+prev: 0x15393e0
+curr: 0x1539430
+next: (nil)
+this many lines: 6
+
+echo 
+prev: (nil)
+curr: 0x153a990
+next: 0x15392c0
+hi 
+prev: 0x153a990
+curr: 0x15392c0
+next: 0x1539310
+| 
+prev: 0x15392c0
+curr: 0x1539310
+next: 0x1539360
+cat 
+prev: 0x1539310
+curr: 0x1539360
+next: 0x15393b0
+| 
+prev: 0x1539360
+curr: 0x15393b0
+next: 0x1539400
+ls 
+prev: 0x15393b0
+curr: 0x1539400
+next: 0x153a5f0
+| 
+prev: 0x1539400
+curr: 0x153a5f0
+next: 0x153a640
+cat
+prev: 0x153a5f0
+curr: 0x153a640
+next: (nil)
+this many lines: 8
+
+echo 
+prev: (nil)
+curr: 0x1539220
+next: 0x153a8a0
+hi 
+prev: 0x1539220
+curr: 0x153a8a0
+next: 0x153a8f0
+| 
+prev: 0x153a8a0
+curr: 0x153a8f0
+next: 0x153a940
+cat 
+prev: 0x153a8f0
+curr: 0x153a940
+next: 0x153a990
+| 
+prev: 0x153a940
+curr: 0x153a990
+next: 0x15392c0
+ls 
+prev: 0x153a990
+curr: 0x15392c0
+next: 0x1539310
+| 
+prev: 0x15392c0
+curr: 0x1539310
+next: 0x1539360
+cat 
+prev: 0x1539310
+curr: 0x1539360
+next: 0x15393b0
+| 
+prev: 0x1539360
+curr: 0x15393b0
+next: 0x1539400
+cat 
+prev: 0x15393b0
+curr: 0x1539400
+next: 0x153aaa0
+| 
+prev: 0x1539400
+curr: 0x153aaa0
+next: 0x153aaf0
+cat 
+prev: 0x153aaa0
+curr: 0x153aaf0
+next: 0x153ab40
+| 
+prev: 0x153aaf0
+curr: 0x153ab40
+next: 0x153ab90
+cat 
+prev: 0x153ab40
+curr: 0x153ab90
+next: 0x153abe0
+| 
+prev: 0x153ab90
+curr: 0x153abe0
+next: 0x153ac30
+cat 
+prev: 0x153abe0
+curr: 0x153ac30
+next: 0x153ad90
+| 
+prev: 0x153ac30
+curr: 0x153ad90
+next: 0x153ade0
+cat
+prev: 0x153ad90
+curr: 0x153ade0
+next: (nil)
+this many lines: 18
+
+echo 
+prev: (nil)
+curr: 0x153a6e0
+next: 0x153a730
+hi 
+prev: 0x153a6e0
+curr: 0x153a730
+next: 0x153a780
+| 
+prev: 0x153a730
+curr: 0x153a780
+next: 0x153a8a0
+cat 
+prev: 0x153a780
+curr: 0x153a8a0
+next: 0x153a8f0
+| 
+prev: 0x153a8a0
+curr: 0x153a8f0
+next: 0x153a940
+ls 
+prev: 0x153a8f0
+curr: 0x153a940
+next: 0x153a990
+| 
+prev: 0x153a940
+curr: 0x153a990
+next: 0x15392c0
+cat 
+prev: 0x153a990
+curr: 0x15392c0
+next: 0x1539310
+| 
+prev: 0x15392c0
+curr: 0x1539310
+next: 0x1539360
+cat 
+prev: 0x1539310
+curr: 0x1539360
+next: 0x15393b0
+| 
+prev: 0x1539360
+curr: 0x15393b0
+next: 0x1539400
+cat 
+prev: 0x15393b0
+curr: 0x1539400
+next: 0x153aaa0
+| 
+prev: 0x1539400
+curr: 0x153aaa0
+next: 0x153aaf0
+cat 
+prev: 0x153aaa0
+curr: 0x153aaf0
+next: 0x153ab40
+| 
+prev: 0x153aaf0
+curr: 0x153ab40
+next: 0x153ab90
+cat 
+prev: 0x153ab40
+curr: 0x153ab90
+next: 0x153abe0
+| 
+prev: 0x153ab90
+curr: 0x153abe0
+next: 0x153ac30
+cat 
+prev: 0x153abe0
+curr: 0x153ac30
+next: 0x153aeb0
+> 
+prev: 0x153ac30
+curr: 0x153aeb0
+next: 0x153af00
+test.txt
+prev: 0x153aeb0
+curr: 0x153af00
+next: (nil)
+this many lines: 20
+
+echo 
+prev: (nil)
+curr: 0xf69c90
+next: 0xf69ce0
+hi 
+prev: 0xf69c90
+curr: 0xf69ce0
+next: 0xf69d30
+| 
+prev: 0xf69ce0
+curr: 0xf69d30
+next: 0xf69d80
+cat 
+prev: 0xf69d30
+curr: 0xf69d80
+next: 0xf69dd0
+| 
+prev: 0xf69d80
+curr: 0xf69dd0
+next: 0xf69e20
+ls 
+prev: 0xf69dd0
+curr: 0xf69e20
+next: 0xf69e70
+| 
+prev: 0xf69e20
+curr: 0xf69e70
+next: 0xf69ec0
+cat 
+prev: 0xf69e70
+curr: 0xf69ec0
+next: 0xf69f10
+| 
+prev: 0xf69ec0
+curr: 0xf69f10
+next: 0xf69f60
+cat 
+prev: 0xf69f10
+curr: 0xf69f60
+next: 0xf69fb0
+| 
+prev: 0xf69f60
+curr: 0xf69fb0
+next: 0xf6a000
+cat 
+prev: 0xf69fb0
+curr: 0xf6a000
+next: 0xf6a050
+| 
+prev: 0xf6a000
+curr: 0xf6a050
+next: 0xf6a0a0
+cat 
+prev: 0xf6a050
+curr: 0xf6a0a0
+next: 0xf6a0f0
+| 
+prev: 0xf6a0a0
+curr: 0xf6a0f0
+next: 0xf6a140
+cat 
+prev: 0xf6a0f0
+curr: 0xf6a140
+next: 0xf6a190
+| 
+prev: 0xf6a140
+curr: 0xf6a190
+next: 0xf6a1e0
+cat 
+prev: 0xf6a190
+curr: 0xf6a1e0
+next: 0xf6a230
+> 
+prev: 0xf6a1e0
+curr: 0xf6a230
+next: 0xf6a280
+test.txt
+prev: 0xf6a230
+curr: 0xf6a280
+next: (nil)
+this many lines: 20
+
+echo 
+prev: (nil)
+curr: 0x238fc90
+next: 0x238fce0
+hi 
+prev: 0x238fc90
+curr: 0x238fce0
+next: 0x238fd30
+| 
+prev: 0x238fce0
+curr: 0x238fd30
+next: 0x238fd80
+cat 
+prev: 0x238fd30
+curr: 0x238fd80
+next: 0x238fdd0
+| 
+prev: 0x238fd80
+curr: 0x238fdd0
+next: 0x238fe20
+ls 
+prev: 0x238fdd0
+curr: 0x238fe20
+next: 0x238fe70
+| 
+prev: 0x238fe20
+curr: 0x238fe70
+next: 0x238fec0
+cat 
+prev: 0x238fe70
+curr: 0x238fec0
+next: 0x238ff10
+| 
+prev: 0x238fec0
+curr: 0x238ff10
+next: 0x238ff60
+cat 
+prev: 0x238ff10
+curr: 0x238ff60
+next: 0x238ffb0
+| 
+prev: 0x238ff60
+curr: 0x238ffb0
+next: 0x2390000
+cat 
+prev: 0x238ffb0
+curr: 0x2390000
+next: 0x2390050
+| 
+prev: 0x2390000
+curr: 0x2390050
+next: 0x23900a0
+cat 
+prev: 0x2390050
+curr: 0x23900a0
+next: 0x23900f0
+| 
+prev: 0x23900a0
+curr: 0x23900f0
+next: 0x2390140
+cat 
+prev: 0x23900f0
+curr: 0x2390140
+next: 0x2390190
+| 
+prev: 0x2390140
+curr: 0x2390190
+next: 0x23901e0
+cat 
+prev: 0x2390190
+curr: 0x23901e0
+next: 0x2390230
+> 
+prev: 0x23901e0
+curr: 0x2390230
+next: 0x2390280
+test.txt
+prev: 0x2390230
+curr: 0x2390280
+next: (nil)
+this many lines: 20
+
