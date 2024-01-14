@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/11 14:21:30 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/14 17:04:44 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	tokenize_list(t_mlist *in)
 		in->token = assign_token(in->str);
 		if (in->pv != NULL && in->pv->token == HEREDOC && in->token == WORD)
 			in->token = HEREDOC_DELIM;
-		if ((in->pv == NULL && in->token != HEREDOC) || in->pv->token == PIPE)
+		if ((in->pv == NULL && in->token != HEREDOC) || \
+			(in->pv != NULL && in->pv->token == PIPE))
 			assign_command_token(in, in->str);
 		in = in->nx;
 	}
@@ -72,9 +73,9 @@ void	analyze_input(t_data *data)
 		printf("%s\n", "error: invalid input");
 	else
 		tokenize_list(data->input);
-	if (go_to_token(&data->input, HEREDOC) == true)
+	if (go_to_token(&data->input, HEREDOC) == true) // calculate amount of heredocs and add their ->nx->str's to **delims
 	{
-		whatsup_doc(data, data->input->nx->str);
+		whatsup_doc(data, node_first(data->input));
 	}
 	data->input = node_first(data->input);
 }

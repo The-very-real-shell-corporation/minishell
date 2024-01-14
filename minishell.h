@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/11 18:57:55 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/14 16:11:10 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,18 @@ typedef struct s_mlist
 
 struct s_data
 {
-	int		heredocs; // do this in parent
 	int		exit_status;
-	char	**path;
-	char	**real_path;
 	char	**argv;
 	char	**env_array;
+	char	**delim;
+	char	**path;
+	char	**real_path;
 	char	*cwd;
 	char	*line;
 	int		(*fn[7])(t_data *, char **);
 	int		pipe_fds[2][2];
 	pid_t	*pids;
+	t_mlist	*heredoc;
 	t_mlist	*env;
 	t_mlist	*input;
 	t_mlist	*pipelines;
@@ -131,7 +132,7 @@ void	wait_for_process(t_data *data, pid_t id);
 
 /*	Heredoc	*/
 
-void	whatsup_doc(t_data *data, char *delim);
+void	whatsup_doc(t_data *data, t_mlist *input);
 
 /*	Initialization	*/
 

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/11 15:14:42 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/11 15:31:59 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/14 17:14:47 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	unlink_node(t_mlist *node)
 	t_mlist	*prev;
 	t_mlist	*next;
 
+	if (node == NULL)
+		return ;
 	prev = node->pv;
 	next = node->nx;
 	if (prev != NULL)

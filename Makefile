@@ -18,7 +18,7 @@ LIBS	= $(LIBFT)/libft.a
 RM		= rm -rf
 CC		= cc
 CFLAGS	= -Wall -Werror -Wextra -g
-# CFLAGS	+= -fsanitize=address
+CFLAGS	+= -fsanitize=address
 L_FLAGS	= -lreadline
 
 SRCS	=	alexer.c \
