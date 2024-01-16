@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/14 16:11:10 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/16 20:06:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ typedef enum e_token
 	RE_INPUT,
 	RE_OUTPUT,
 	HEREDOC,
-	HEREDOC_DELIM,
+	DOC_DELIM,
+	DOC_INPUT,
 	APPEND,
 	WORD,
 	COMMAND,
@@ -85,10 +86,9 @@ struct s_data
 	int		(*fn[7])(t_data *, char **);
 	int		pipe_fds[2][2];
 	pid_t	*pids;
-	t_mlist	*heredoc;
 	t_mlist	*env;
 	t_mlist	*input;
-	t_mlist	*pipelines;
+	t_mlist	**pipelines;
 };
 
 /*	Built-ins	*/
@@ -132,7 +132,7 @@ void	wait_for_process(t_data *data, pid_t id);
 
 /*	Heredoc	*/
 
-void	whatsup_doc(t_data *data, t_mlist *input);
+t_mlist	*whatsup_doc(t_data *data, t_mlist *input);
 
 /*	Initialization	*/
 
@@ -145,6 +145,7 @@ void	clear_mlist(t_mlist **list);
 t_mlist	*new_node(t_data *data, char *word, char **args, t_token tolkien);
 void	delete_node(t_mlist *node);
 void	insert_node(t_mlist *node1, t_mlist *node2, t_mlist *new);
+void	insert_list(t_mlist *node1, t_mlist *node2, t_mlist *list);
 void	node_addback(t_mlist **list, t_mlist *new_node);
 void	replace_node(t_data *data, t_mlist *node, char *input);
 void	unlink_node(t_mlist *node);
@@ -156,6 +157,7 @@ t_mlist	*node_last(t_mlist *list);
 t_mlist	*find_input(t_mlist *env, char *input);
 bool	go_to_token(t_mlist **list, t_token tolkien);
 size_t	list_size(t_mlist *list, t_token tolkien);
+size_t	count_tokens(t_mlist *list, t_token tolkien);
 
 /*	List functions (utility)	*/
 
@@ -180,7 +182,7 @@ void	copy_environment(t_data *data, char **envp);
 
 /* Pipes */
 
-void	build_pipeline(t_data *data, t_mlist *input, t_token tolkien);
+void	build_pipeline(t_data *data, t_mlist *input, t_mlist **pipelines);
 void	copy_pipe_fds(t_data *data, int pipes[2][2]);
 pid_t	fork_pipe(t_data *data, t_mlist *pipelines);
 void	open_pipe(t_data *data, int pipes);

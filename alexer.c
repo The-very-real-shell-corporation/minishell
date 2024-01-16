@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/14 17:04:44 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/16 19:55:18 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	tokenize_list(t_mlist *in)
 	{
 		in->token = assign_token(in->str);
 		if (in->pv != NULL && in->pv->token == HEREDOC && in->token == WORD)
-			in->token = HEREDOC_DELIM;
+			in->token = DOC_DELIM;
 		if ((in->pv == NULL && in->token != HEREDOC) || \
 			(in->pv != NULL && in->pv->token == PIPE))
 			assign_command_token(in, in->str);
@@ -70,12 +70,16 @@ void	tokenize_list(t_mlist *in)
 void	analyze_input(t_data *data)
 {
 	if (data->input == NULL)
-		printf("%s\n", "error: invalid input");
-	else
-		tokenize_list(data->input);
-	if (go_to_token(&data->input, HEREDOC) == true) // calculate amount of heredocs and add their ->nx->str's to **delims
 	{
-		whatsup_doc(data, node_first(data->input));
+		printf("%s\n", "error: invalid input");
+		return ;
+	}
+	tokenize_list(data->input);
+	data->pipelines = ft_calloc2(data, \
+	count_tokens(data->input, PIPE) + 2, sizeof(t_mlist *));
+	if (go_to_token(&data->input, HEREDOC) == true)
+	{
+		whatsup_doc(data, data->input);
 	}
 	data->input = node_first(data->input);
 }

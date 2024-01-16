@@ -6,11 +6,21 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 18:29:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/14 16:13:32 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/16 20:07:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	free_pipelines(t_data *data, t_mlist **pipelines)
+{
+	while (*pipelines != NULL)
+	{
+		clear_mlist(pipelines);
+		pipelines++;
+	}
+	free_and_null((void **)&data->pipelines);
+}
 
 void	free_and_null(void **variable)
 {
@@ -38,9 +48,8 @@ void	free_2d_(void ***input)
 
 void	loop_clean(t_data *data)
 {
-	clear_mlist(&data->heredoc);
+	free_pipelines(data, data->pipelines);
 	clear_mlist(&data->input);
-	clear_mlist(&data->pipelines);
 	free_2d_((void ***)&data->argv);
 	free_2d_((void ***)&data->env_array);
 	free_2d_((void ***)&data->delim);

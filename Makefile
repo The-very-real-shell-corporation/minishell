@@ -18,7 +18,7 @@ LIBS	= $(LIBFT)/libft.a
 RM		= rm -rf
 CC		= cc
 CFLAGS	= -Wall -Werror -Wextra -g
-CFLAGS	+= -fsanitize=address
+#CFLAGS	+= -fsanitize=address
 L_FLAGS	= -lreadline
 
 SRCS	=	alexer.c \
@@ -36,6 +36,7 @@ SRCS	=	alexer.c \
 			initialize.c \
 			list_adding.c \
 			list_navigate.c \
+			list_navigate2.c \
 			list_printing.c \
 			list_removal.c \
 			main.c \

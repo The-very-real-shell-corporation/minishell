@@ -17,8 +17,11 @@ char	*envp_string(t_data *data, char *input)
 	char	*value;
 	t_mlist	*tmp;
 	char	*str;
+	char	*join;
 
-	str = ft_strjoin2(data, input, ft_strdup2(data, "="));
+	join = ft_strdup2(data, "=");
+	str = ft_strjoin2(data, input, join);
+	free(join);
 	tmp = find_input(data->env, str);
 	free(str);
 	if (tmp == NULL)

@@ -6,25 +6,49 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/11 20:31:02 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/16 19:44:59 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	build_pipeline(t_data *data, t_mlist *input, t_token tolkien)
+static t_mlist	*check_heredoc(t_data *data, t_mlist *input)
+{
+	t_mlist	*doc;
+	t_mlist	*tmp;
+
+	tmp = NULL;
+	if (input->token == HEREDOC)
+	{
+		doc = whatsup_doc(data, input);
+		if (doc != NULL)
+		{	
+			tmp = input->nx->nx;
+			insert_node(input, input->nx, doc);
+		}
+		unlink_node(input->nx);
+		unlink_node(input);
+		return (tmp);
+	}
+	else
+		return (input->nx);
+}
+
+void	build_pipeline(t_data *data, t_mlist *input, t_mlist **pipelines)
 {
 	char 	**result;
+	t_token	tolkien;
 
-	result = list_to_array(data, input, PIPE);
+	tolkien = input->token;
 	while (input != NULL && input->token != PIPE)
-		input = input->nx;
-	node_addback(&data->pipelines, new_node(data, NULL, result, tolkien));
-	if (input != NULL)
 	{
-		input = input->nx;
-		build_pipeline(data, input, input->token);
+		input = check_heredoc(data, input);	
 	}
+	result = list_to_array(data, input, PIPE);
+	if (result != NULL)
+		node_addback(&data->pipelines, new_node(data, NULL, result, tolkien));
+	if (input != NULL)
+		build_pipeline(data, input->nx, pipelines + 1);
 }
 
 pid_t	fork_pipe(t_data *data, t_mlist *pipelines)

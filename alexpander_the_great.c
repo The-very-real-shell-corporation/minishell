@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/11 20:11:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/16 18:06:23 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	expansion_pack(t_data *data, char *input)
 	data->input = split;
 	if (split == NULL)
 		return ;
-	print_list(split);
 	while (split != NULL)
 	{
 		expand_dollar(data, &split->str);

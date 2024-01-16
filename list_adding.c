@@ -44,8 +44,21 @@ void	insert_node(t_mlist *node1, t_mlist *node2, t_mlist *new)
 {
 	new->pv = node1;
 	new->nx = node2;
-	if (node1 != NULL && node1 != new)
+	if (node1 != NULL)
 		node1->nx = new;
-	if (node2 != NULL && node2 != new)
+	if (node2 != NULL)
 		node2->pv = new;
+}
+
+void	insert_list(t_mlist *node1, t_mlist *node2, t_mlist *list)
+{
+	t_mlist	*tmp;
+
+	list->pv = node1;
+	if (node1 != NULL)
+		node1->nx = list;
+	tmp = node_last(list);
+	tmp->nx = node2;
+	if (node2 != NULL)
+		node2->pv = tmp;
 }
