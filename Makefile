@@ -42,6 +42,7 @@ SRCS	=	alexer.c \
 			main.c \
 			pipe_utils.c \
 			pipes.c \
+			redirections.c \
 			signals.c \
 			string_functions.c \
 			string_nav.c \

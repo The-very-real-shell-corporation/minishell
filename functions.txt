@@ -21,17 +21,11 @@ exit		exit program
 Waiting/signal functions:
 
 signal		basic version of sending a signal
-sigaction	sending signals with more options
-sigemptyset	initialize some values in the signal struct to not very much
-sigaddset	adds signal to the struct
 kill		send signal
 
 Wait functions:
 
-wait		waits for forks to merge
-wait3		^^ + if signal interrupts
 waitpid		wait for a particular process
-wait4		sounds very similar to "waitpid"
 
 Pipex & other:
 
@@ -48,7 +42,6 @@ fstat		^^ about a file with a fd
 execve		-> execute program or something
 unlink		-> executes "rm" or something something link to file something
 
-dup			duplicate existing file descriptor
 dup2		duplicate specific fd
 
 pipe		-> pipe stuff
