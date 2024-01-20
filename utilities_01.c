@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 13:50:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/11 20:31:32 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/20 17:01:20 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ char	**list_to_array(t_data *data, t_mlist *input, t_token tolkien)
 		input = input->nx;
 		i++;
 	}
+	if (*result == NULL)
+		return (free(result), NULL);
 	return (result);
 }
 

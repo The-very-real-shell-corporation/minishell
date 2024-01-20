@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/16 19:44:59 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/20 17:02:33 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	build_pipeline(t_data *data, t_mlist *input, t_mlist **pipelines)
 	tolkien = input->token;
 	while (input != NULL && input->token != PIPE)
 	{
-		input = check_heredoc(data, input);	
+		input = input->nx;
+		// input = check_heredoc(data, input);	<- do this step when executing, not building
 	}
 	result = list_to_array(data, input, PIPE);
 	if (result != NULL)

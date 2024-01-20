@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/20 15:33:54 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/20 16:02:13 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_data	t_data;
 # define LEFT 0
 # define RIGHT 1
 
-typedef enum e_token
+typedef enum e_builtin
 {
 	B_CD,
 	B_ECHO,
@@ -48,19 +48,26 @@ typedef enum e_token
 	B_EXPORT,
 	B_PWD,
 	B_UNSET,
-	INITIALIZED,
-	PIPE,
-	PIPELINE,
+}	t_builtin;
+
+typedef enum e_direction
+{
+	APPEND,
 	RE_INPUT,
 	RE_OUTPUT,
 	HEREDOC,
 	DOC_DELIM,
 	DOC_INPUT,
-	APPEND,
+	PIPE,
+}	t_direction;
+
+typedef enum e_token
+{
+	INITIALIZED,
+	PIPELINE,
 	WORD,
 	COMMAND,
 	ECHO_FLAG,
-	UNDERSCORE,
 	DUMMY
 }	t_token;
 
@@ -187,8 +194,8 @@ void	open_pipe(t_data *data, int pipes);
 
 /*	Redirections	*/
 
-void	append_output(t_data *data, char *pathname, char *output);
-void	redirect_output(t_data *data, char *pathname, char *output);
+int		append_output(t_data *data, char *pathname);
+int		redirect_output(t_data *data, char *pathname);
 t_mlist	*whatsup_doc(t_data *data, t_mlist *input);
 
 /*	Signals	*/
