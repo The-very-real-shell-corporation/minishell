@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/16 19:55:18 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/21 17:47:34 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static void	assign_command_token(t_mlist *node, char *str)
 		node->token = COMMAND;
 }
 
-int	assign_token(char *str)
+static t_token	assign_token(char *str)
 {
-	int	token;
+	t_token	token;
 
 	if (ft_strncmp(str, ">>", 3) == 0)
 		token = APPEND;
@@ -53,7 +53,7 @@ int	assign_token(char *str)
 	return (token);
 }
 
-void	tokenize_list(t_mlist *in)
+static void	tokenize_list(t_mlist *in)
 {
 	while (in != NULL)
 	{
@@ -75,11 +75,8 @@ void	analyze_input(t_data *data)
 		return ;
 	}
 	tokenize_list(data->input);
-	data->pipelines = ft_calloc2(data, \
-	count_tokens(data->input, PIPE) + 2, sizeof(t_mlist *));
-	if (go_to_token(&data->input, HEREDOC) == true)
-	{
-		whatsup_doc(data, data->input);
-	}
-	data->input = node_first(data->input);
+	print_list(data->input);
+	exit(0);
+	data->pipelines = \
+	ft_calloc2(data, re_tokens(data->input) + 1, sizeof(t_mlist *));
 }

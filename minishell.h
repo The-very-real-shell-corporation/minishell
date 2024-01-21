@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/20 16:02:13 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/21 18:19:13 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,31 +41,23 @@ typedef struct s_data	t_data;
 
 typedef enum e_builtin
 {
-	B_CD,
+	B_CD = 0,
 	B_ECHO,
 	B_ENV,
 	B_EXIT,
 	B_EXPORT,
 	B_PWD,
 	B_UNSET,
-}	t_builtin;
-
-typedef enum e_direction
-{
-	APPEND,
+	APPEND = 100,
+	HEREDOC,
+	PIPE,
 	RE_INPUT,
 	RE_OUTPUT,
-	HEREDOC,
 	DOC_DELIM,
 	DOC_INPUT,
-	PIPE,
-}	t_direction;
-
-typedef enum e_token
-{
-	INITIALIZED,
-	PIPELINE,
+	INITIALIZED = 200,
 	WORD,
+	FILENAME,
 	COMMAND,
 	ECHO_FLAG,
 	DUMMY
@@ -83,7 +75,7 @@ typedef struct s_mlist
 struct s_data
 {
 	int		exit_status;
-	char	**argv;
+	char	**args;
 	char	**env_array;
 	char	**delim;
 	char	**path;
@@ -123,7 +115,7 @@ t_mlist	*sort_environment(t_data *data, t_mlist *env);
 /*	Execution	*/
 
 void	execute(t_data *data, t_mlist *pipelines, pid_t *pids);
-void	fork_stuff(t_data *data);
+void	execute_the_path(t_data *data);
 bool	run_builtins(t_data *data, t_mlist *pipeline);
 void	execute_command(t_data *data, char *directory, char **args);
 void	search_the_path(t_data *data, t_mlist *pipeline, char **path);
@@ -139,7 +131,7 @@ void	wait_for_process(t_data *data, pid_t id);
 
 /*	Initialization	*/
 
-void	parse_input(t_data *data, char *input);
+void	parse_input(t_data *data);
 void	initialize_data(t_data *data, char **envp);
 
 /*	List functions (editing)	*/
@@ -155,7 +147,7 @@ void	unlink_node(t_mlist *node);
 
 /*	List functions (navigation)	*/
 
-size_t	count_tokens(t_mlist *list, t_token tolkien);
+size_t	re_tokens(t_mlist *list);
 t_mlist	*node_first(t_mlist *list);
 t_mlist	*node_last(t_mlist *list);
 t_mlist	*find_input(t_mlist *env, char *input);
@@ -170,18 +162,15 @@ void	print_list(t_mlist *list);
 /*	Lexer	*/
 
 void	analyze_input(t_data *data);
-int		assign_token(char *str);
 void	expansion_pack(t_data *data, char *input);
 bool	first_last(char *str, char c);
 int		ft_ministrcmp(char *str1, char *str2);
 char	*mini_shubstr(t_data *data, char *str, int len);
-void	tokenize_list(t_mlist *list);
 
 /*	Parser functions	*/
 
 void	copy_environment(t_data *data, char **envp);
 t_mlist	*ft_special_split(t_data *data, char *input);
-void	get_path_ready(t_data *data);
 
 /* Pipes */
 
@@ -215,7 +204,9 @@ char	*remake_str(char *original, int start, int len, char *newpart);
 
 bool	everythingiswhitespace(char *str);
 void	exit_error(t_data *data, char *msg);
-char	**list_to_array(t_data *data, t_mlist *list, t_token tolkien);
+bool	is_builtin(t_token tolkien);
+bool	is_redirection(t_token tolkien);
+char	**list_to_array(t_data *data, t_mlist *list);
 void	print_2d_charray(char **array);
 int		ptr_array_size(void **array);
 

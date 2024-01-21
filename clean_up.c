@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 18:29:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/16 20:07:22 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/21 18:06:53 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	loop_clean(t_data *data)
 {
 	free_pipelines(data, data->pipelines);
 	clear_mlist(&data->input);
-	free_2d_((void ***)&data->argv);
+	free_2d_((void ***)&data->args);
 	free_2d_((void ***)&data->env_array);
 	free_2d_((void ***)&data->delim);
 	free_2d_((void ***)&data->path);

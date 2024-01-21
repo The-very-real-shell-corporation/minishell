@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/11 21:00:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/21 18:19:47 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static bool	try_pipeless(t_data *data, t_mlist *pipeline)
 	if (pipeline->nx == NULL)
 	{
 		if (run_builtins(data, pipeline) == false)
-			fork_stuff(data);
+			execute_the_path(data);
 		return (true);
 	}
 	return (false);
@@ -34,7 +34,7 @@ void	execute_command(t_data *data, char *directory, char **args)
 
 bool	run_builtins(t_data *data, t_mlist *p)
 {
-	if (p->token <= 6)
+	if (is_builtin(p->token) == true)
 	{
 		data->fn[p->token](data, &p->pipeline[1]);
 		return (true);
@@ -42,7 +42,7 @@ bool	run_builtins(t_data *data, t_mlist *p)
 	return (false);
 }
 
-void	execute(t_data *data, t_mlist *pipelines, pid_t	*pids)
+void	execute(t_data *data, t_mlist *pipelines, pid_t *pids)
 {
 	int	i;
 
@@ -59,7 +59,6 @@ void	execute(t_data *data, t_mlist *pipelines, pid_t	*pids)
 		else
 			open_pipe(data, 2);
 		pids[i] = fork_pipe(data, pipelines);
-		close_main_fds(data->pipe_fds);
 		i++;
 		pipelines = pipelines->nx;
 	}
@@ -70,3 +69,22 @@ void	execute(t_data *data, t_mlist *pipelines, pid_t	*pids)
 		printf("exit status: %d\n", data->exit_status);
 	}
 }
+
+/* void	execute(t_data *data, t_mlist *input, pid_t	*pids)
+{
+	int	i;
+
+	i = 0;
+	pids = ft_calloc2(data, list_size(input, DUMMY), sizeof(pid_t));
+	while (input != NULL)
+	{
+
+	}
+	while (i > 0)
+	{
+		i--;
+		wait_for_process(data, pids[i]);
+		printf("exit status: %d\n", data->exit_status);
+	}
+}
+ */

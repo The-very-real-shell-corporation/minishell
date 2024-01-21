@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/20 17:02:33 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/21 18:08:30 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_mlist	*check_heredoc(t_data *data, t_mlist *input)
+/* static t_mlist	*check_heredoc(t_data *data, t_mlist *input)
 {
 	t_mlist	*doc;
 	t_mlist	*tmp;
@@ -32,24 +32,19 @@ static t_mlist	*check_heredoc(t_data *data, t_mlist *input)
 	}
 	else
 		return (input->nx);
-}
+} */
 
-void	build_pipeline(t_data *data, t_mlist *input, t_mlist **pipelines)
+void	build_pipeline(t_data *data, t_mlist *in, t_mlist **pipelines)
 {
-	char 	**result;
-	t_token	tolkien;
-
-	tolkien = input->token;
-	while (input != NULL && input->token != PIPE)
-	{
-		input = input->nx;
-		// input = check_heredoc(data, input);	<- do this step when executing, not building
-	}
-	result = list_to_array(data, input, PIPE);
-	if (result != NULL)
-		node_addback(&data->pipelines, new_node(data, NULL, result, tolkien));
-	if (input != NULL)
-		build_pipeline(data, input->nx, pipelines + 1);
+	char 	**arr;
+	
+	arr = list_to_array(data, in);
+	while (in != NULL && is_redirection(in->token) == false)
+		in = in->nx;
+	if (arr != NULL)
+		node_addback(data->pipelines, new_node(data, NULL, arr, in->token));
+	if (in != NULL)
+		build_pipeline(data, in->nx, pipelines + 1);
 }
 
 pid_t	fork_pipe(t_data *data, t_mlist *pipelines)
@@ -65,5 +60,6 @@ pid_t	fork_pipe(t_data *data, t_mlist *pipelines)
 			search_the_path(data, pipelines, data->path);
 		exit(55);
 	}
+	close_main_fds(data->pipe_fds);
 	return (id);
 }

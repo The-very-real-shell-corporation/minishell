@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/16 17:06:40 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/21 18:12:33 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,19 @@ void	exit_error(t_data *data, char *msg)
 	ft_putstr_fd(msg, STDERR_FILENO);
 	write(STDERR_FILENO, "\n", 1);
 	exit(EXIT_FAILURE);
+}
+
+static void	carry_out_orders(t_data *data, t_mlist **pipelines)
+{
+	int	i;
+
+	i = 0;
+	if (data->input == NULL)
+		return ;
+	while (pipelines[i] != NULL)
+	{
+		execute(data, pipelines[i], data->pids);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -34,19 +47,9 @@ int	main(int argc, char **argv, char **envp)
 		if (data.cwd == NULL)
 			exit_error(&data, "cwd failed");
 		set_signals();
-		data.line = readline("WE SHELL SEE: ");
-		if (data.line == NULL)
-		{
-			clean_up(&data);
-			printf("exit\n");
-			return (0);
-		}
-		parse_input(&data, data.line);
-		if (data.input != NULL)
-		{
-			execute(&data, data.pipelines, data.pids);
-			add_history(data.line);
-		}
+
+		parse_input(&data);
+		carry_out_orders(&data, data.pipelines);
 		loop_clean(&data);
 	}
 	return (0);

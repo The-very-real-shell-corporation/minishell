@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/16 19:46:13 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/21 18:17:40 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,52 @@ static void	assign_function_ptrs(t_data *data)
 	data->fn[B_UNSET] = &unset_builtin;
 }
 
+static void	get_path_ready(t_data *data)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = envp_string(data, ft_strdup2(data, "PATH"));
+	data->path = ft_split(tmp, ':');
+	if (data->path == NULL)
+	{
+		free(tmp);
+		exit_error(data, "Split error");
+	}
+	free(tmp);
+	data->real_path = ft_calloc2(data, ptr_array_size((void **)data->path) \
+						+ 1, sizeof(char *));
+	while (data->path[i] != NULL)
+	{
+		data->real_path[i] = ft_strjoin2(data, data->path[i], "/");
+		i++;
+	}
+}
+
 void	initialize_data(t_data *data, char **envp)
 {
 	ft_bzero(data, sizeof(t_data));
-	copy_environment(data, envp);
 	assign_function_ptrs(data);
+	copy_environment(data, envp);
+	get_path_ready(data);
 }
 
-void	parse_input(t_data *data, char *input)
+void	parse_input(t_data *data)
 {
-	get_path_ready(data);
-	if (everythingiswhitespace(input) == true)
-		data->input = NULL;
-	else
-		expansion_pack(data, input);
-	if (data->input == NULL)
+	char	*line;
+	
+	line = readline("WE SHELL SEE: ");
+	if (line == NULL)
+	{
+		printf("exit\n");
+		exit_builtin(data, NULL);
+	}
+	if (everythingiswhitespace(line) == true)
 		return ;
-	data->argv = list_to_array(data, data->input, DUMMY);
+	add_history(line);
+	expansion_pack(data, line);
+	free(line);
+	data->args = list_to_array(data, data->input);
 	build_pipeline(data, data->input, data->pipelines);
 }

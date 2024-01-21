@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/11 15:30:30 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/21 18:07:33 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,13 @@ int	env_builtin(t_data *data, char **args)
 
 int	exit_builtin(t_data *data, char **args)
 {
-	if (*args == NULL)
-	{
-		clean_up(data);
-		exit(0);
-	}
-	return (0);
+	int	exit_status;
+
+	exit_status = data->exit_status;
+	if (args == NULL)
+		printf("exit");
+	clean_up(data);
+	exit(exit_status);
 }
 
 int	export_builtin(t_data *data, char **args)

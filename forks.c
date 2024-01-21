@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/16 20:08:06 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/21 18:06:53 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void	wait_for_process(t_data *data, pid_t id)
 	waitpid(id, &data->exit_status, 0);
 	if (WEXITSTATUS(data->exit_status) == EXIT_FAILURE)
 	{
-		write(STDERR_FILENO, data->argv[0], ft_strlen(data->argv[0]));
+		write(STDERR_FILENO, data->args[0], ft_strlen(data->args[0]));
 		write(STDERR_FILENO, ": command not found\n", 21);
 		return ;
 	}
 	if (WEXITSTATUS(data->exit_status) == EXEC_ERR)
 	{
-		write(STDERR_FILENO, data->argv[0], ft_strlen(data->argv[0]));
+		write(STDERR_FILENO, data->args[0], ft_strlen(data->args[0]));
 		write(STDERR_FILENO, ": could not execute\n", 21);
 		return ;
 	}
@@ -60,12 +60,12 @@ pid_t	create_fork(t_data *data)
 	return (id);
 }
 
-void	fork_stuff(t_data *data)
+void	execute_the_path(t_data *data)
 {
 	pid_t	id;
 
 	id = create_fork(data);
 	if (id == 0)
-		search_the_path(data, data->pipelines, data->path);
+		search_the_path(data, *data->pipelines, data->path);
 	wait_for_process(data, id);
 }

@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 16:05:51 by vincent       #+#    #+#                 */
-/*   Updated: 2024/01/16 18:05:23 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/21 17:50:44 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,6 @@ int	print_env(t_mlist *list)
 
 void	print_list(t_mlist *list)
 {
-	int	i;
-
-	i = 0;
 	if (list == NULL)
 	{
 		printf("Couldn't print empty list");
@@ -69,10 +66,7 @@ void	print_list(t_mlist *list)
 	while (list != NULL)
 	{
 		if (list->str != NULL)
-		{
-			i++;
 			printf("%s\n", list->str);
-		}
 		list = list->nx;
 	}
 	printf("%p\n", list);
