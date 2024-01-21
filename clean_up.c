@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 18:29:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/21 18:06:53 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/21 19:12:58 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	loop_clean(t_data *data)
 	free_2d_((void ***)&data->path);
 	free_2d_((void ***)&data->real_path);
 	free_and_null((void **)&data->cwd);
-	free_and_null((void **)&data->line);
 	free_and_null((void **)&data->pids);
 }
 

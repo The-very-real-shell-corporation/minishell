@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/21 18:17:40 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/21 19:11:43 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	initialize_data(t_data *data, char **envp)
 	get_path_ready(data);
 }
 
-void	parse_input(t_data *data)
+void	get_input_and_parse(t_data *data)
 {
 	char	*line;
 	

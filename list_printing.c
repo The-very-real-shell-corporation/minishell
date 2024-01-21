@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 16:05:51 by vincent       #+#    #+#                 */
-/*   Updated: 2024/01/21 17:50:44 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/21 19:07:21 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,10 @@ void	print_list(t_mlist *list)
 	list = node_first(list);
 	while (list != NULL)
 	{
-		if (list->str != NULL)
-			printf("%s\n", list->str);
+		printf("%s\n", list->str);
+		if (list->pipeline != NULL)
+			print_2d_charray(list->pipeline);
+		printf("token: %d\n", list->token);
 		list = list->nx;
 	}
 	printf("%p\n", list);

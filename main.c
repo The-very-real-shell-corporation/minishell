@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/21 18:12:33 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/21 19:15:04 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ static void	carry_out_orders(t_data *data, t_mlist **pipelines)
 	int	i;
 
 	i = 0;
-	if (data->input == NULL)
-		return ;
 	while (pipelines[i] != NULL)
 	{
 		execute(data, pipelines[i], data->pids);
@@ -43,12 +41,8 @@ int	main(int argc, char **argv, char **envp)
 	initialize_data(&data, envp);
 	while (INFINITY)
 	{
-		data.cwd = getcwd(NULL, 0);
-		if (data.cwd == NULL)
-			exit_error(&data, "cwd failed");
 		set_signals();
-
-		parse_input(&data);
+		get_input_and_parse(&data);
 		carry_out_orders(&data, data.pipelines);
 		loop_clean(&data);
 	}

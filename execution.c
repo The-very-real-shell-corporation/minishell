@@ -1,16 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   execute.c                                          :+:    :+:            */
+/*   execution.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/21 18:19:47 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/21 19:14:53 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	execute_through_path(t_data *data, t_mlist *p, char **path)
+{
+	int		i;
+	char	*directory;
+	char	*cwd;
+
+	i = 0;
+	cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+		exit_error(data, "cwd failed");
+	data->env_array = list_to_array(data, data->env);
+	while (path[i] != NULL)
+	{
+		chdir(path[i]);
+		if (access(data->args[0], X_OK) == 0)
+		{
+			directory = ft_strjoin2(data, data->real_path[i], p->pipeline[0]);
+			chdir(cwd);
+			execute_command(data, directory, p->pipeline);
+		}
+		i++;
+	}
+	chdir(cwd);
+	if (access(data->args[0], X_OK) == 0)
+		execute_command(data, ft_strdup2(data, p->pipeline[0]), p->pipeline);
+	exit(54); // look up a smart exit status
+}
 
 static bool	try_pipeless(t_data *data, t_mlist *pipeline)
 {
@@ -23,24 +51,6 @@ static bool	try_pipeless(t_data *data, t_mlist *pipeline)
 	return (false);
 }
 
-void	execute_command(t_data *data, char *directory, char **args)
-{
-	if (execve(directory, args, data->env_array) == -1)
-		exit_error(data, "execve failed");
-	free(directory);
-	clean_up(data);
-	exit(EXIT_FAILURE); // look up a smart exit status
-}
-
-bool	run_builtins(t_data *data, t_mlist *p)
-{
-	if (is_builtin(p->token) == true)
-	{
-		data->fn[p->token](data, &p->pipeline[1]);
-		return (true);
-	}
-	return (false);
-}
 
 void	execute(t_data *data, t_mlist *pipelines, pid_t *pids)
 {

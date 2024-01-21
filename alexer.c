@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/21 17:47:34 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/21 19:01:31 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ void	analyze_input(t_data *data)
 		return ;
 	}
 	tokenize_list(data->input);
-	print_list(data->input);
-	exit(0);
 	data->pipelines = \
 	ft_calloc2(data, re_tokens(data->input) + 1, sizeof(t_mlist *));
 }

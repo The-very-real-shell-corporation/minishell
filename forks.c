@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/21 18:06:53 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/21 18:30:33 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ void	execute_the_path(t_data *data)
 
 	id = create_fork(data);
 	if (id == 0)
-		search_the_path(data, *data->pipelines, data->path);
+		execute_through_path(data, *data->pipelines, data->path);
 	wait_for_process(data, id);
 }

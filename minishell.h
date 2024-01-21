@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/21 18:19:13 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/21 19:15:13 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef enum e_builtin
 	DOC_INPUT,
 	INITIALIZED = 200,
 	WORD,
-	FILENAME,
 	COMMAND,
 	ECHO_FLAG,
 	DUMMY
@@ -80,8 +79,6 @@ struct s_data
 	char	**delim;
 	char	**path;
 	char	**real_path;
-	char	*cwd;
-	char	*line;
 	int		(*fn[7])(t_data *, char **);
 	int		pipe_fds[2][2];
 	pid_t	*pids;
@@ -118,7 +115,7 @@ void	execute(t_data *data, t_mlist *pipelines, pid_t *pids);
 void	execute_the_path(t_data *data);
 bool	run_builtins(t_data *data, t_mlist *pipeline);
 void	execute_command(t_data *data, char *directory, char **args);
-void	search_the_path(t_data *data, t_mlist *pipeline, char **path);
+void	execute_through_path(t_data *data, t_mlist *pipeline, char **path);
 
 /*	Expander (dollar)	*/
 
@@ -131,7 +128,7 @@ void	wait_for_process(t_data *data, pid_t id);
 
 /*	Initialization	*/
 
-void	parse_input(t_data *data);
+void	get_input_and_parse(t_data *data);
 void	initialize_data(t_data *data, char **envp);
 
 /*	List functions (editing)	*/

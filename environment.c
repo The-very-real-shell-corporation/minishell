@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 19:47:55 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/09 16:44:28 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/21 18:37:03 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,26 @@ t_mlist	*find_position(char *str, t_mlist *list, bool *direction)
 
 t_mlist	*sort_environment(t_data *data, t_mlist *env)
 {
-	t_mlist	*sorted_env;
+	t_mlist	*sorted;
 	bool	direction;
 
-	if (data->env == NULL)
+	if (env == NULL)
 		return (NULL);
-	sorted_env = new_node(data, ft_strdup2(data, env->str), NULL, INITIALIZED);
+	sorted = new_node(data, ft_strdup2(data, env->str), NULL, INITIALIZED);
 	env = env->nx;
 	direction = LEFT;
 	while (env != NULL)
 	{
-		sorted_env = find_position(env->str, sorted_env, &direction);
+		sorted = find_position(env->str, sorted, &direction);
 		if (direction == LEFT)
-			insert_node(sorted_env->pv, sorted_env, \
+			insert_node(sorted->pv, sorted, \
 			new_node(data, ft_strdup2(data, env->str), NULL, INITIALIZED));
 		else if (direction == RIGHT)
-			insert_node(sorted_env, sorted_env->nx, \
+			insert_node(sorted, sorted->nx, \
 			new_node(data, ft_strdup2(data, env->str), NULL, INITIALIZED));
 		env = env->nx;
 	}
-	return (node_first(sorted_env));
+	return (node_first(sorted));
 }
 
 void	copy_environment(t_data *data, char **envp)
