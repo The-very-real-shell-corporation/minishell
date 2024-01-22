@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 13:50:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/21 18:17:03 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/22 17:10:09 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,24 @@ void	print_2d_charray(char **array)
 
 char	**list_to_array(t_data *data, t_mlist *input)
 {
-	char	**result;
+	char	**arr;
 	char	*tmp;
 	size_t	i;
 
 	i = 0;
-	result = ft_calloc2(data, (list_size(input, DUMMY) + 1), sizeof(char *));
+	arr = ft_calloc2(data, (list_size_redirection(input) + 1), sizeof(char *));
 	while (input != NULL && is_redirection(input->token) == false)
 	{
-		result[i] = ft_strdup2(data, input->str);
-		tmp = result[i];
-		result[i] = ft_strtrim2(data, tmp, " ");
+		arr[i] = ft_strdup2(data, input->str);
+		tmp = arr[i];
+		arr[i] = ft_strtrim2(data, tmp, " ");
 		free(tmp);
 		input = input->nx;
 		i++;
 	}
-	if (*result == NULL)
-		return (free(result), NULL);
-	return (result);
+	if (*arr == NULL)
+		return (free(arr), NULL);
+	return (arr);
 }
 
 bool	is_builtin(t_token tolkien)

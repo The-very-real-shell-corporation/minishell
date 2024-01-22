@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/21 19:15:13 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/22 20:36:44 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <readline/history.h>
 # include <dirent.h>
 # include <stdint.h>
-# include <signal.h>
 # include <sys/ioctl.h>
 # include <sys/types.h>
 # include <termios.h>
@@ -55,16 +54,16 @@ typedef enum e_builtin
 	RE_OUTPUT,
 	DOC_DELIM,
 	DOC_INPUT,
-	INITIALIZED = 200,
-	WORD,
-	COMMAND,
-	ECHO_FLAG,
-	DUMMY
+	COMMAND = 200,
+	DUMMY,
+	FILENAME,
+	INITIALIZED,
+	WORD
 }	t_token;
 
 typedef struct s_mlist
 {
-	char			**pipeline;
+	char			**args;
 	char			*str;
 	t_token			token;
 	struct s_mlist	*nx;
@@ -74,7 +73,6 @@ typedef struct s_mlist
 struct s_data
 {
 	int		exit_status;
-	char	**args;
 	char	**env_array;
 	char	**delim;
 	char	**path;
@@ -84,7 +82,7 @@ struct s_data
 	pid_t	*pids;
 	t_mlist	*env;
 	t_mlist	*input;
-	t_mlist	**pipelines;
+	t_mlist	*pipelines;
 };
 
 /*	Built-ins	*/
@@ -111,11 +109,12 @@ t_mlist	*sort_environment(t_data *data, t_mlist *env);
 
 /*	Execution	*/
 
-void	execute(t_data *data, t_mlist *pipelines, pid_t *pids);
-void	execute_the_path(t_data *data);
-bool	run_builtins(t_data *data, t_mlist *pipeline);
+void	carry_out_orders(t_data *data, t_mlist *pipelines, pid_t *pids);
+pid_t	execute(t_data *data, t_mlist *pipelines);
 void	execute_command(t_data *data, char *directory, char **args);
+void	execute_the_path(t_data *data);
 void	execute_through_path(t_data *data, t_mlist *pipeline, char **path);
+bool	run_builtins(t_data *data, t_mlist *pipeline);
 
 /*	Expander (dollar)	*/
 
@@ -124,7 +123,7 @@ void	expand_dollar(t_data *data, char **str);
 /*	Forking	*/
 
 pid_t	create_fork(t_data *data);
-void	wait_for_process(t_data *data, pid_t id);
+void	wait_for_process(t_data *data, pid_t id, char *input);
 
 /*	Initialization	*/
 
@@ -144,12 +143,13 @@ void	unlink_node(t_mlist *node);
 
 /*	List functions (navigation)	*/
 
-size_t	re_tokens(t_mlist *list);
-t_mlist	*node_first(t_mlist *list);
-t_mlist	*node_last(t_mlist *list);
 t_mlist	*find_input(t_mlist *env, char *input);
 bool	go_to_token(t_mlist **list, t_token tolkien);
 size_t	list_size(t_mlist *list, t_token tolkien);
+size_t	list_size_redirection(t_mlist *list);
+t_mlist	*node_first(t_mlist *list);
+t_mlist	*node_last(t_mlist *list);
+size_t	re_tokens(t_mlist *list);
 
 /*	List functions (utility)	*/
 
@@ -171,17 +171,18 @@ t_mlist	*ft_special_split(t_data *data, char *input);
 
 /* Pipes */
 
-void	build_pipeline(t_data *data, t_mlist *input, t_mlist **pipelines);
+void	build_pipelines(t_data *data, t_mlist *input, t_mlist **pipelines);
 void	close_extra_fds(int pipe_fds[2][2]);
 void	close_main_fds(int pipe_fds[2][2]);
 void	copy_pipe_fds(t_data *data, int pipes[2][2]);
-pid_t	fork_pipe(t_data *data, t_mlist *pipelines);
+pid_t	fork_process(t_data *data, t_mlist *pipelines);
 void	open_pipe(t_data *data, int pipes);
 
 /*	Redirections	*/
 
 int		append_output(t_data *data, char *pathname);
 int		redirect_output(t_data *data, char *pathname);
+void	setup_redirection(t_data *data, t_mlist *pipeline);
 t_mlist	*whatsup_doc(t_data *data, t_mlist *input);
 
 /*	Signals	*/

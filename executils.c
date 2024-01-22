@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/21 18:33:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/01/21 18:33:36 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/22 16:06:06 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	execute_command(t_data *data, char *directory, char **args)
 	exit(EXIT_FAILURE); // look up a smart exit status
 }
 
-bool	run_builtins(t_data *data, t_mlist *p)
+bool	run_builtins(t_data *data, t_mlist *pipeline)
 {
-	if (is_builtin(p->token) == true)
+	if (is_builtin(pipeline->token) == true)
 	{
-		data->fn[p->token](data, &p->pipeline[1]);
+		data->fn[pipeline->token](data, &pipeline->args[1]);
 		return (true);
 	}
 	return (false);

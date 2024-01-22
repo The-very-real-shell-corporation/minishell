@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/21 18:07:33 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/22 17:54:39 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	exit_builtin(t_data *data, char **args)
 
 	exit_status = data->exit_status;
 	if (args == NULL)
-		printf("exit");
+		printf("exit\n");
 	clean_up(data);
 	exit(exit_status);
 }

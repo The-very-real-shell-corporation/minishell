@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/21 19:11:43 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/22 18:14:20 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,20 @@ void	initialize_data(t_data *data, char **envp)
 	ft_bzero(data, sizeof(t_data));
 	assign_function_ptrs(data);
 	copy_environment(data, envp);
-	get_path_ready(data);
 }
 
 void	get_input_and_parse(t_data *data)
 {
 	char	*line;
-	
+
 	line = readline("WE SHELL SEE: ");
 	if (line == NULL)
-	{
-		printf("exit\n");
 		exit_builtin(data, NULL);
-	}
 	if (everythingiswhitespace(line) == true)
 		return ;
 	add_history(line);
+	get_path_ready(data);
 	expansion_pack(data, line);
 	free(line);
-	data->args = list_to_array(data, data->input);
-	build_pipeline(data, data->input, data->pipelines);
+	build_pipelines(data, data->input, &data->pipelines);
 }

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/21 19:10:02 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/22 20:38:28 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,26 @@
 		return (input->nx);
 } */
 
-void	build_pipeline(t_data *data, t_mlist *in, t_mlist **pipelines)
+void	build_pipelines(t_data *data, t_mlist *in, t_mlist **pipelines)
 {
 	char 	**arr;
 
-	print_list(in);
-	arr = list_to_array(data, in);
-	if (arr != NULL)
-		node_addback(pipelines, new_node(data, NULL, arr, in->token));
-	while (in != NULL && is_redirection(in->token) == false)
-		in = in->nx;
-	if (in != NULL)
-		build_pipeline(data, in->nx, pipelines + 1);
-	if (in != NULL && is_redirection(in->token) == true) // recursion is funny, but this can be first too
-		node_addback(pipelines, new_node(data, NULL, NULL, in->token));
+	while (in != NULL)
+	{
+		arr = list_to_array(data, in);
+		if (arr != NULL)
+			node_addback(pipelines, new_node(data, NULL, arr, in->token));
+		while (in != NULL && is_redirection(in->token) == false)
+			in = in->nx;
+		if (in != NULL && is_redirection(in->token) == true)
+		{
+			node_addback(pipelines, new_node(data, NULL, NULL, in->token));
+			in = in->nx;
+		}
+	}
 }
 
-pid_t	fork_pipe(t_data *data, t_mlist *pipelines)
+pid_t	fork_process(t_data *data, t_mlist *pipelines)
 {
 	pid_t	id;
 

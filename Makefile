@@ -27,8 +27,8 @@ SRCS	=	alexer.c \
 			builtins_F_to_Z.c \
 			clean_up.c \
 			environment.c \
-			execution.c \
 			executils.c \
+			execution.c \
 			expand_dollar.c \
 			forks.c \
 			ft_special_split.c \
