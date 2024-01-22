@@ -20,7 +20,7 @@ t_mlist	*new_node(t_data *data, char *word, char **args, t_token tolkien)
 	if (new == NULL)
 		exit_error(data, "List malloc failed");
 	new->str = word;
-	new->pipeline = args;
+	new->args = args;
 	new->token = tolkien;
 	new->nx = NULL;
 	new->pv = NULL;

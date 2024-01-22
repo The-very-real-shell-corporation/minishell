@@ -27,10 +27,10 @@ SRCS	=	alexer.c \
 			builtins_F_to_Z.c \
 			clean_up.c \
 			environment.c \
-			execute.c \
+			executils.c \
+			execution.c \
 			expand_dollar.c \
 			forks.c \
-			find_the_path.c \
 			ft_special_split.c \
 			heredoc.c \
 			initialize.c \
@@ -42,6 +42,7 @@ SRCS	=	alexer.c \
 			main.c \
 			pipe_utils.c \
 			pipes.c \
+			redirections.c \
 			signals.c \
 			string_functions.c \
 			string_nav.c \

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/16 19:55:18 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/22 17:34:41 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static void	assign_command_token(t_mlist *node, char *str)
 		node->token = COMMAND;
 }
 
-int	assign_token(char *str)
+static t_token	assign_token(char *str)
 {
-	int	token;
+	t_token	token;
 
 	if (ft_strncmp(str, ">>", 3) == 0)
 		token = APPEND;
@@ -46,23 +46,32 @@ int	assign_token(char *str)
 		token = RE_INPUT;
 	else if (ft_strncmp(str, "|", 2) == 0)
 		token = PIPE;
-	else if (ft_strncmp(str, "-n", 3) == 0)
-		token = ECHO_FLAG;
 	else
 		token = WORD;
 	return (token);
 }
 
-void	tokenize_list(t_mlist *in)
+static void	tokenize_list(t_data *data) // add redirections and use FILENAME token
 {
+	t_mlist	*in;
+
+	in = data->input;
 	while (in != NULL)
 	{
 		in->token = assign_token(in->str);
 		if (in->pv != NULL && in->pv->token == HEREDOC && in->token == WORD)
 			in->token = DOC_DELIM;
-		if ((in->pv == NULL && in->token != HEREDOC) || \
+		else if (is_redirection(in->token) == true && in->pv != NULL && is_redirection(in->pv->token) == true)
+		{
+			ft_putendl_fd("error: multiple redirections in a row", STDERR_FILENO);
+			clear_mlist(&data->input);
+			return ;
+		}
+		else if ((in->pv == NULL && in->token != HEREDOC) || \
 			(in->pv != NULL && in->pv->token == PIPE))
 			assign_command_token(in, in->str);
+		else if (in->pv != NULL && is_redirection(in->pv->token))
+			in->token = FILENAME;
 		in = in->nx;
 	}
 }
@@ -74,12 +83,5 @@ void	analyze_input(t_data *data)
 		printf("%s\n", "error: invalid input");
 		return ;
 	}
-	tokenize_list(data->input);
-	data->pipelines = ft_calloc2(data, \
-	count_tokens(data->input, PIPE) + 2, sizeof(t_mlist *));
-	if (go_to_token(&data->input, HEREDOC) == true)
-	{
-		whatsup_doc(data, data->input);
-	}
-	data->input = node_first(data->input);
+	tokenize_list(data);
 }

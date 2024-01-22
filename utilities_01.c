@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 13:50:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/11 20:31:32 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/22 17:10:09 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,40 @@ void	print_2d_charray(char **array)
 	printf("String [%d]: %s\n", i, array[i]);
 }
 
-char	**list_to_array(t_data *data, t_mlist *input, t_token tolkien)
+char	**list_to_array(t_data *data, t_mlist *input)
 {
-	char	**result;
+	char	**arr;
 	char	*tmp;
 	size_t	i;
 
-	result = ft_calloc2(data, (list_size(input, tolkien) + 1), sizeof(char *));
 	i = 0;
-	while (input != NULL && input->token != tolkien)
+	arr = ft_calloc2(data, (list_size_redirection(input) + 1), sizeof(char *));
+	while (input != NULL && is_redirection(input->token) == false)
 	{
-		result[i] = ft_strdup2(data, input->str);
-		tmp = result[i];
-		result[i] = ft_strtrim2(data, tmp, " ");
+		arr[i] = ft_strdup2(data, input->str);
+		tmp = arr[i];
+		arr[i] = ft_strtrim2(data, tmp, " ");
 		free(tmp);
 		input = input->nx;
 		i++;
 	}
-	return (result);
+	if (*arr == NULL)
+		return (free(arr), NULL);
+	return (arr);
+}
+
+bool	is_builtin(t_token tolkien)
+{
+	if (tolkien >= B_CD && tolkien <= B_UNSET)
+		return (true);
+	return (false);
+}
+
+bool	is_redirection(t_token tolkien)
+{
+	if (tolkien >= APPEND && tolkien <= RE_OUTPUT)
+		return (true);
+	return (false);
 }
 
 bool	everythingiswhitespace(char *str)

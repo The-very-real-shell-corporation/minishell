@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/16 19:44:59 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/22 20:38:28 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_mlist	*check_heredoc(t_data *data, t_mlist *input)
+/* static t_mlist	*check_heredoc(t_data *data, t_mlist *input)
 {
 	t_mlist	*doc;
 	t_mlist	*tmp;
@@ -32,26 +32,28 @@ static t_mlist	*check_heredoc(t_data *data, t_mlist *input)
 	}
 	else
 		return (input->nx);
-}
+} */
 
-void	build_pipeline(t_data *data, t_mlist *input, t_mlist **pipelines)
+void	build_pipelines(t_data *data, t_mlist *in, t_mlist **pipelines)
 {
-	char 	**result;
-	t_token	tolkien;
+	char 	**arr;
 
-	tolkien = input->token;
-	while (input != NULL && input->token != PIPE)
+	while (in != NULL)
 	{
-		input = check_heredoc(data, input);	
+		arr = list_to_array(data, in);
+		if (arr != NULL)
+			node_addback(pipelines, new_node(data, NULL, arr, in->token));
+		while (in != NULL && is_redirection(in->token) == false)
+			in = in->nx;
+		if (in != NULL && is_redirection(in->token) == true)
+		{
+			node_addback(pipelines, new_node(data, NULL, NULL, in->token));
+			in = in->nx;
+		}
 	}
-	result = list_to_array(data, input, PIPE);
-	if (result != NULL)
-		node_addback(&data->pipelines, new_node(data, NULL, result, tolkien));
-	if (input != NULL)
-		build_pipeline(data, input->nx, pipelines + 1);
 }
 
-pid_t	fork_pipe(t_data *data, t_mlist *pipelines)
+pid_t	fork_process(t_data *data, t_mlist *pipelines)
 {
 	pid_t	id;
 
@@ -61,8 +63,9 @@ pid_t	fork_pipe(t_data *data, t_mlist *pipelines)
 		close_extra_fds(data->pipe_fds);
 		copy_pipe_fds(data, data->pipe_fds);
 		if (run_builtins(data, pipelines) == false)
-			search_the_path(data, pipelines, data->path);
+			execute_through_path(data, pipelines, data->path);
 		exit(55);
 	}
+	close_main_fds(data->pipe_fds);
 	return (id);
 }

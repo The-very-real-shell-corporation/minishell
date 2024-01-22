@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/11 15:14:42 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/14 17:14:47 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/22 16:07:32 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	delete_node(t_mlist *node)
 {
-	if (node->pipeline != NULL)
+	if (node->args != NULL)
 	{
-		free_2d_((void ***)&node->pipeline);
+		free_2d_((void ***)&node->args);
 	}
 	if (node->str != NULL)
 	{

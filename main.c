@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/16 17:06:40 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/22 18:14:03 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,9 @@ int	main(int argc, char **argv, char **envp)
 	initialize_data(&data, envp);
 	while (INFINITY)
 	{
-		data.cwd = getcwd(NULL, 0);
-		if (data.cwd == NULL)
-			exit_error(&data, "cwd failed");
 		set_signals();
-		data.line = readline("WE SHELL SEE: ");
-		if (data.line == NULL)
-		{
-			clean_up(&data);
-			printf("exit\n");
-			return (0);
-		}
-		parse_input(&data, data.line);
-		if (data.input != NULL)
-		{
-			execute(&data, data.pipelines, data.pids);
-			add_history(data.line);
-		}
+		get_input_and_parse(&data);
+		carry_out_orders(&data, data.pipelines, data.pids);
 		loop_clean(&data);
 	}
 	return (0);
