@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/21 14:48:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/21 18:13:48 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/23 20:56:40 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_mlist	*doodle_in_doc(t_data *data, t_mlist *doc, t_mlist *tmp, char *delim)
+static void	doodle_in_doc(t_data *data, char *delim)
 {
 	bool	expansion;
 	char	*line;
@@ -28,25 +28,22 @@ t_mlist	*doodle_in_doc(t_data *data, t_mlist *doc, t_mlist *tmp, char *delim)
 			break ;
 		if (expansion == true)
 			expand_dollar(data, &line);
-		node_addback(&doc, \
-		new_node(data, ft_strdup2(data, line), NULL, INITIALIZED));
+		write(STDOUT_FILENO, line, ft_strlen(line));
 		free(line);
 	}
-	if (doc != NULL)
-		tmp = new_node(data, NULL, list_to_array(data, doc), DOC_INPUT);
-	clear_mlist(&doc);
-	return (tmp);
+	free(line);
 }
 
 /*	To do: implement signals so interrupting heredoc doesn't close minishell and make sure
 ctrl + D works (EOF)	*/
 
-t_mlist	*whatsup_doc(t_data *data, t_mlist *input)
+void	whatsup_doc(t_data *data, t_mlist *input)
 {
 	if (input->nx == NULL || input->nx->token != DOC_DELIM)
 	{
 		write(STDERR_FILENO, "Could not find heredoc delimiter\n", 34);
-		return (NULL);
+		exit(EXIT_FAILURE);
 	}
-	return (doodle_in_doc(data, NULL, NULL, input->nx->str));
+	doodle_in_doc(data, input->nx->str);
+	// return (doodle_in_doc(data, NULL, NULL, input->nx->str));
 }

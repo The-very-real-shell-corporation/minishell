@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/23 17:54:57 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/23 20:58:01 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void	open_pipe(t_data *data, int pipes);
 int		append_output(t_data *data, char *pathname);
 int		redirect_output(t_data *data, char *pathname);
 void	setup_redirection(t_data *data, t_mlist *pipeline);
-t_mlist	*whatsup_doc(t_data *data, t_mlist *input);
+void	whatsup_doc(t_data *data, t_mlist *input);
 
 /*	Signals	*/
 

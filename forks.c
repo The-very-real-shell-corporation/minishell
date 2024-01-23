@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/23 18:55:49 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/23 20:57:44 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,14 @@ pid_t	fork_process(t_data *data, t_mlist *pipeline, int direction)
 			direct_pipes_left(data, data->pipe_fds);
 		if (direction == RIGHT || direction == NONE)
 			direct_pipes_right(data, data->pipe_fds);
-		if (pipeline->token == FILENAME)
+		if (pipeline->token == HEREDOC)
 		{
-			exit(EXIT_SUCCESS);
+			whatsup_doc(data, pipeline);
+			exit(0);
 		}
-			// write_file_into_pipe(data);
-		else if (run_builtins(data, pipeline) == false)
+		if (pipeline->token == FILENAME)
+			exit(EXIT_SUCCESS);
+		if (run_builtins(data, pipeline) == false)
 			execute_through_path(data, pipeline, data->path);
 		clean_up(data);
 		exit(0);
