@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/16 19:50:48 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/22 14:44:40 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/23 15:05:10 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ size_t	re_tokens(t_mlist *list)
 	count = 0;
 	while (list != NULL)
 	{
-		if (is_redirection(list->token) == true)
+		if (is_redirection(list->token) != NONE)
 			count++;
 		list = list->nx;
 	}
@@ -33,7 +33,7 @@ size_t	list_size_redirection(t_mlist *list)
 	i = 0;
 	while (list != NULL)
 	{
-		if (is_redirection(list->token) == true)
+		if (is_redirection(list->token) != NONE)
 			break ;
 		list = list->nx;
 		i++;

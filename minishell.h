@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/22 20:36:44 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/23 16:27:19 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,13 @@ typedef struct s_data	t_data;
 # define INFINITY	1
 # define EXEC_ERR	10000
 
+# define NONE -1
 # define LEFT 0
 # define RIGHT 1
+
+# define START 0
+# define MIDDLE 1
+# define END 2
 
 typedef enum e_builtin
 {
@@ -48,10 +53,10 @@ typedef enum e_builtin
 	B_PWD,
 	B_UNSET,
 	APPEND = 100,
-	HEREDOC,
 	PIPE,
-	RE_INPUT,
 	RE_OUTPUT,
+	HEREDOC,
+	RE_INPUT,
 	DOC_DELIM,
 	DOC_INPUT,
 	COMMAND = 200,
@@ -109,8 +114,7 @@ t_mlist	*sort_environment(t_data *data, t_mlist *env);
 
 /*	Execution	*/
 
-void	carry_out_orders(t_data *data, t_mlist *pipelines, pid_t *pids);
-pid_t	execute(t_data *data, t_mlist *pipelines);
+void	carry_out_orders(t_data *data, t_mlist *pipelines);
 void	execute_command(t_data *data, char *directory, char **args);
 void	execute_the_path(t_data *data);
 void	execute_through_path(t_data *data, t_mlist *pipeline, char **path);
@@ -172,10 +176,10 @@ t_mlist	*ft_special_split(t_data *data, char *input);
 /* Pipes */
 
 void	build_pipelines(t_data *data, t_mlist *input, t_mlist **pipelines);
-void	close_extra_fds(int pipe_fds[2][2]);
 void	close_main_fds(int pipe_fds[2][2]);
-void	copy_pipe_fds(t_data *data, int pipes[2][2]);
-pid_t	fork_process(t_data *data, t_mlist *pipelines);
+void	direct_pipes_left(t_data *data, int pipe_fds[2][2]);
+void	direct_pipes_right(t_data *data, int pipe_fds[2][2]);
+pid_t	fork_process(t_data *data, t_mlist *pipelines, int direction);
 void	open_pipe(t_data *data, int pipes);
 
 /*	Redirections	*/
@@ -203,7 +207,7 @@ char	*remake_str(char *original, int start, int len, char *newpart);
 bool	everythingiswhitespace(char *str);
 void	exit_error(t_data *data, char *msg);
 bool	is_builtin(t_token tolkien);
-bool	is_redirection(t_token tolkien);
+int		is_redirection(t_token tolkien);
 char	**list_to_array(t_data *data, t_mlist *list);
 void	print_2d_charray(char **array);
 int		ptr_array_size(void **array);

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/22 17:34:41 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/23 15:25:20 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	tokenize_list(t_data *data) // add redirections and use FILENAME tok
 		in->token = assign_token(in->str);
 		if (in->pv != NULL && in->pv->token == HEREDOC && in->token == WORD)
 			in->token = DOC_DELIM;
-		else if (is_redirection(in->token) == true && in->pv != NULL && is_redirection(in->pv->token) == true)
+		else if (is_redirection(in->token) != NONE && in->pv != NULL && is_redirection(in->pv->token) != NONE)
 		{
 			ft_putendl_fd("error: multiple redirections in a row", STDERR_FILENO);
 			clear_mlist(&data->input);
@@ -70,7 +70,7 @@ static void	tokenize_list(t_data *data) // add redirections and use FILENAME tok
 		else if ((in->pv == NULL && in->token != HEREDOC) || \
 			(in->pv != NULL && in->pv->token == PIPE))
 			assign_command_token(in, in->str);
-		else if (in->pv != NULL && is_redirection(in->pv->token))
+		else if (in->pv != NULL && is_redirection(in->pv->token) != NONE) // potentially unnecessary
 			in->token = FILENAME;
 		in = in->nx;
 	}

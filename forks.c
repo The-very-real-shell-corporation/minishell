@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/22 15:10:40 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/23 16:23:59 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ void	wait_for_process(t_data *data, pid_t id, char *input)
 		}	
 		else if (WTERMSIG(data->exit_status) == SIGQUIT)
 		{	
-			write(STDOUT_FILENO, "My core dumped, ouchie\n", 23);
+			write(STDERR_FILENO, "My core dumped, ouchie\n", 23);
 			data->exit_status = 128 + WTERMSIG(data->exit_status);
 		}
 	}
-	else
+	else if (WEXITSTATUS(data->exit_status) != 0)
 	{
-		data->exit_status = WEXITSTATUS(data->exit_status);	
+		// data->exit_status = WEXITSTATUS(data->exit_status);
+		write(STDERR_FILENO, "Not sure what but something went wrong\n", 40);
 	}
 }
 
@@ -68,4 +69,26 @@ void	execute_the_path(t_data *data)
 	if (id == 0)
 		execute_through_path(data, data->pipelines, data->path);
 	wait_for_process(data, id, data->pipelines->args[0]);
+}
+
+pid_t	fork_process(t_data *data, t_mlist *pipeline, int direction)
+{
+	pid_t	id;
+
+	if (direction != NONE)
+		setup_redirection(data, pipeline->nx);
+	id = create_fork(data);
+	if (id == 0)
+	{
+		if (direction == LEFT)
+			direct_pipes_left(data, data->pipe_fds);
+		if (direction == RIGHT)
+			direct_pipes_right(data, data->pipe_fds);
+		if (run_builtins(data, pipeline) == false)
+			execute_through_path(data, pipeline, data->path);
+		clean_up(data);
+		exit(55);
+	}
+	close_main_fds(data->pipe_fds);
+	return (id);
 }

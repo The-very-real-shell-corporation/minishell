@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/22 18:14:03 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/23 16:26:31 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		set_signals();
 		get_input_and_parse(&data);
-		carry_out_orders(&data, data.pipelines, data.pids);
+		carry_out_orders(&data, data.pipelines);
 		loop_clean(&data);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/22 18:14:20 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/23 16:18:14 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,12 @@ static void	get_path_ready(t_data *data)
 {
 	int		i;
 	char	*tmp;
+	char	*path;
 
 	i = 0;
-	tmp = envp_string(data, ft_strdup2(data, "PATH"));
+	path = ft_strdup2(data, "PATH");
+	tmp = envp_string(data, path);
+	free(path);
 	data->path = ft_split(tmp, ':');
 	if (data->path == NULL)
 	{

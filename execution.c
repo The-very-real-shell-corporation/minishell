@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/22 20:57:52 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/23 16:26:44 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,75 +53,30 @@ static bool	try_pipeless(t_data *data, t_mlist *pipeline)
 	return (false);
 }
 
-
-/* void	execute2(t_data *data, t_mlist *pipelines, pid_t *pids)
+void	carry_out_orders(t_data *data, t_mlist *pipelines)
 {
 	int	i;
+	int	direction;
 
 	i = 0;
 	if (try_pipeless(data, pipelines) == true)
 		return ;
-	pids = ft_calloc2(data, list_size(pipelines, DUMMY), sizeof(pid_t));
+	data->pids = ft_calloc2(data, re_tokens(pipelines) + 1, sizeof(pid_t));
 	while (pipelines != NULL)
 	{
-		if (pipelines->pv == NULL)
-			open_pipe(data, 0);
-		else if (pipelines->nx == NULL)
-			open_pipe(data, 1);
-		else
-			open_pipe(data, 2);
-		pids[i] = fork_process(data, pipelines);
-		i++;
+		direction = NONE;
+		if (pipelines->nx != NULL)
+			direction = is_redirection(pipelines->nx->token);
+		data->pids[i] = fork_process(data, pipelines, direction);
 		pipelines = pipelines->nx;
-	}
-	while (i > 0)
-	{
-		i--;
-		wait_for_process(data, pids[i], data->pipelines->args[0]);
-		printf("exit status: %d\n", data->exit_status);
-	}
-} */
-
-pid_t	execute(t_data *data, t_mlist *input)
-{
-	pid_t	id;
-
-	while (input != NULL && is_redirection(input->token) == false)
-	{
-		if (input->token == FILENAME)
-			setup_redirection(data, input);
-		if (input->pv == NULL)
-			open_pipe(data, 0);
-		else if (input->nx == NULL)
-			open_pipe(data, 1);
-		else if (input->nx->token == PIPE)
-			open_pipe(data, 2);
-		id = fork_process(data, input);
-		input = input->nx;
-	}
-	return (id);
-}
-
-void	carry_out_orders(t_data *data, t_mlist *pipelines, pid_t *pids)
-{
-	int	i;
-
-	i = 0;
-	if (try_pipeless(data, pipelines) == true)
-		return ;
-	pids = ft_calloc2(data, list_size(pipelines, DUMMY), sizeof(pid_t)); // make it more precisely allocate?
-	while (pipelines != NULL)
-	{
-		pids[i] = execute(data, pipelines);
-		pipelines = pipelines->nx;
-		if (pipelines != NULL && is_redirection(pipelines->token) == true)
+		if (direction != NONE)
 			pipelines = pipelines->nx;
 		i++;
 	}
 	while (i > 0)
 	{
 		i--;
-		wait_for_process(data, pids[i], "WHAT");
+		wait_for_process(data, data->pids[i], "WHAT");
 		printf("exit status: %d\n", data->exit_status);
 	}
 }

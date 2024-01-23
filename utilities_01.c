@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 13:50:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/22 17:10:09 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/23 15:05:58 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**list_to_array(t_data *data, t_mlist *input)
 
 	i = 0;
 	arr = ft_calloc2(data, (list_size_redirection(input) + 1), sizeof(char *));
-	while (input != NULL && is_redirection(input->token) == false)
+	while (input != NULL && is_redirection(input->token) == NONE)
 	{
 		arr[i] = ft_strdup2(data, input->str);
 		tmp = arr[i];
@@ -54,11 +54,13 @@ bool	is_builtin(t_token tolkien)
 	return (false);
 }
 
-bool	is_redirection(t_token tolkien)
+int	is_redirection(t_token tolkien)
 {
 	if (tolkien >= APPEND && tolkien <= RE_OUTPUT)
-		return (true);
-	return (false);
+		return (RIGHT);
+	if (tolkien >= HEREDOC && tolkien <= RE_INPUT)
+		return (LEFT);
+	return (NONE);
 }
 
 bool	everythingiswhitespace(char *str)
