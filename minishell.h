@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/23 16:27:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/23 17:54:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <dirent.h>
 # include <stdint.h>
 # include <sys/ioctl.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <termios.h>
 # include <sys/wait.h>

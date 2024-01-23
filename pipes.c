@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/23 15:46:30 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/23 18:03:33 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@
 	else
 		return (input->nx);
 } */
+
+// void	write_file_into_pipe(t_data *data, int fd)
+// {
+// 	while (INFINITY)
+// 	{
+// 		readline()
+// 	}
+// }
 
 void	build_pipelines(t_data *data, t_mlist *in, t_mlist **pipelines)
 {

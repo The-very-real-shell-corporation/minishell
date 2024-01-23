@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/22 17:54:39 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/23 18:23:11 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ int	echo_builtin(t_data *data, char **args)
 	(void)data;
 	while (*args != NULL)
 	{
-		printf("%s", *args);
+		ft_putstr_fd(*args, STDOUT_FILENO);
 		if (*(args + 1) != NULL)
-			printf(" ");
+			ft_putstr_fd(" ", STDOUT_FILENO);
 		args++;
 	}
 	if (n_flag == false)
-		printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
 }
 

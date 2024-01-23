@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/23 16:26:44 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/23 17:34:07 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ void	carry_out_orders(t_data *data, t_mlist *pipelines)
 	data->pids = ft_calloc2(data, re_tokens(pipelines) + 1, sizeof(pid_t));
 	while (pipelines != NULL)
 	{
-		direction = NONE;
-		if (pipelines->nx != NULL)
+		if (pipelines->nx == NULL)
+			direction = NONE;
+		else
 			direction = is_redirection(pipelines->nx->token);
 		data->pids[i] = fork_process(data, pipelines, direction);
 		pipelines = pipelines->nx;
