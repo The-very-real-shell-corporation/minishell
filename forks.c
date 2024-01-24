@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/24 12:30:55 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/24 16:01:09 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	wait_for_process(t_data *data, pid_t id, char *input)
 		{
 			write(STDOUT_FILENO, "\n", 1);
 			data->exit_status = 128 + WTERMSIG(data->exit_status);
-		}	
+		}
 		else if (WTERMSIG(data->exit_status) == SIGQUIT)
-		{	
+		{
 			write(STDERR_FILENO, "My core dumped, ouchie\n", 23);
 			data->exit_status = 128 + WTERMSIG(data->exit_status);
 		}
@@ -77,10 +77,7 @@ pid_t	fork_process(t_data *data, t_mlist *pipeline, int direction)
 {
 	pid_t	id;
 
-	if (direction != NONE)
-		setup_redirection(data, pipeline->nx);
-	else
-		open_pipe(data, END);
+	setup_redirection(data, pipeline);
 	id = create_fork(data);
 	if (id == 0)
 	{
@@ -89,7 +86,6 @@ pid_t	fork_process(t_data *data, t_mlist *pipeline, int direction)
 			direct_pipes_left(data, data->pipe_fds);
 			if (pipeline->token == HEREDOC)
 				whatsup_doc(data, pipeline);
-			sleep(1);
 			exit(EXIT_SUCCESS);
 		}
 		direct_pipes_right(data, data->pipe_fds);

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/24 12:29:51 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/24 15:48:54 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,17 @@
 # include <sys/wait.h>
 # include "libft/libft.h"
 
-typedef struct s_data	t_data;
-
 # define INFINITY	1
 # define EXEC_ERR	10000
 
-enum direction
+enum e_direction
 {
 	NONE,
 	LEFT,
 	RIGHT
 };
 
-enum position
+enum e_position
 {
 	START,
 	MIDDLE,
@@ -80,7 +78,7 @@ typedef struct s_mlist
 	struct s_mlist	*pv;
 }	t_mlist;
 
-struct s_data
+typedef struct s_data
 {
 	int		exit_status;
 	char	**env_array;
@@ -93,7 +91,7 @@ struct s_data
 	t_mlist	*env;
 	t_mlist	*input;
 	t_mlist	*pipelines;
-};
+}	t_data;
 
 /*	Built-ins	*/
 
@@ -138,13 +136,14 @@ void	wait_for_process(t_data *data, pid_t id, char *input);
 
 void	get_input_and_parse(t_data *data);
 void	initialize_data(t_data *data, char **envp);
+void	setup_redirection(t_data *data, t_mlist *pipeline);
 
 /*	List functions (editing)	*/
 
 void	clear_mlist(t_mlist **list);
+t_mlist	*copy_node(t_data *data, t_mlist *node);
 void	delete_node(t_mlist **node);
 void	insert_node(t_mlist *node1, t_mlist *node2, t_mlist *new);
-void	insert_list(t_mlist *node1, t_mlist *node2, t_mlist *list);
 t_mlist	*new_node(t_data *data, char *word, char **args, t_token tolkien);
 void	node_addback(t_mlist **list, t_mlist *new_node);
 void	replace_node(t_data *data, t_mlist *node, char *input);
@@ -186,12 +185,6 @@ void	direct_pipes_left(t_data *data, int pipe_fds[2][2]);
 void	direct_pipes_right(t_data *data, int pipe_fds[2][2]);
 pid_t	fork_process(t_data *data, t_mlist *pipelines, int direction);
 void	open_pipe(t_data *data, int pipes);
-
-/*	Redirections	*/
-
-int		append_output(t_data *data, char *pathname);
-int		redirect_output(t_data *data, char *pathname);
-void	setup_redirection(t_data *data, t_mlist *pipeline);
 void	whatsup_doc(t_data *data, t_mlist *input);
 
 /*	Signals	*/

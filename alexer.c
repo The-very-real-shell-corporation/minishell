@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/24 12:23:12 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/24 15:41:53 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	assign_token(t_mlist *node, char *str)
 		node->token = WORD;
 }
 
-static void	tokenize_list(t_data *data, t_mlist *in) // add redirections and use FILENAME token
+static void	tokenize_list(t_data *data, t_mlist *in)
 {
 	assign_token(in, in->str);
 	if (in->pv != NULL && is_redirection(in->pv->token) != NONE \
@@ -64,7 +64,9 @@ static void	tokenize_list(t_data *data, t_mlist *in) // add redirections and use
 			lexer_error(data, "heredoc has no delimiter");
 		else
 		{
-			in->str = ft_strdup2(data, in->nx->str);
+			in->args = ft_split(in->nx->str, ' ');
+			if (in->args == NULL)
+				exit_error(data, "split alloc failed");
 			unlink_node(in->nx);
 		}
 	}

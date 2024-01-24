@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/21 14:48:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/24 12:26:57 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/24 15:49:52 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	doodle_in_doc(t_data *data, char *delim)
 	bool	expansion;
 	char	*line;
 
+	puts("HI");
 	expansion = true;
 	if (first_last(delim, '\"') == true || first_last(delim, '\'') == true)
 		expansion = false;
@@ -33,8 +34,8 @@ static void	doodle_in_doc(t_data *data, char *delim)
 	free(line);
 }
 
-/*	To do: implement signals so interrupting heredoc doesn't close minishell and make sure
-ctrl + D works (EOF)	*/
+/*	To do: implement signals so interrupting heredoc doesn't close minishell 
+and make sure ctrl + D works (EOF)	*/
 
 void	whatsup_doc(t_data *data, t_mlist *input)
 {

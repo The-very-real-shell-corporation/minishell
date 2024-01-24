@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/16 18:06:23 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/24 15:41:22 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*remove_quotes(t_data *data, char *str, char c)
 	int		i;
 
 	i = 0;
-	res = ft_calloc2(data,ft_strlen(str) - 1, sizeof(char));
+	res = ft_calloc2(data, ft_strlen(str) - 1, sizeof(char));
 	while (str[i] == c)
 		str++;
 	while (str[i] != '\0')
