@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/23 20:58:01 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/24 12:29:51 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,21 @@ typedef struct s_data	t_data;
 # define INFINITY	1
 # define EXEC_ERR	10000
 
-# define NONE -1
-# define LEFT 0
-# define RIGHT 1
+enum direction
+{
+	NONE,
+	LEFT,
+	RIGHT
+};
 
-# define START 0
-# define MIDDLE 1
-# define END 2
+enum position
+{
+	START,
+	MIDDLE,
+	END
+};
 
-typedef enum e_builtin
+typedef enum e_token
 {
 	B_CD = 0,
 	B_ECHO,
@@ -58,8 +64,6 @@ typedef enum e_builtin
 	RE_OUTPUT,
 	HEREDOC,
 	RE_INPUT,
-	DOC_DELIM,
-	DOC_INPUT,
 	COMMAND = 200,
 	DUMMY,
 	FILENAME,
@@ -138,7 +142,7 @@ void	initialize_data(t_data *data, char **envp);
 /*	List functions (editing)	*/
 
 void	clear_mlist(t_mlist **list);
-void	delete_node(t_mlist *node);
+void	delete_node(t_mlist **node);
 void	insert_node(t_mlist *node1, t_mlist *node2, t_mlist *new);
 void	insert_list(t_mlist *node1, t_mlist *node2, t_mlist *list);
 t_mlist	*new_node(t_data *data, char *word, char **args, t_token tolkien);
@@ -209,6 +213,7 @@ bool	everythingiswhitespace(char *str);
 void	exit_error(t_data *data, char *msg);
 bool	is_builtin(t_token tolkien);
 int		is_redirection(t_token tolkien);
+void	lexer_error(t_data *data, char *msg);
 char	**list_to_array(t_data *data, t_mlist *list);
 void	print_2d_charray(char **array);
 int		ptr_array_size(void **array);

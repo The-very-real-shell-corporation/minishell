@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 19:47:55 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/21 18:37:03 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/24 10:57:24 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_mlist	*find_position(char *str, t_mlist *list, bool *direction)
+static t_mlist	*find_position(char *str, t_mlist *list, int *direction)
 {
 	if (ft_strncmp(str, list->str, ft_strlen(str) + 1) < 0)
 	{
@@ -36,7 +36,7 @@ t_mlist	*find_position(char *str, t_mlist *list, bool *direction)
 t_mlist	*sort_environment(t_data *data, t_mlist *env)
 {
 	t_mlist	*sorted;
-	bool	direction;
+	int		direction;
 
 	if (env == NULL)
 		return (NULL);

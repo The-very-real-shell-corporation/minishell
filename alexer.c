@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/23 15:25:20 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/24 12:23:12 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,60 +28,53 @@ static void	assign_command_token(t_mlist *node, char *str)
 		node->token = B_PWD;
 	else if (ft_strncmp("unset", str, 6) == 0)
 		node->token = B_UNSET;
+	else if (ft_strncmp(str, "<<", 3) == 0)
+		node->token = HEREDOC;
 	else
 		node->token = COMMAND;
 }
 
-static t_token	assign_token(char *str)
+static void	assign_token(t_mlist *node, char *str)
 {
-	t_token	token;
-
 	if (ft_strncmp(str, ">>", 3) == 0)
-		token = APPEND;
+		node->token = APPEND;
 	else if (ft_strncmp(str, "<<", 3) == 0)
-		token = HEREDOC;
+		node->token = HEREDOC;
 	else if (ft_strncmp(str, ">", 2) == 0)
-		token = RE_OUTPUT;
+		node->token = RE_OUTPUT;
 	else if (ft_strncmp(str, "<", 2) == 0)
-		token = RE_INPUT;
+		node->token = RE_INPUT;
 	else if (ft_strncmp(str, "|", 2) == 0)
-		token = PIPE;
+		node->token = PIPE;
 	else
-		token = WORD;
-	return (token);
+		node->token = WORD;
 }
 
-static void	tokenize_list(t_data *data) // add redirections and use FILENAME token
+static void	tokenize_list(t_data *data, t_mlist *in) // add redirections and use FILENAME token
 {
-	t_mlist	*in;
-
-	in = data->input;
-	while (in != NULL)
+	assign_token(in, in->str);
+	if (in->pv != NULL && is_redirection(in->pv->token) != NONE \
+	&& is_redirection(in->token) != NONE)
+		lexer_error(data, "multiple redirections in a row");
+	else if (in->pv == NULL || in->pv->token == PIPE)
+		assign_command_token(in, in->str);
+	if (in != NULL && in->token == HEREDOC)
 	{
-		in->token = assign_token(in->str);
-		if (in->pv != NULL && in->pv->token == HEREDOC && in->token == WORD)
-			in->token = DOC_DELIM;
-		else if (is_redirection(in->token) != NONE && in->pv != NULL && is_redirection(in->pv->token) != NONE)
+		if (in->nx == NULL)
+			lexer_error(data, "heredoc has no delimiter");
+		else
 		{
-			ft_putendl_fd("error: multiple redirections in a row", STDERR_FILENO);
-			clear_mlist(&data->input);
-			return ;
+			in->str = ft_strdup2(data, in->nx->str);
+			unlink_node(in->nx);
 		}
-		else if ((in->pv == NULL && in->token != HEREDOC) || \
-			(in->pv != NULL && in->pv->token == PIPE))
-			assign_command_token(in, in->str);
-		else if (in->pv != NULL && is_redirection(in->pv->token) != NONE) // potentially unnecessary
-			in->token = FILENAME;
-		in = in->nx;
 	}
+	if (data->input != NULL && in->nx != NULL)
+		tokenize_list(data, in->nx);
 }
 
 void	analyze_input(t_data *data)
 {
-	if (data->input == NULL)
-	{
-		printf("%s\n", "error: invalid input");
-		return ;
-	}
-	tokenize_list(data);
+	tokenize_list(data, data->input);
+	puts("Tokenized list:");
+	print_list(data->input);
 }

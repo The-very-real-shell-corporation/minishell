@@ -6,41 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/23 18:03:33 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/24 12:28:54 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* static t_mlist	*check_heredoc(t_data *data, t_mlist *input)
-{
-	t_mlist	*doc;
-	t_mlist	*tmp;
-
-	tmp = NULL;
-	if (input->token == HEREDOC)
-	{
-		doc = whatsup_doc(data, input);
-		if (doc != NULL)
-		{	
-			tmp = input->nx->nx;
-			insert_node(input, input->nx, doc);
-		}
-		unlink_node(input->nx);
-		unlink_node(input);
-		return (tmp);
-	}
-	else
-		return (input->nx);
-} */
-
-// void	write_file_into_pipe(t_data *data, int fd)
-// {
-// 	while (INFINITY)
-// 	{
-// 		readline()
-// 	}
-// }
 
 void	build_pipelines(t_data *data, t_mlist *in, t_mlist **pipelines)
 {
@@ -55,8 +25,12 @@ void	build_pipelines(t_data *data, t_mlist *in, t_mlist **pipelines)
 			in = in->nx;
 		if (in != NULL && is_redirection(in->token) != NONE)
 		{
-			node_addback(pipelines, new_node(data, NULL, NULL, in->token));
+			node_addback(pipelines, \
+			new_node(data, ft_strdup2(data, in->str), NULL, in->token));
 			in = in->nx;
 		}
 	}
+	puts("\nPipelines: \n");
+	print_list(data->pipelines);
+	// exit(0);
 }

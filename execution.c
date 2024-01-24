@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/23 17:34:07 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/24 11:15:54 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,6 @@ void	carry_out_orders(t_data *data, t_mlist *pipelines)
 	{
 		i--;
 		wait_for_process(data, data->pids[i], "WHAT");
-		printf("exit status: %d\n", data->exit_status);
+		// printf("exit status: %d\n", data->exit_status);
 	}
 }

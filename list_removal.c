@@ -6,23 +6,23 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/11 15:14:42 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/22 16:07:32 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/24 12:10:52 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	delete_node(t_mlist *node)
+void	delete_node(t_mlist **node)
 {
-	if (node->args != NULL)
+	if ((*node)->args != NULL)
 	{
-		free_2d_((void ***)&node->args);
+		free_2d_((void ***)&(*node)->args);
 	}
-	if (node->str != NULL)
+	if ((*node)->str != NULL)
 	{
-		free(node->str);
+		free((*node)->str);
 	}
-	free_and_null((void **)&node);
+	free_and_null((void **)node);
 }
 
 void	clear_mlist(t_mlist **list)
@@ -33,7 +33,7 @@ void	clear_mlist(t_mlist **list)
 	{
 		tmp = *list;
 		*list = (*list)->nx;
-		delete_node(tmp);
+		delete_node(&tmp);
 	}
 }
 
@@ -50,7 +50,7 @@ void	unlink_node(t_mlist *node)
 		prev->nx = next;
 	if (next != NULL)
 		next->pv = prev;
-	delete_node(node);
+	delete_node(&node);
 }
 
 void	replace_node(t_data *data, t_mlist *node, char *input)

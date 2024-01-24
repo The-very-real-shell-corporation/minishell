@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/16 19:50:48 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/23 15:05:10 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/24 11:49:32 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ size_t	list_size_redirection(t_mlist *list)
 	while (list != NULL)
 	{
 		if (is_redirection(list->token) != NONE)
+		{
+			if (list->token == HEREDOC)
+				i++;
 			break ;
+		}
 		list = list->nx;
 		i++;
 	}

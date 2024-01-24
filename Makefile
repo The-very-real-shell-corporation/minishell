@@ -18,7 +18,7 @@ LIBS	= $(LIBFT)/libft.a
 RM		= rm -rf
 CC		= cc
 CFLAGS	= -Wall -Werror -Wextra -g
-#CFLAGS	+= -fsanitize=address
+CFLAGS	+= -fsanitize=address
 L_FLAGS	= -lreadline
 
 SRCS	=	alexer.c \
@@ -27,6 +27,7 @@ SRCS	=	alexer.c \
 			builtins_F_to_Z.c \
 			clean_up.c \
 			environment.c \
+			errors.c \
 			executils.c \
 			execution.c \
 			expand_dollar.c \
@@ -48,6 +49,7 @@ SRCS	=	alexer.c \
 			string_nav.c \
 			utilities_01.c \
 
+HEREDOC	= heredoc_dir
 OBJDIR	= shobjects
 
 OBJS	= $(SRCS:%.c=$(OBJDIR)/%.o)
@@ -62,12 +64,13 @@ $(OBJDIR)/%.o : %.c
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
+	mkdir -p $(HEREDOC)
 
 $(NAME): $(LIBS) $(OBJDIR) $(OBJS) 
 	$(CC) $(CFLAGS) $(OBJS) $(L_FLAGS) $(LIBS) -o $(NAME)
 
 clean:	
-	$(RM) $(OBJDIR)
+	$(RM) $(OBJDIR) $(HEREDOC)
 	make clean -C $(LIBFT)
 
 fclean: clean
