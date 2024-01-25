@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/24 15:42:21 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/25 20:36:24 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,4 @@ void	build_pipelines(t_data *data, t_mlist *in, t_mlist **pipelines)
 			in = in->nx;
 		}
 	}
-	puts("\nPipelines: \n");
-	print_list(data->pipelines);
 }

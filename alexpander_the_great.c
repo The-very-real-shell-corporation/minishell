@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/24 15:41:22 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/25 19:21:54 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,5 @@ void	expansion_pack(t_data *data, char *input)
 		split = split->nx;
 	}
 	contract_list(data, data->input);
-	analyze_input(data);
+	tokenize_list(data, data->input);
 }

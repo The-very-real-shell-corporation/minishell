@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/20 15:04:31 by vincent       #+#    #+#                 */
-/*   Updated: 2024/01/24 16:03:50 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/25 21:22:38 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,7 @@ static void	redirect_input(t_data *data, char *pathname)
 	int	fd;
 
 	close(data->pipe_fds[0][0]);
-	fd = open(pathname, O_RDONLY, 0644);
-	if (fd == -1)
-		exit_error(data, "failed to open or create file");
-	data->pipe_fds[0][0] = fd;
-}
-
-static void	open_heredoc(t_data *data, char *pathname)
-{
-	int	fd;
-
-	close(data->pipe_fds[0][0]);
-	fd = open(pathname, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	fd = open(pathname, O_RDWR, 0644);
 	if (fd == -1)
 		exit_error(data, "failed to open or create file");
 	data->pipe_fds[0][0] = fd;
@@ -60,12 +49,11 @@ void	setup_redirection(t_data *data, t_mlist *pipeline)
 {
 	if (pipeline->token == HEREDOC)
 	{
-		open_pipe(data, END);
-		open_heredoc(data, "heredoc_dir/heredoc.txt");
+		setup_heredoc(data, pipeline);
 		return ;
 	}
 	pipeline = pipeline->nx;
-	if (pipeline->nx != NULL)
+	if (pipeline != NULL && pipeline->nx != NULL)
 	{
 		if (pipeline->pv->pv == NULL)
 			open_pipe(data, START);
@@ -77,12 +65,7 @@ void	setup_redirection(t_data *data, t_mlist *pipeline)
 			redirect_output(data, pipeline->nx->args[0]);
 		if (pipeline->token == RE_INPUT)
 			redirect_input(data, pipeline->nx->args[0]);
-		if (pipeline->token == HEREDOC)
-			open_heredoc(data, "heredoc_dir/heredoc.txt");
 	}
 	else
-	{
-		puts("WHOOP");
 		open_pipe(data, END);
-	}
 }

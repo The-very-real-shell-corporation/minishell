@@ -6,18 +6,39 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/21 14:48:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/24 15:49:52 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/25 20:59:11 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	doodle_in_doc(t_data *data, char *delim)
+static void	open_heredoc(t_data *data, char *pathname)
+{
+	int	fd;
+
+	close(data->pipe_fds[0][0]);
+	fd = open(pathname, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	if (fd == -1)
+		exit_error(data, "failed to open or create file");
+	data->pipe_fds[0][0] = fd;
+}
+
+void	setup_heredoc(t_data *data, t_mlist *pipeline)
+{
+	if (pipeline->pv == NULL)
+		open_pipe(data, START);
+	if (pipeline->nx == NULL)
+		open_pipe(data, END);
+	else
+		open_pipe(data, MIDDLE);
+	open_heredoc(data, "heredoc_dir/heredoc.txt");
+}
+
+void	whatsup_doc(t_data *data, char *delim)
 {
 	bool	expansion;
 	char	*line;
 
-	puts("HI");
 	expansion = true;
 	if (first_last(delim, '\"') == true || first_last(delim, '\'') == true)
 		expansion = false;
@@ -32,13 +53,8 @@ static void	doodle_in_doc(t_data *data, char *delim)
 		free(line);
 	}
 	free(line);
+	exit(EXIT_SUCCESS);
 }
 
 /*	To do: implement signals so interrupting heredoc doesn't close minishell 
 and make sure ctrl + D works (EOF)	*/
-
-void	whatsup_doc(t_data *data, t_mlist *input)
-{
-	doodle_in_doc(data, input->str);
-	// return (doodle_in_doc(data, NULL, NULL, input->nx->str));
-}

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/24 15:48:54 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/25 20:54:15 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 
 # define INFINITY	1
 # define EXEC_ERR	10000
+
+typedef struct s_data	t_data;
 
 enum e_direction
 {
@@ -78,11 +80,10 @@ typedef struct s_mlist
 	struct s_mlist	*pv;
 }	t_mlist;
 
-typedef struct s_data
+struct s_data
 {
 	int		exit_status;
 	char	**env_array;
-	char	**delim;
 	char	**path;
 	char	**real_path;
 	int		(*fn[7])(t_data *, char **);
@@ -91,7 +92,7 @@ typedef struct s_data
 	t_mlist	*env;
 	t_mlist	*input;
 	t_mlist	*pipelines;
-}	t_data;
+};
 
 /*	Built-ins	*/
 
@@ -166,11 +167,11 @@ void	print_list(t_mlist *list);
 
 /*	Lexer	*/
 
-void	analyze_input(t_data *data);
 void	expansion_pack(t_data *data, char *input);
 bool	first_last(char *str, char c);
 int		ft_ministrcmp(char *str1, char *str2);
 char	*mini_shubstr(t_data *data, char *str, int len);
+void	tokenize_list(t_data *data, t_mlist *in);
 
 /*	Parser functions	*/
 
@@ -183,9 +184,11 @@ void	build_pipelines(t_data *data, t_mlist *input, t_mlist **pipelines);
 void	close_main_fds(int pipe_fds[2][2]);
 void	direct_pipes_left(t_data *data, int pipe_fds[2][2]);
 void	direct_pipes_right(t_data *data, int pipe_fds[2][2]);
+void	direct_pipes_start(t_data *data, int pipe_fds[2][2]);
 pid_t	fork_process(t_data *data, t_mlist *pipelines, int direction);
 void	open_pipe(t_data *data, int pipes);
-void	whatsup_doc(t_data *data, t_mlist *input);
+void	setup_heredoc(t_data *data, t_mlist *pipeline);
+void	whatsup_doc(t_data *data, char *delim);
 
 /*	Signals	*/
 

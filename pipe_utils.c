@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/08 19:46:35 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/24 12:36:39 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/25 21:10:31 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	direct_pipes_left(t_data *data, int pipe_fds[2][2])
 {
 	if (pipe_fds[0][0] != -1)
 	{
-		puts("HERE left");
 		close(data->pipe_fds[0][1]);
 		if (dup2(pipe_fds[0][0], STDIN_FILENO) == -1)
 			exit_error(data, "dup2 failed");
@@ -57,7 +56,6 @@ void	direct_pipes_left(t_data *data, int pipe_fds[2][2])
 	}
 	if (pipe_fds[1][0] != -1)
 	{
-		puts("NO, HERE left");
 		close(data->pipe_fds[1][0]);
 		if (dup2(pipe_fds[1][1], STDOUT_FILENO) == -1)
 			exit_error(data, "dup2 failed");
@@ -69,7 +67,7 @@ void	direct_pipes_right(t_data *data, int pipe_fds[2][2])
 {
 	if (pipe_fds[0][0] != -1)
 	{
-		puts("HERE");
+		
 		close(data->pipe_fds[0][0]);
 		if (dup2(pipe_fds[0][1], STDOUT_FILENO) == -1)
 			exit_error(data, "dup2 failed");
@@ -77,7 +75,6 @@ void	direct_pipes_right(t_data *data, int pipe_fds[2][2])
 	}
 	if (pipe_fds[1][0] != -1)
 	{
-		puts("NO, HERE");
 		close(data->pipe_fds[1][1]);
 		if (dup2(pipe_fds[1][0], STDIN_FILENO) == -1)
 			exit_error(data, "dup2 failed");

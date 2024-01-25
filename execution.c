@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/24 15:57:40 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/25 21:13:56 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	carry_out_orders(t_data *data, t_mlist *pipelines)
 {
 	int	i;
 	int	direction;
+	t_mlist	*tmp;
 
 	i = 0;
 	if (try_pipeless(data, pipelines) == true)
@@ -67,13 +68,16 @@ void	carry_out_orders(t_data *data, t_mlist *pipelines)
 	data->pids = ft_calloc2(data, re_tokens(pipelines) + 1, sizeof(pid_t));
 	while (pipelines != NULL)
 	{
-		data->pids[i] = fork_process(data, pipelines, direction);
+		tmp = pipelines;
 		pipelines = pipelines->nx;
 		if (pipelines != NULL)
 		{
 			direction = is_redirection(pipelines->token);
-			pipelines = pipelines->nx;
+			if (pipelines->token != HEREDOC)
+				pipelines = pipelines->nx;
+			printf("direction: %d\n", direction);
 		}
+		data->pids[i] = fork_process(data, tmp, direction);
 		i++;
 	}
 	while (i > 0)

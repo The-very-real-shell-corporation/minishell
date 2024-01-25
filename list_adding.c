@@ -59,8 +59,11 @@ t_mlist	*copy_node(t_data *data, t_mlist *node)
 	copy = new_node(data, NULL, NULL, INITIALIZED);
 	copy->str = ft_strdup2(data, node->str);
 	copy->token = node->token;
-	copy->args = ft_calloc2(data, \
-	ptr_array_size((void **)node->args) + 1, sizeof(char *));
+	if (node->args != NULL)
+		copy->args = ft_calloc2(data, \
+		ptr_array_size((void **)node->args) + 1, sizeof(char *));
+	else
+		return (copy);
 	while (node->args[i] != NULL)
 	{
 		copy->args[i] = ft_strdup2(data, node->args[i]);

@@ -6,7 +6,7 @@
 /*   By: akasiota <akasiota@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/28 15:16:19 by akasiota      #+#    #+#                 */
-/*   Updated: 2024/01/24 13:15:35 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/25 18:53:19 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ void	signal_int_handler(int sig)
 	(void)sig;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
-	// rl_replace_line("\0", 0);
+	rl_replace_line("\0", 0);
 	rl_redisplay();
 }
