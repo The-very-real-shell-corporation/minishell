@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/23 18:23:11 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/26 15:04:27 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int	cd_builtin(t_data *data, char **args)
 		return (126);
 	}
 	change_env_var(data, "OLDPWD=", tmp);
-	change_env_var(data, "PWD=", getcwd(NULL, 0));
+	tmp = getcwd(NULL, 0);
+	if (tmp == NULL)
+		exit_error(data, "getcwd failed");
+	change_env_var(data, "PWD=", tmp);
 	return (0);
 }
 
@@ -39,14 +42,17 @@ int	echo_builtin(t_data *data, char **args)
 	bool	n_flag;
 
 	if (*args == NULL)
-		return (-1);
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		return (0);
+	}
+	(void)data;
 	n_flag = false;
-	if (*args != NULL && ft_strncmp("-n", *args, 3) == 0)
+	if (ft_strncmp("-n", *args, 3) == 0)
 	{
 		n_flag = true;
 		args++;
 	}
-	(void)data;
 	while (*args != NULL)
 	{
 		ft_putstr_fd(*args, STDOUT_FILENO);
@@ -72,13 +78,10 @@ int	env_builtin(t_data *data, char **args)
 
 int	exit_builtin(t_data *data, char **args)
 {
-	int	exit_status;
-
-	exit_status = data->exit_status;
-	if (args == NULL)
-		printf("exit\n");
+	(void)args;
+	ft_putendl_fd("exit", STDOUT_FILENO);
 	clean_up(data);
-	exit(exit_status);
+	exit(EXIT_SUCCESS);
 }
 
 int	export_builtin(t_data *data, char **args)

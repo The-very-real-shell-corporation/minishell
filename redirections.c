@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/20 15:04:31 by vincent       #+#    #+#                 */
-/*   Updated: 2024/01/25 21:22:38 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/26 15:20:06 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	setup_redirection(t_data *data, t_mlist *pipeline)
 {
 	if (pipeline->token == HEREDOC)
 	{
-		setup_heredoc(data, pipeline);
+		open_heredoc(data, pipeline);
 		return ;
 	}
 	pipeline = pipeline->nx;

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/25 20:54:15 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/26 15:25:58 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,9 +186,10 @@ void	direct_pipes_left(t_data *data, int pipe_fds[2][2]);
 void	direct_pipes_right(t_data *data, int pipe_fds[2][2]);
 void	direct_pipes_start(t_data *data, int pipe_fds[2][2]);
 pid_t	fork_process(t_data *data, t_mlist *pipelines, int direction);
+int		heredoc_pos(t_mlist *pipeline);
+void	open_heredoc(t_data *data, t_mlist *pipeline);
 void	open_pipe(t_data *data, int pipes);
-void	setup_heredoc(t_data *data, t_mlist *pipeline);
-void	whatsup_doc(t_data *data, char *delim);
+void	whatsup_doc(t_data *data, char *delim, int position);
 
 /*	Signals	*/
 

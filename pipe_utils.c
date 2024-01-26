@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/08 19:46:35 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/25 21:10:31 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/26 15:08:52 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	direct_pipes_right(t_data *data, int pipe_fds[2][2])
 {
 	if (pipe_fds[0][0] != -1)
 	{
-		
 		close(data->pipe_fds[0][0]);
 		if (dup2(pipe_fds[0][1], STDOUT_FILENO) == -1)
 			exit_error(data, "dup2 failed");

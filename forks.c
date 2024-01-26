@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/25 21:18:09 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/26 15:25:50 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ pid_t	fork_process(t_data *data, t_mlist *pipeline, int direction)
 	if (id == 0)
 	{
 		if (pipeline->token == HEREDOC)
-			whatsup_doc(data, pipeline->args[0]);
+			whatsup_doc(data, pipeline->args[0], heredoc_pos(pipeline));
 		if (direction == LEFT)
 			direct_pipes_left(data, data->pipe_fds);
 		if (direction == RIGHT)
@@ -92,7 +92,7 @@ pid_t	fork_process(t_data *data, t_mlist *pipeline, int direction)
 		if (run_builtins(data, pipeline) == false)
 			execute_through_path(data, pipeline, data->path);
 		clean_up(data);
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 	close_main_fds(data->pipe_fds);
 	return (id);
