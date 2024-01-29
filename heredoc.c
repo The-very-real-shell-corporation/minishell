@@ -6,71 +6,73 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/21 14:48:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/26 16:25:50 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/29 21:52:55 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	heredoc_fd(t_data *data, int position)
+static void	wait_briefly(void)
 {
-	if (position == START)
-		return (data->pipe_fds[0][1]);
-	else
-		return (data->pipe_fds[1][1]);
+	int	i;
+
+	i = 0;
+	while (i < 500000)
+		i++;
 }
 
-int	heredoc_pos(t_mlist *pipeline)
+static void	close_heredoc_fds(int pipe_fds[2][2])
 {
-	int	position;
-
-	if (pipeline->pv == NULL)
-		position = START;
-	else if (pipeline->nx == NULL)
-		position = END;
-	else
-		position = MIDDLE;
-	return (position);
+	if (pipe_fds[0][0] != -1)
+		close(pipe_fds[0][0]);
+	if (pipe_fds[0][1] != -1)
+		close(pipe_fds[0][1]);
+	if (pipe_fds[1][0] != -1)
+		close(pipe_fds[1][0]);
+	if (pipe_fds[1][1] != -1)
+		close(pipe_fds[1][1]);
 }
 
-void	open_heredoc(t_data *data, t_mlist *pipeline)
+static int	open_heredoc(t_data *data)
 {
 	int	fd;
 
-	open_pipe(data, heredoc_pos(pipeline));
-	close(data->pipe_fds[0][1]);
-	fd = open("heredoc_dir/heredoc.txt", O_CREAT | O_RDWR | O_APPEND, 0644);
+	fd = open(HD_PATH, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
 		exit_error(data, "failed to open or create file");
-	data->pipe_fds[0][1] = fd;
+	return (fd);
 }
 
-void	whatsup_doc(t_data *data, char *delim, int position)
+void	whatsup_doc(t_data *data, char *delim)
 {
 	int		fd;
 	bool	expansion;
 	char	*line;
+	pid_t	id;
 
-	(void)position;
-	expansion = true;
-	if (first_last(delim, '\"') == true || first_last(delim, '\'') == true)
-		expansion = false;
-	fd = heredoc_fd(data, position);
-	while (INFINITY)
+	id = create_fork(data);
+	if (id == 0)
 	{
-		line = readline("> ");
-		if (line == NULL || ft_strncmp(line, delim, ft_strlen(delim)) == 0)
-			break ;
-		if (expansion == true)
-			expand_dollar(data, &line);
-		ft_putendl_fd(line, fd);
-		free(line);
+		fd = open_heredoc(data);
+		expansion = true;
+		if (first_last(delim, '\"') == true || first_last(delim, '\'') == true)
+			expansion = false;
+		wait_briefly();
+		while (INFINITY)
+		{
+			line = readline("> ");
+			if (line == NULL || ft_strncmp(line, delim, ft_strlen(delim)) == 0)
+			{
+				free(line);
+				close(fd);
+				close_heredoc_fds(data->pipe_fds);
+				exit(EXIT_SUCCESS);
+			}
+			if (expansion == true)
+				expand_dollar(data, &line);
+			ft_putendl_fd(line, fd);
+			free(line);
+		}
 	}
-	free(line);
-	// close(fd);
-	direct_pipes_left(data, data->pipe_fds);
-	exit(EXIT_SUCCESS);
+	wait_for_process(data, id, NULL);
 }
-
-/*	To do: implement signals so interrupting heredoc doesn't close minishell 
-and make sure ctrl + D works (EOF)	*/

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/25 21:13:56 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/29 21:34:14 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static bool	try_pipeless(t_data *data, t_mlist *pipeline)
 {
 	if (pipeline == NULL)
 		return (true);
-	if (pipeline->nx == NULL && pipeline->token != HEREDOC)
+	if (pipeline->nx == NULL)
 	{
 		if (run_builtins(data, pipeline) == false)
 			execute_the_path(data);
@@ -63,19 +63,16 @@ void	carry_out_orders(t_data *data, t_mlist *pipelines)
 	if (try_pipeless(data, pipelines) == true)
 		return ;
 	direction = NONE;
-	if (pipelines->token == HEREDOC)
-		direction = LEFT;
 	data->pids = ft_calloc2(data, re_tokens(pipelines) + 1, sizeof(pid_t));
 	while (pipelines != NULL)
 	{
 		tmp = pipelines;
-		pipelines = pipelines->nx;
+		if (pipelines->token != HEREDOC)
+			pipelines = pipelines->nx;
 		if (pipelines != NULL)
 		{
 			direction = is_redirection(pipelines->token);
-			if (pipelines->token != HEREDOC)
-				pipelines = pipelines->nx;
-			printf("direction: %d\n", direction);
+			pipelines = pipelines->nx;
 		}
 		data->pids[i] = fork_process(data, tmp, direction);
 		i++;

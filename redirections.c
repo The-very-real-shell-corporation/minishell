@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/20 15:04:31 by vincent       #+#    #+#                 */
-/*   Updated: 2024/01/26 15:20:06 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/29 21:20:16 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	redirect_input(t_data *data, char *pathname)
 	int	fd;
 
 	close(data->pipe_fds[0][0]);
-	fd = open(pathname, O_RDWR, 0644);
+	fd = open(pathname, O_RDONLY, 0644);
 	if (fd == -1)
 		exit_error(data, "failed to open or create file");
 	data->pipe_fds[0][0] = fd;
@@ -47,18 +47,19 @@ static void	redirect_input(t_data *data, char *pathname)
 
 void	setup_redirection(t_data *data, t_mlist *pipeline)
 {
-	if (pipeline->token == HEREDOC)
-	{
-		open_heredoc(data, pipeline);
-		return ;
-	}
-	pipeline = pipeline->nx;
+	if (pipeline->token != HEREDOC)
+		pipeline = pipeline->nx;
 	if (pipeline != NULL && pipeline->nx != NULL)
 	{
-		if (pipeline->pv->pv == NULL)
+		if (pipeline->token == HEREDOC)
+			whatsup_doc(data, pipeline->args[0]);
+		if ((pipeline->pv != NULL && pipeline->pv->pv == NULL) || \
+			(pipeline->token == HEREDOC && pipeline->pv == NULL))
 			open_pipe(data, START);
 		else
 			open_pipe(data, MIDDLE);
+		if (pipeline->token == HEREDOC)
+			pipeline->token = RE_INPUT;
 		if (pipeline->token == APPEND)
 			append_output(data, pipeline->nx->args[0]);
 		if (pipeline->token == RE_OUTPUT)

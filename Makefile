@@ -18,7 +18,7 @@ LIBS	= $(LIBFT)/libft.a
 RM		= rm -rf
 CC		= cc
 CFLAGS	= -Wall -Werror -Wextra -g
-CFLAGS	+= -fsanitize=address
+#CFLAGS	+= -fsanitize=address
 L_FLAGS	= -lreadline
 
 SRCS	=	alexer.c \
@@ -70,7 +70,7 @@ $(NAME): $(LIBS) $(OBJDIR) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(L_FLAGS) $(LIBS) -o $(NAME)
 
 clean:	
-	$(RM) $(OBJDIR) $(HEREDOC)/heredoc.txt
+	$(RM) $(OBJDIR) $(HEREDOC)
 	make clean -C $(LIBFT)
 
 fclean: clean

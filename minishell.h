@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/26 15:25:58 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/29 18:31:20 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 
 # define INFINITY	1
 # define EXEC_ERR	10000
+
+# define HD_PATH "heredoc_dir/heredoc.txt"
 
 typedef struct s_data	t_data;
 
@@ -186,10 +188,8 @@ void	direct_pipes_left(t_data *data, int pipe_fds[2][2]);
 void	direct_pipes_right(t_data *data, int pipe_fds[2][2]);
 void	direct_pipes_start(t_data *data, int pipe_fds[2][2]);
 pid_t	fork_process(t_data *data, t_mlist *pipelines, int direction);
-int		heredoc_pos(t_mlist *pipeline);
-void	open_heredoc(t_data *data, t_mlist *pipeline);
 void	open_pipe(t_data *data, int pipes);
-void	whatsup_doc(t_data *data, char *delim, int position);
+void	whatsup_doc(t_data *data, char *delim);
 
 /*	Signals	*/
 
@@ -210,7 +210,7 @@ bool	everythingiswhitespace(char *str);
 void	exit_error(t_data *data, char *msg);
 bool	is_builtin(t_token tolkien);
 int		is_redirection(t_token tolkien);
-void	lexer_error(t_data *data, char *msg);
+void	lexer_error(t_data *data, char *msg, char *token);
 char	**list_to_array(t_data *data, t_mlist *list);
 void	print_2d_charray(char **array);
 int		ptr_array_size(void **array);

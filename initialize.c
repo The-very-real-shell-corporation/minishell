@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/23 16:18:14 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/29 19:15:59 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	get_input_and_parse(t_data *data)
 {
 	char	*line;
 
-	line = readline("WE SHELL SEE: ");
+	line = readline("THE BASHBASHER: ");
 	if (line == NULL)
 		exit_builtin(data, NULL);
 	if (everythingiswhitespace(line) == true)

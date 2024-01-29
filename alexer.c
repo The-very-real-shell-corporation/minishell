@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/25 21:21:02 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/29 18:35:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool	is_double_redirection(t_mlist *list)
 {
-	if (list->pv != NULL)
+	if (list != NULL && list->pv != NULL)
 	{
 		if (is_redirection(list->pv->token) != NONE)
 		{
@@ -72,26 +72,39 @@ static void	assign_token(t_mlist *node, char *str)
 		node->token = WORD;
 }
 
-void	tokenize_list(t_data *data, t_mlist *in)
+static void	check_list(t_data *data, t_mlist *in)
 {
-	assign_token(in, in->str);
-	if (is_double_redirection(in) == true)
-		lexer_error(data, "multiple redirections in a row");
-	else if (in->pv == NULL || in->pv->token == PIPE)
-		assign_command_token(in, in->str);
-
-	if (in != NULL && in->token == HEREDOC)
+	while (in != NULL)
 	{
-		if (in->nx == NULL)
-			lexer_error(data, "heredoc has no delimiter");
-		else
+		if (is_redirection(in->token) != NONE)
+		{
+			if (is_double_redirection(in->nx) == true || in->nx == NULL)
+			{
+				lexer_error(data, "error near redirection symbol: ", in->str);
+				return ;
+			}
+		}
+		if (in->token == HEREDOC)
 		{
 			in->args = ft_split(in->nx->str, ' ');
 			if (in->args == NULL)
 				exit_error(data, "split alloc failed");
 			unlink_node(in->nx);
+			insert_node(in, in->nx, \
+			new_node(data, ft_strdup2(data, HD_PATH), NULL, FILENAME));
 		}
+		in = in->nx;
 	}
-	if (in != NULL && in->nx != NULL)
-		tokenize_list(data, in->nx);
+}
+
+void	tokenize_list(t_data *data, t_mlist *in)
+{
+	while (in != NULL)
+	{
+		assign_token(in, in->str);		
+		if (in->pv == NULL || in->pv->token == PIPE)
+			assign_command_token(in, in->str);
+		in = in->nx;
+	}
+	check_list(data, data->input);
 }
