@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 16:30:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/11 18:33:32 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 14:28:39 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdarg.h>
+# include "get_next_line.h"
 # include "../minishell.h"
 
 typedef struct s_data	t_data;

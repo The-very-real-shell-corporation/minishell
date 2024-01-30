@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 16:35:26 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/11 15:27:43 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 15:42:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	pwd_builtin(t_data *data, char **args)
 	(void)args;
 	out = getcwd(NULL, 0);
 	if (out == NULL)
-		exit_error(data, "Pwd determining failed\n");
-	printf("%s\n", out);
+		exit_error(data, "cwd failed\n");
+	ft_putendl_fd(out, STDOUT_FILENO);
 	free(out);
 	return (0);
 }
@@ -36,9 +36,12 @@ int	unset_builtin(t_data *data, char **args)
 	}
 	while (*args != NULL)
 	{
-		tmp = find_input(data->env, *args);
-		if (tmp != NULL)
-			unlink_node(tmp);
+		if (ft_strchr(*args, '=') == NULL)
+		{
+			tmp = find_input(data->env, *args);
+			if (tmp != NULL)
+				unlink_node(tmp);
+		}
 		args++;
 	}
 	return (0);

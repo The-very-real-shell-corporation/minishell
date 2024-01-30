@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 11:56:43 by vincent       #+#    #+#                 */
-/*   Updated: 2024/01/29 20:54:14 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 14:25:29 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ void	exit_error(t_data *data, char *msg)
 
 void	lexer_error(t_data *data, char *msg, char *token)
 {
-	// ft_putstr_fd("error: ", STDERR_FILENO);
-	ft_putstr_fd(msg, STDERR_FILENO);
-	write(STDERR_FILENO, "\"", 1);
-	ft_putstr_fd(token, STDERR_FILENO);
-	write(STDERR_FILENO, "\"\n", 2);	
+	if (msg != NULL && token != NULL)
+	{
+		ft_putstr_fd(msg, STDERR_FILENO);
+		write(STDERR_FILENO, "\"", 1);
+		ft_putstr_fd(token, STDERR_FILENO);
+		write(STDERR_FILENO, "\"\n", 2);
+	}
 	clear_mlist(&data->input);
 }

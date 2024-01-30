@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 19:46:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/26 15:04:27 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/30 15:48:59 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,22 @@
 
 int	cd_builtin(t_data *data, char **args)
 {
-	int		exit_status;
 	char	*tmp;
 
 	if (*(args + 1) != NULL)
+	{
+		ft_putendl_fd("error: too many args for cd", STDERR_FILENO);
 		return (-1);
+	}
 	tmp = getcwd(NULL, 0);
 	if (tmp == NULL)
 		exit_error(data, "getcwd failed");
-	exit_status = chdir(*args);
-	if (exit_status == -1)
+	if (chdir(*args) == -1)
 	{
 		free(tmp);
-		printf("Error: \"%s\" is not a directory\n", *args);
+		ft_putstr_fd("error: ", STDERR_FILENO);
+		ft_putstr_fd(*args, STDERR_FILENO);
+		ft_putendl_fd(" is not a directory", STDERR_FILENO);
 		return (126);
 	}
 	change_env_var(data, "OLDPWD=", tmp);
@@ -68,11 +71,8 @@ int	echo_builtin(t_data *data, char **args)
 int	env_builtin(t_data *data, char **args)
 {
 	(void)args;
-	if (data->env == NULL)
-		return (0);
-	print_list(data->env);
 	if (print_env(data->env) == -1)
-		exit_error(data, "env failed to print");
+		ft_putendl_fd("environment is empty", STDOUT_FILENO);
 	return (0);
 }
 
@@ -92,7 +92,7 @@ int	export_builtin(t_data *data, char **args)
 	if (*args == NULL || **args == '\0')
 	{
 		tmp = sort_environment(data, node_first(data->env));
-		print_list(tmp);
+		print_list(node_first(tmp));
 		return (clear_mlist(&tmp), 0);
 	}
 	while (*args != NULL)

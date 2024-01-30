@@ -6,11 +6,30 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/29 19:15:59 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 14:25:48 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	about_message(void)
+{
+	char	*line;
+	int		fd;
+
+	fd = open("about.txt", O_RDONLY);
+	while (INFINITY)
+	{
+		line = get_next_line(fd);
+		if (line == NULL)
+		{
+			close(fd);
+			return ;
+		}
+		ft_putstr_fd(line, STDOUT_FILENO);
+		free(line);
+	}
+}
 
 static void	assign_function_ptrs(t_data *data)
 {
@@ -68,6 +87,11 @@ void	get_input_and_parse(t_data *data)
 	add_history(line);
 	get_path_ready(data);
 	expansion_pack(data, line);
+	if (ft_strncmp(line, "about", 6) == 0)
+	{
+		about_message();
+		lexer_error(data, NULL, NULL);
+	}
 	free(line);
 	build_pipelines(data, data->input, &data->pipelines);
 }

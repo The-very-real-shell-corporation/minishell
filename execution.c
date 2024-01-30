@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/29 21:34:14 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 14:50:34 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	execute_through_path(t_data *data, t_mlist *p, char **path)
 	chdir(cwd);
 	if (access(p->args[0], X_OK) == 0)
 		execute_command(data, ft_strdup2(data, p->args[0]), p->args);
-	exit(54); // look up a smart exit status
+	exit(EXIT_FAILURE);
 }
 
 static bool	try_pipeless(t_data *data, t_mlist *pipeline)
@@ -53,13 +53,11 @@ static bool	try_pipeless(t_data *data, t_mlist *pipeline)
 	return (false);
 }
 
-void	carry_out_orders(t_data *data, t_mlist *pipelines)
+void	carry_out_orders(t_data *data, t_mlist *pipelines, int i)
 {
-	int	i;
-	int	direction;
+	int		direction;
 	t_mlist	*tmp;
 
-	i = 0;
 	if (try_pipeless(data, pipelines) == true)
 		return ;
 	direction = NONE;
@@ -81,6 +79,5 @@ void	carry_out_orders(t_data *data, t_mlist *pipelines)
 	{
 		i--;
 		wait_for_process(data, data->pids[i], "WHAT");
-		// printf("exit status: %d\n", data->exit_status);
 	}
 }

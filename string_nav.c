@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/20 15:53:40 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/25 19:29:39 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 15:35:34 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,19 @@ bool	first_last(char *str, char c)
 	return (false);
 }
 
-int	ft_ministrcmp(char *str1, char *str2)
+int	ft_ministrcmp(char *env_str, char *input)
 {
 	size_t	i;
 
 	i = 0;
-	while (str1[i] != '\0' && str1[i] != '=' && str1[i] == str2[i])
+	while (env_str[i] != '\0' && env_str[i] != '=' && env_str[i] == input[i])
 		i++;
-	return (str1[i] - str2[i]);
+	if ((env_str[i] == '=' && input[i] == '\0') || \
+		(env_str[i] == '\0' && input[i] == '='))
+		i--;
+	if (input[i] != '\0' && input[i + 1] != '\0')
+		return (-1);
+	return (env_str[i] - input[i]);
 }
 
 int	ptr_array_size(void **array)

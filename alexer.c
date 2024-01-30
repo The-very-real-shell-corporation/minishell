@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/29 18:35:57 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 14:46:14 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	tokenize_list(t_data *data, t_mlist *in)
 {
 	while (in != NULL)
 	{
-		assign_token(in, in->str);		
+		assign_token(in, in->str);
 		if (in->pv == NULL || in->pv->token == PIPE)
 			assign_command_token(in, in->str);
 		in = in->nx;

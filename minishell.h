@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/29 18:31:20 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 14:44:47 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ t_mlist	*sort_environment(t_data *data, t_mlist *env);
 
 /*	Execution	*/
 
-void	carry_out_orders(t_data *data, t_mlist *pipelines);
+void	carry_out_orders(t_data *data, t_mlist *pipelines, int i);
 void	execute_command(t_data *data, char *directory, char **args);
 void	execute_the_path(t_data *data);
 void	execute_through_path(t_data *data, t_mlist *pipeline, char **path);

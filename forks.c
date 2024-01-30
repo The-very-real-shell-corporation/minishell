@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/29 21:34:17 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 14:51:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 void	wait_for_process(t_data *data, pid_t id, char *input)
 {
 	waitpid(id, &data->exit_status, 0);
-	// printf("exit status: %d\n", data->exit_status);
-	return ;
 	if (WEXITSTATUS(data->exit_status) == EXIT_FAILURE)
 	{
-		write(STDERR_FILENO, input, ft_strlen(input));
-		write(STDERR_FILENO, ": command not found\n", 21);
+		ft_putstr_fd("command not found: ", STDERR_FILENO);
+		ft_putendl_fd(input, STDERR_FILENO);
 		return ;
 	}
 	if (WEXITSTATUS(data->exit_status) == EXEC_ERR)
@@ -29,6 +27,7 @@ void	wait_for_process(t_data *data, pid_t id, char *input)
 		write(STDERR_FILENO, ": could not execute\n", 21);
 		return ;
 	}
+	return ;
 	if (WIFSIGNALED(data->exit_status) != 0)
 	{
 		if (WTERMSIG(data->exit_status) == SIGINT)
@@ -44,7 +43,6 @@ void	wait_for_process(t_data *data, pid_t id, char *input)
 	}
 	else if (WEXITSTATUS(data->exit_status) != 0)
 	{
-		// data->exit_status = WEXITSTATUS(data->exit_status);
 		write(STDERR_FILENO, "Not sure what but something went wrong\n", 40);
 	}
 }

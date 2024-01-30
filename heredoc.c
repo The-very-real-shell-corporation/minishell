@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/21 14:48:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/29 21:52:55 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 14:42:36 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,32 @@ static int	open_heredoc(t_data *data)
 	return (fd);
 }
 
+static void	get_user_input(t_data *data, int fd, char *delim, bool expansion)
+{
+	char	*line;
+
+	while (INFINITY)
+	{
+		line = readline("> ");
+		if (line == NULL || ft_strncmp(line, delim, ft_strlen(delim)) == 0)
+		{
+			free(line);
+			close(fd);
+			close_heredoc_fds(data->pipe_fds);
+			clean_up(data);
+			exit(EXIT_SUCCESS);
+		}
+		if (expansion == true)
+			expand_dollar(data, &line);
+		ft_putendl_fd(line, fd);
+		free(line);
+	}
+}
+
 void	whatsup_doc(t_data *data, char *delim)
 {
 	int		fd;
 	bool	expansion;
-	char	*line;
 	pid_t	id;
 
 	id = create_fork(data);
@@ -58,21 +79,7 @@ void	whatsup_doc(t_data *data, char *delim)
 		if (first_last(delim, '\"') == true || first_last(delim, '\'') == true)
 			expansion = false;
 		wait_briefly();
-		while (INFINITY)
-		{
-			line = readline("> ");
-			if (line == NULL || ft_strncmp(line, delim, ft_strlen(delim)) == 0)
-			{
-				free(line);
-				close(fd);
-				close_heredoc_fds(data->pipe_fds);
-				exit(EXIT_SUCCESS);
-			}
-			if (expansion == true)
-				expand_dollar(data, &line);
-			ft_putendl_fd(line, fd);
-			free(line);
-		}
+		get_user_input(data, fd, delim, expansion);
 	}
 	wait_for_process(data, id, NULL);
 }
