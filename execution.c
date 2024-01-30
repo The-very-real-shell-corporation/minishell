@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 18:13:38 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 20:20:38 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ void	carry_out_orders(t_data *data, t_mlist *pipelines, int i)
 	while (i > 0)
 	{
 		i--;
-		wait_for_process(data, data->pids[i], "WHAT");
+		wait_for_process(data, data->pids[i], "");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 14:46:14 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 20:30:24 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static void	assign_command_token(t_mlist *node, char *str)
 		node->token = B_UNSET;
 	else if (ft_strncmp(str, "<<", 3) == 0)
 		node->token = HEREDOC;
+	else if (ft_strncmp(str, "|", 2) == 0)
+		node->token = PIPE;
 	else
 		node->token = COMMAND;
 }
