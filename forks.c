@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 14:51:57 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 18:14:07 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,13 @@ pid_t	fork_process(t_data *data, t_mlist *pipeline, int direction)
 {
 	pid_t	id;
 
-	setup_redirection(data, pipeline);
+	if (setup_redirection(data, pipeline) == ERROR)
+		return (-1);
 	id = create_fork(data);
 	if (id == 0)
 	{
+		// if (pipeline->token == PIPE)
+		// 	connect_with_pipe(data, data->pipe_fds);
 		if (direction == LEFT)
 			direct_pipes_left(data, data->pipe_fds);
 		if (direction == RIGHT)

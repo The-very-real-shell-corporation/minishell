@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 14:25:48 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 18:29:41 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	about_message(void)
 			close(fd);
 			return ;
 		}
-		ft_putstr_fd(line, STDOUT_FILENO);
+		printf("\033[0;34m%s\033[0m", line);
 		free(line);
 	}
 }
@@ -79,7 +79,7 @@ void	get_input_and_parse(t_data *data)
 {
 	char	*line;
 
-	line = readline("THE BASHBASHER: ");
+	line = readline("\033[0;33mTHE BASHBASHER: \033[0m");
 	if (line == NULL)
 		exit_builtin(data, NULL);
 	if (everythingiswhitespace(line) == true)

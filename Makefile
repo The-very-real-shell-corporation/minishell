@@ -23,8 +23,13 @@ L_FLAGS	= -lreadline
 
 SRCS	=	alexer.c \
 			alexpander_the_great.c \
-			builtins_A_to_E.c \
-			builtins_F_to_Z.c \
+			builtin_cd.c \
+			builtin_echo.c \
+			builtin_env.c \
+			builtin_exit.c \
+			builtin_export.c \
+			builtin_pwd.c \
+			builtin_unset.c \
 			clean_up.c \
 			environment.c \
 			errors.c \

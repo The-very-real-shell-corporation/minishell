@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 14:44:47 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/30 18:18:31 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # include "libft/libft.h"
 
 # define INFINITY	1
+# define ERROR	1
+# define SUCCESS 0
 # define EXEC_ERR	10000
 
 # define HD_PATH "heredoc_dir/heredoc.txt"
@@ -139,7 +141,7 @@ void	wait_for_process(t_data *data, pid_t id, char *input);
 
 void	get_input_and_parse(t_data *data);
 void	initialize_data(t_data *data, char **envp);
-void	setup_redirection(t_data *data, t_mlist *pipeline);
+bool	setup_redirection(t_data *data, t_mlist *pipeline);
 
 /*	List functions (editing)	*/
 
@@ -186,7 +188,7 @@ void	build_pipelines(t_data *data, t_mlist *input, t_mlist **pipelines);
 void	close_main_fds(int pipe_fds[2][2]);
 void	direct_pipes_left(t_data *data, int pipe_fds[2][2]);
 void	direct_pipes_right(t_data *data, int pipe_fds[2][2]);
-void	direct_pipes_start(t_data *data, int pipe_fds[2][2]);
+void	duplicate_fd(t_data *data, int in, int out);
 pid_t	fork_process(t_data *data, t_mlist *pipelines, int direction);
 void	open_pipe(t_data *data, int pipes);
 void	whatsup_doc(t_data *data, char *delim);

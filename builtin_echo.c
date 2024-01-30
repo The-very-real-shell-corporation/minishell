@@ -1,48 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtins_F_to_Z.c                                  :+:    :+:            */
+/*   builtin_echo.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/16 16:35:26 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 15:42:57 by vvan-der      ########   odam.nl         */
+/*   Created: 2024/01/30 18:42:23 by vvan-der      #+#    #+#                 */
+/*   Updated: 2024/01/30 18:43:27 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pwd_builtin(t_data *data, char **args)
+int	echo_builtin(t_data *data, char **args)
 {
-	char	*out;
-
-	(void)args;
-	out = getcwd(NULL, 0);
-	if (out == NULL)
-		exit_error(data, "cwd failed\n");
-	ft_putendl_fd(out, STDOUT_FILENO);
-	free(out);
-	return (0);
-}
-
-int	unset_builtin(t_data *data, char **args)
-{
-	t_mlist	*tmp;
+	bool	n_flag;
 
 	if (*args == NULL)
 	{
-		printf("Please provide a variable to unset\n");
+		write(STDOUT_FILENO, "\n", 1);
 		return (0);
+	}
+	(void)data;
+	n_flag = false;
+	if (ft_strncmp("-n", *args, 3) == 0)
+	{
+		n_flag = true;
+		args++;
 	}
 	while (*args != NULL)
 	{
-		if (ft_strchr(*args, '=') == NULL)
-		{
-			tmp = find_input(data->env, *args);
-			if (tmp != NULL)
-				unlink_node(tmp);
-		}
+		ft_putstr_fd(*args, STDOUT_FILENO);
+		if (*(args + 1) != NULL)
+			ft_putstr_fd(" ", STDOUT_FILENO);
 		args++;
 	}
+	if (n_flag == false)
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
 }
