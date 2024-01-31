@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 18:18:31 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/31 20:59:48 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define INFINITY	1
 # define ERROR	1
 # define SUCCESS 0
+# define READ 0
+# define WRITE 1
 # define EXEC_ERR	10000
 
 # define HD_PATH "heredoc_dir/heredoc.txt"
@@ -179,7 +181,7 @@ void	tokenize_list(t_data *data, t_mlist *in);
 
 /*	Parser functions	*/
 
-void	copy_environment(t_data *data, char **envp);
+void	copy_environment(t_data *data, t_mlist **env, char **envp);
 t_mlist	*ft_special_split(t_data *data, char *input);
 
 /* Pipes */

@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/20 15:04:31 by vincent       #+#    #+#                 */
-/*   Updated: 2024/01/30 18:19:13 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/31 18:45:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ bool	setup_redirection(t_data *data, t_mlist *pipeline)
 	{
 		if (pipeline->token == HEREDOC)
 			whatsup_doc(data, pipeline->args[0]);
-		// if ((pipeline->pv != NULL && pipeline->pv->pv == NULL) || \
-		// 	(pipeline->token == HEREDOC && pipeline->pv == NULL))
-		// 	open_pipe(data, START);
-		// else
-		open_pipe(data, MIDDLE);
+		if ((pipeline->pv != NULL && pipeline->pv->pv == NULL) || \
+			(pipeline->token == HEREDOC && pipeline->pv == NULL))
+			open_pipe(data, START);
+		else
+			open_pipe(data, MIDDLE);
 		if (pipeline->token == HEREDOC)
 			pipeline->token = RE_INPUT;
 		if (pipeline->token == APPEND)

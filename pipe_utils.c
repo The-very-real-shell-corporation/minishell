@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/08 19:46:35 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 17:56:48 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/31 18:43:42 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	close_main_fds(int pipe_fds[2][2])
 {
 	if (pipe_fds[1][0] != -1)
 	{
-		close(pipe_fds[1][0]);
-		close(pipe_fds[1][1]);
+		close(pipe_fds[1][READ]);
+		close(pipe_fds[1][WRITE]);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 17:51:57 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/31 18:45:05 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ void	direct_pipes_left(t_data *data, int pipe_fds[2][2])
 {
 	if (pipe_fds[0][0] != -1)
 	{
-		close(data->pipe_fds[0][1]);
-		duplicate_fd(data, pipe_fds[0][0], STDIN_FILENO);
-		close(data->pipe_fds[0][0]);
+		close(data->pipe_fds[0][WRITE]);
+		duplicate_fd(data, pipe_fds[0][READ], STDIN_FILENO);
+		close(data->pipe_fds[0][READ]);
 	}
 	if (pipe_fds[1][0] != -1)
 	{
-		close(data->pipe_fds[1][0]);
-		duplicate_fd(data, pipe_fds[1][1], STDOUT_FILENO);
-		close(data->pipe_fds[1][1]);
+		close(data->pipe_fds[1][READ]);
+		duplicate_fd(data, pipe_fds[1][WRITE], STDOUT_FILENO);
+		close(data->pipe_fds[1][WRITE]);
 	}
 }
 
@@ -51,14 +51,14 @@ void	direct_pipes_right(t_data *data, int pipe_fds[2][2])
 {
 	if (pipe_fds[0][0] != -1)
 	{
-		close(data->pipe_fds[0][0]);
-		duplicate_fd(data, pipe_fds[0][1], STDOUT_FILENO);
-		close(data->pipe_fds[0][1]);
+		close(data->pipe_fds[0][READ]);
+		duplicate_fd(data, pipe_fds[0][WRITE], STDOUT_FILENO);
+		close(data->pipe_fds[0][WRITE]);
 	}
 	if (pipe_fds[1][0] != -1)
 	{
-		close(data->pipe_fds[1][1]);
-		duplicate_fd(data, pipe_fds[1][0], STDIN_FILENO);
-		close(data->pipe_fds[1][0]);
+		close(data->pipe_fds[1][WRITE]);
+		duplicate_fd(data, pipe_fds[1][READ], STDIN_FILENO);
+		close(data->pipe_fds[1][READ]);
 	}
 }

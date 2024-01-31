@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 20:20:38 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/01/31 18:51:13 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	carry_out_orders(t_data *data, t_mlist *pipelines, int i)
 
 	if (try_pipeless(data, pipelines) == true)
 		return ;
-	open_pipe(data, START);
+	// open_pipe(data, START);
 	direction = NONE;
 	data->pids = ft_calloc2(data, re_tokens(pipelines) + 1, sizeof(pid_t));
 	while (pipelines != NULL)

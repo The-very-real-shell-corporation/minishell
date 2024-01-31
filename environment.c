@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 19:47:55 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/24 10:57:24 by vincent       ########   odam.nl         */
+/*   Updated: 2024/01/31 20:58:52 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,19 @@ t_mlist	*sort_environment(t_data *data, t_mlist *env)
 	return (node_first(sorted));
 }
 
-void	copy_environment(t_data *data, char **envp)
+void	copy_environment(t_data *data, t_mlist **env, char **envp)
 {
 	int		i;
-	t_mlist	*tmp;
 
 	i = 0;
 	if (envp == NULL)
 		exit_error(data, "Envp was NULL somehow");
-	tmp = NULL;
 	while (envp[i] != NULL)
 	{
-		node_addback(&tmp, new_node(data, \
+		node_addback(env, new_node(data, \
 		ft_strdup2(data, envp[i]), NULL, INITIALIZED));
 		i++;
 	}
-	data->env = tmp;
 }
 
 void	change_env_var(t_data *data, char *var, char *new_value)
