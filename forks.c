@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 17:18:35 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 18:13:51 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ pid_t	fork_process(t_data *data, t_mlist *pipeline)
 	{
 		if (pipeline->token == PIPE)
 			pipeline = pipeline->nx;
-		if (setup_redirection(data, pipeline) == ERROR)
+		if (setup_redirections(data, pipeline) == ERROR)
 			return (-1);
 		make_pipes_pipe(data, data->pipe_fds);
 		if (run_builtins(data, pipeline) == false)

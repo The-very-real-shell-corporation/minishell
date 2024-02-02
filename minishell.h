@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 17:14:49 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 18:29:17 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	wait_for_process(t_data *data, pid_t id, char *input);
 
 void	get_input_and_parse(t_data *data);
 void	initialize_data(t_data *data, char **envp);
-bool	setup_redirection(t_data *data, t_mlist *pipeline);
+bool	setup_redirections(t_data *data, t_mlist *pipeline);
 
 /*	List functions (editing)	*/
 
@@ -211,12 +211,13 @@ char	*remake_str(char *original, int start, int len, char *newpart);
 bool	everythingiswhitespace(char *str);
 void	exit_error(t_data *data, char *msg);
 bool	is_builtin(t_token tolkien);
-int		is_redirection(t_token tolkien);
+bool	is_redirection(t_token tolkien);
 void	lexer_error(t_data *data, char *msg, char *token);
 char	**list_to_array(t_data *data, t_mlist *list);
 void	print_2d_charray(char **array);
 int		ptr_array_size(void **array);
 
 void	print_debug(t_mlist *list);
+bool	contains_redirections(t_mlist *list);
 
 #endif

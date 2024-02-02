@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/20 15:04:31 by vincent       #+#    #+#                 */
-/*   Updated: 2024/02/02 16:45:21 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 18:13:51 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	redirect_input(t_data *data, char *pathname, bool *status)
 	*status = SUCCESS;
 }
 
-bool	setup_redirection(t_data *data, t_mlist *pipeline)
+bool	setup_redirections(t_data *data, t_mlist *pipeline)
 {
 	bool	status;
 

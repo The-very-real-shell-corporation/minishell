@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 17:13:08 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 18:55:43 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static bool	is_double_redirection(t_mlist *list)
 {
 	if (list != NULL && list->pv != NULL)
 	{
-		if (is_redirection(list->pv->token) != NONE)
+		if (is_redirection(list->pv->token) == true)
 		{
-			if (is_redirection(list->token) != NONE)
+			if (is_redirection(list->token) == true)
 			{
 				if (list->pv->token == HEREDOC)
 					return (false);
@@ -65,7 +65,7 @@ static void	assign_token(t_mlist *node, char *str)
 		node->token = RE_INPUT;
 	else if (ft_strncmp(str, "|", 2) == 0)
 		node->token = PIPE;
-	else if (node->pv != NULL && is_redirection(node->pv->token) != NONE)
+	else if (node->pv != NULL && is_redirection(node->pv->token) == true)
 	{
 		if (node->pv->token != PIPE && node->pv->token != HEREDOC)
 			node->token = FILENAME;
@@ -78,7 +78,7 @@ static void	check_list(t_data *data, t_mlist *in)
 {
 	while (in != NULL)
 	{
-		if (is_redirection(in->token) != NONE)
+		if (is_redirection(in->token) == true)
 		{
 			if (is_double_redirection(in->nx) == true || in->nx == NULL)
 			{
@@ -99,6 +99,8 @@ static void	check_list(t_data *data, t_mlist *in)
 
 void	tokenize_list(t_data *data, t_mlist *in)
 {
+	static int i = 0;
+
 	while (in != NULL)
 	{
 		assign_token(in, in->str);
@@ -107,4 +109,8 @@ void	tokenize_list(t_data *data, t_mlist *in)
 		in = in->nx;
 	}
 	check_list(data, data->input);
+	print_debug(data->input);
+	if (i == 1)
+		exit(0);
+	i++;
 }

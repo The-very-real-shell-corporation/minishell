@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 17:22:49 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 18:29:47 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,27 @@ void	execute_through_path(t_data *data, t_mlist *p, char **path)
 	exit(EXIT_FAILURE);
 }
 
+static void	execute_pipelessly(t_data *data, t_mlist *pipeline)
+{
+	pid_t	id;
+
+	if (run_builtins(data, pipeline) == false)
+	{
+		id = create_fork(data);
+		if (id == 0)
+			execute_through_path(data, pipeline, data->path);
+		else
+			waitpid(-1, &data->exit_status, 0);
+	}
+}
+
 void	carry_out_orders(t_data *data, t_mlist *pipelines, int i)
 {
+	if (contains_redirections(pipelines) == false)
+	{
+		execute_pipelessly(data, pipelines);
+		return ;
+	}
 	data->pids = ft_calloc2(data, count_tokens(pipelines, PIPE) + 1, sizeof(pid_t));
 	while (pipelines != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 13:38:22 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 18:28:33 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,14 @@ void	build_pipelines(t_data *data, t_mlist *in, t_mlist **pipelines)
 		arr = list_to_array(data, in);
 		if (arr != NULL)
 			node_addback(pipelines, new_node(data, NULL, arr, in->token));
-		while (in != NULL && is_redirection(in->token) == NONE)
+		while (in != NULL && is_redirection(in->token) == false)
 			in = in->nx;
-		if (in != NULL && is_redirection(in->token) != NONE)
+		if (in != NULL)
 		{
 			node_addback(pipelines, copy_node(data, in));
 			in = in->nx;
 		}
 	}
-	// print_list(*pipelines);
-	// exit(0);
 }
 
 void	make_pipes_pipe(t_data *data, int pipe_fds[2][2])

@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 16:04:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/01/30 15:14:06 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 18:34:05 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 t_mlist	*node_first(t_mlist *list)
 {
+	if (list == NULL)
+		return (NULL);
 	while (list->pv != NULL)
 		list = list->pv;
 	return (list);
@@ -21,6 +23,8 @@ t_mlist	*node_first(t_mlist *list)
 
 t_mlist	*node_last(t_mlist *list)
 {
+	if (list == NULL)
+		return (NULL);
 	while (list->nx != NULL)
 		list = list->nx;
 	return (list);
