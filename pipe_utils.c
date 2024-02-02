@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/08 19:46:35 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 13:41:36 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 16:07:12 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,43 +27,30 @@ void	open_pipe(t_data *data, int position)
 	if (position == START)
 	{
 		open_single_pipe(data, fd[0]);
-		fd[1][0] = -1;
-		fd[1][1] = -1;
+		fd[1][READ] = -1;
+		fd[1][WRITE] = -1;
 	}
 	if (position == MIDDLE)
 	{
-		fd[1][0] = fd[0][0];
-		fd[1][1] = fd[0][1];
+		fd[1][READ] = fd[0][READ];
+		fd[1][WRITE] = fd[0][WRITE];
 		open_single_pipe(data, fd[0]);
 	}
 	if (position == END)
 	{
-		fd[1][0] = fd[0][0];
-		fd[1][1] = fd[0][1];
-		fd[0][0] = -1;
-		fd[0][1] = -1;
+		fd[1][READ] = fd[0][READ];
+		fd[1][WRITE] = fd[0][WRITE];
+		fd[0][READ] = -1;
+		fd[0][WRITE] = -1;
 	}
 }
 
-void	duplicate_fd(t_data *data, int new, int old)
+void	duplicate_fd(t_data *data, int old, int new)
 {
 	if (dup2(old, new) == -1)
 		exit_error(data, "dup2 failed");
 	close(old);
 }
-
-/* void	connect_with_pipe(t_data *data, int pipe_fds[2][2])
-{
-	close(data->pipe_fds[0][0]);
-	if (dup2(pipe_fds[0][1], STDOUT_FILENO) == -1)
-		exit_error(data, "dup2 failed");
-	close(data->pipe_fds[0][1]);
-
-	close(data->pipe_fds[1][1]);
-	if (dup2(pipe_fds[1][0], STDIN_FILENO) == -1)
-		exit_error(data, "dup2 failed");
-	close(data->pipe_fds[1][0]);
-} */
 
 void	close_main_fds(int pipe_fds[2][2])
 {

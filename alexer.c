@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 20:30:24 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 17:13:08 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ static void	assign_command_token(t_mlist *node, char *str)
 		node->token = B_PWD;
 	else if (ft_strncmp("unset", str, 6) == 0)
 		node->token = B_UNSET;
-	else if (ft_strncmp(str, "<<", 3) == 0)
-		node->token = HEREDOC;
-	else if (ft_strncmp(str, "|", 2) == 0)
-		node->token = PIPE;
+	// else if (ft_strncmp(str, "<<", 3) == 0)
+	// 	node->token = HEREDOC;
+	// else if (ft_strncmp(str, "|", 2) == 0)
+	// 	node->token = PIPE;
 	else
 		node->token = COMMAND;
 }
@@ -92,8 +92,6 @@ static void	check_list(t_data *data, t_mlist *in)
 			if (in->args == NULL)
 				exit_error(data, "split alloc failed");
 			unlink_node(in->nx);
-			insert_node(in, in->nx, \
-			new_node(data, ft_strdup2(data, HD_PATH), NULL, FILENAME));
 		}
 		in = in->nx;
 	}

@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 16:05:51 by vincent       #+#    #+#                 */
-/*   Updated: 2024/02/02 13:01:58 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 16:42:03 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,20 @@ void	print_list(t_mlist *list)
 	}
 }
 
-/* void	print_list(t_mlist *list)
+void	print_debug(t_mlist *list)
 {
 	if (list == NULL)
 	{
-		printf("Couldn't print empty list\n");
+		dprintf(STDERR_FILENO, "Couldn't print empty list\n");
 		return ;
 	}
 	while (list != NULL)
 	{
-		printf("string: %s\n", list->str);
+		dprintf(STDERR_FILENO, "string: %s\n", list->str);
 		print_2d_charray(list->args);
-		printf("token: %d\n", list->token);
+		dprintf(STDERR_FILENO, "token: %d\n", list->token);
 		list = list->nx;
-		printf("\nNEXT\n\n");
+		dprintf(STDERR_FILENO, "\nNEXT\n\n");
 	}
-	printf("%p\n", list);
-} */
+	dprintf(STDERR_FILENO, "%p\n", list);
+}

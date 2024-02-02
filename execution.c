@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 13:33:36 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 17:22:49 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,9 @@ void	execute_through_path(t_data *data, t_mlist *p, char **path)
 	exit(EXIT_FAILURE);
 }
 
-static bool	try_pipeless(t_data *data, t_mlist *pipeline) // needs to loop & do redirections
-{
-	if (pipeline == NULL)
-		return (true);
-	if (pipeline->nx == NULL)
-	{
-		if (run_builtins(data, pipeline) == false)
-			execute_the_path(data);
-		return (true);
-	}
-	return (false);
-}
-
 void	carry_out_orders(t_data *data, t_mlist *pipelines, int i)
 {
-	t_mlist	*tmp;
-
-	if (try_pipeless(data, pipelines) == true)
-		return ;
-	open_pipe(data, START);
-	data->pids = ft_calloc2(data, count_pipes(pipelines) + 1, sizeof(pid_t));
+	data->pids = ft_calloc2(data, count_tokens(pipelines, PIPE) + 1, sizeof(pid_t));
 	while (pipelines != NULL)
 	{
 		if (pipelines->pv == NULL || pipelines->token == PIPE)
@@ -75,6 +57,6 @@ void	carry_out_orders(t_data *data, t_mlist *pipelines, int i)
 	while (i > 0)
 	{
 		i--;
-		wait_for_process(data, data->pids[i], "");
+		wait_for_process(data, data->pids[i], data->pipelines->args[0]);
 	}
 }

@@ -6,20 +6,20 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/16 19:50:48 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 13:26:38 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 16:38:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	count_pipes(t_mlist *list)
+size_t	count_tokens(t_mlist *list, t_token tolkien)
 {
 	size_t	count;
 
 	count = 0;
 	while (list != NULL)
 	{
-		if (list->token == PIPE)
+		if (list->token == tolkien)
 			count++;
 		list = list->nx;
 	}

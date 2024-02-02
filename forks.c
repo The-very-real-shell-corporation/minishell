@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 13:35:13 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 17:18:35 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	wait_for_process(t_data *data, pid_t id, char *input)
 		write(STDERR_FILENO, ": could not execute\n", 21);
 		return ;
 	}
-	return ;
 	if (WIFSIGNALED(data->exit_status) != 0)
 	{
 		if (WTERMSIG(data->exit_status) == SIGINT)
@@ -61,20 +60,16 @@ pid_t	create_fork(t_data *data)
 	return (id);
 }
 
-void	execute_the_path(t_data *data)
-{
-	pid_t	id;
-
-	id = create_fork(data);
-	if (id == 0)
-		execute_through_path(data, data->pipelines, data->path);
-	wait_for_process(data, id, data->pipelines->args[0]);
-}
-
 pid_t	fork_process(t_data *data, t_mlist *pipeline)
 {
 	pid_t	id;
 
+	if (pipeline->pv == NULL && count_tokens(pipeline, PIPE) != 0)
+		open_pipe(data, START);
+	else if (count_tokens(pipeline->nx, PIPE) != 0)
+		open_pipe(data, MIDDLE);
+	else
+		open_pipe(data, END);
 	id = create_fork(data);
 	if (id == 0)
 	{
@@ -82,7 +77,7 @@ pid_t	fork_process(t_data *data, t_mlist *pipeline)
 			pipeline = pipeline->nx;
 		if (setup_redirection(data, pipeline) == ERROR)
 			return (-1);
-		direct_pipes_right(data, data->pipe_fds);
+		make_pipes_pipe(data, data->pipe_fds);
 		if (run_builtins(data, pipeline) == false)
 			execute_through_path(data, pipeline, data->path);
 		clean_up(data);

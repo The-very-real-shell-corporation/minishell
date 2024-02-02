@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 13:54:06 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 17:14:49 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ t_mlist	*sort_environment(t_data *data, t_mlist *env);
 
 void	carry_out_orders(t_data *data, t_mlist *pipelines, int i);
 void	execute_command(t_data *data, char *directory, char **args);
-void	execute_the_path(t_data *data);
 void	execute_through_path(t_data *data, t_mlist *pipeline, char **path);
 bool	run_builtins(t_data *data, t_mlist *pipeline);
 
@@ -164,7 +163,7 @@ size_t	list_size(t_mlist *list, t_token tolkien);
 size_t	list_size_redirection(t_mlist *list);
 t_mlist	*node_first(t_mlist *list);
 t_mlist	*node_last(t_mlist *list);
-size_t	count_pipes(t_mlist *list);
+size_t	count_tokens(t_mlist *list, t_token tolkien);
 
 /*	List functions (utility)	*/
 
@@ -217,5 +216,7 @@ void	lexer_error(t_data *data, char *msg, char *token);
 char	**list_to_array(t_data *data, t_mlist *list);
 void	print_2d_charray(char **array);
 int		ptr_array_size(void **array);
+
+void	print_debug(t_mlist *list);
 
 #endif

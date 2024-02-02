@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/31 20:58:35 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 17:23:56 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,10 @@ void	initialize_data(t_data *data, char **envp)
 	ft_bzero(data, sizeof(t_data));
 	assign_function_ptrs(data);
 	copy_environment(data, &data->env, envp);
+	data->pipe_fds[0][READ] = -1;
+	data->pipe_fds[0][WRITE] = -1;
+	data->pipe_fds[1][READ] = -1;
+	data->pipe_fds[1][WRITE] = -1;
 }
 
 void	get_input_and_parse(t_data *data)
