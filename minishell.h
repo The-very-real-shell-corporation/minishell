@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/31 20:59:48 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 13:54:06 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ size_t	list_size(t_mlist *list, t_token tolkien);
 size_t	list_size_redirection(t_mlist *list);
 t_mlist	*node_first(t_mlist *list);
 t_mlist	*node_last(t_mlist *list);
-size_t	re_tokens(t_mlist *list);
+size_t	count_pipes(t_mlist *list);
 
 /*	List functions (utility)	*/
 
@@ -188,10 +188,9 @@ t_mlist	*ft_special_split(t_data *data, char *input);
 
 void	build_pipelines(t_data *data, t_mlist *input, t_mlist **pipelines);
 void	close_main_fds(int pipe_fds[2][2]);
-void	direct_pipes_left(t_data *data, int pipe_fds[2][2]);
-void	direct_pipes_right(t_data *data, int pipe_fds[2][2]);
-void	duplicate_fd(t_data *data, int in, int out);
-pid_t	fork_process(t_data *data, t_mlist *pipelines, int direction);
+void	make_pipes_pipe(t_data *data, int pipe_fds[2][2]);
+void	duplicate_fd(t_data *data, int old, int new);
+pid_t	fork_process(t_data *data, t_mlist *pipelines);
 void	open_pipe(t_data *data, int pipes);
 void	whatsup_doc(t_data *data, char *delim);
 

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/31 18:51:13 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 13:33:36 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	execute_through_path(t_data *data, t_mlist *p, char **path)
 	exit(EXIT_FAILURE);
 }
 
-static bool	try_pipeless(t_data *data, t_mlist *pipeline)
+static bool	try_pipeless(t_data *data, t_mlist *pipeline) // needs to loop & do redirections
 {
 	if (pipeline == NULL)
 		return (true);
@@ -55,28 +55,22 @@ static bool	try_pipeless(t_data *data, t_mlist *pipeline)
 
 void	carry_out_orders(t_data *data, t_mlist *pipelines, int i)
 {
-	int		direction;
 	t_mlist	*tmp;
 
 	if (try_pipeless(data, pipelines) == true)
 		return ;
-	// open_pipe(data, START);
-	direction = NONE;
-	data->pids = ft_calloc2(data, re_tokens(pipelines) + 1, sizeof(pid_t));
+	open_pipe(data, START);
+	data->pids = ft_calloc2(data, count_pipes(pipelines) + 1, sizeof(pid_t));
 	while (pipelines != NULL)
 	{
-		tmp = pipelines;
-		if (pipelines->token != HEREDOC)
-			pipelines = pipelines->nx;
-		if (pipelines != NULL)
+		if (pipelines->pv == NULL || pipelines->token == PIPE)
 		{
-			direction = is_redirection(pipelines->token);
-			pipelines = pipelines->nx;
+			data->pids[i] = fork_process(data, pipelines);
+			if (data->pids[i] == -1)
+				break ;
+			i++;
 		}
-		data->pids[i] = fork_process(data, tmp, direction);
-		if (data->pids[i] == -1)
-			break ;
-		i++;
+		pipelines = pipelines->nx;
 	}
 	while (i > 0)
 	{

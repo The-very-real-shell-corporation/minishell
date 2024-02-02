@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/08 19:46:35 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/31 18:43:42 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 13:41:36 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ void	open_pipe(t_data *data, int position)
 	}
 }
 
-void	duplicate_fd(t_data *data, int in, int out)
+void	duplicate_fd(t_data *data, int new, int old)
 {
-	if (dup2(in, out) == -1)
+	if (dup2(old, new) == -1)
 		exit_error(data, "dup2 failed");
+	close(old);
 }
 
 /* void	connect_with_pipe(t_data *data, int pipe_fds[2][2])

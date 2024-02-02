@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/31 18:45:05 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/02 13:38:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,11 @@ void	build_pipelines(t_data *data, t_mlist *in, t_mlist **pipelines)
 			in = in->nx;
 		}
 	}
+	// print_list(*pipelines);
+	// exit(0);
 }
 
-void	direct_pipes_left(t_data *data, int pipe_fds[2][2])
-{
-	if (pipe_fds[0][0] != -1)
-	{
-		close(data->pipe_fds[0][WRITE]);
-		duplicate_fd(data, pipe_fds[0][READ], STDIN_FILENO);
-		close(data->pipe_fds[0][READ]);
-	}
-	if (pipe_fds[1][0] != -1)
-	{
-		close(data->pipe_fds[1][READ]);
-		duplicate_fd(data, pipe_fds[1][WRITE], STDOUT_FILENO);
-		close(data->pipe_fds[1][WRITE]);
-	}
-}
-
-void	direct_pipes_right(t_data *data, int pipe_fds[2][2])
+void	make_pipes_pipe(t_data *data, int pipe_fds[2][2])
 {
 	if (pipe_fds[0][0] != -1)
 	{
