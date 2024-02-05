@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 17:23:56 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/05 20:51:29 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	get_input_and_parse(t_data *data)
 	char	*line;
 
 	line = readline("The Bashbasher: ");
-	if (line == NULL)
+	if (line == NULL || ft_strncmp(line, "exit", 5) == 0)
 		exit_builtin(data, NULL);
 	if (everythingiswhitespace(line) == true)
 		return ;

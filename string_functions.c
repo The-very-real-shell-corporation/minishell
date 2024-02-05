@@ -14,26 +14,18 @@
 
 char	*envp_string(t_data *data, char *input)
 {
-	char	*value;
 	t_mlist	*tmp;
 	char	*str;
-	char	*join;
-
-	join = ft_strdup2(data, "=");
-	str = ft_strjoin2(data, input, join);
-	free(join);
-	tmp = find_input(data->env, str);
-	free(str);
-	if (tmp == NULL)
-		str = "";
-	else
+	
+	tmp = find_input(data->env, input);
+	str = "";
+	if (tmp != NULL)
 		str = tmp->str;
 	while (*str != '\0' && *str != '=')
 		str++;
 	if (*str == '=')
 		str++;
-	value = ft_strdup2(data, str);
-	return (value);
+	return (ft_strdup2(data, str));
 }
 
 /*	Takes the new part to overwrite a set part of the original string, 

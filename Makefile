@@ -40,6 +40,7 @@ SRCS	=	alexer.c \
 			ft_special_split.c \
 			heredoc.c \
 			initialize.c \
+			journey_to_alexpandria.c \
 			list_adding.c \
 			list_navigate.c \
 			list_navigate2.c \

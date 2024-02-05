@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 18:55:43 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/05 15:04:08 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,5 @@ void	tokenize_list(t_data *data, t_mlist *in)
 		in = in->nx;
 	}
 	check_list(data, data->input);
-	print_debug(data->input);
-	if (i == 1)
-		exit(0);
 	i++;
 }

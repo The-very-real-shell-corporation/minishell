@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/11 15:14:42 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/24 12:10:52 by vincent       ########   odam.nl         */
+/*   Updated: 2024/02/05 20:17:38 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ void	unlink_node(t_mlist *node)
 void	replace_node(t_data *data, t_mlist *node, char *input)
 {
 	insert_node(node->pv, node, \
-	new_node(data, ft_strdup2(data, input), NULL, INITIALIZED));
+	new_node(data, ft_strdup2(data, input), NULL, INIT));
 	unlink_node(node);
 }

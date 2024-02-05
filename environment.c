@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 19:47:55 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/31 20:58:52 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/05 20:17:38 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_mlist	*sort_environment(t_data *data, t_mlist *env)
 
 	if (env == NULL)
 		return (NULL);
-	sorted = new_node(data, ft_strdup2(data, env->str), NULL, INITIALIZED);
+	sorted = new_node(data, ft_strdup2(data, env->str), NULL, INIT);
 	env = env->nx;
 	direction = LEFT;
 	while (env != NULL)
@@ -48,10 +48,10 @@ t_mlist	*sort_environment(t_data *data, t_mlist *env)
 		sorted = find_position(env->str, sorted, &direction);
 		if (direction == LEFT)
 			insert_node(sorted->pv, sorted, \
-			new_node(data, ft_strdup2(data, env->str), NULL, INITIALIZED));
+			new_node(data, ft_strdup2(data, env->str), NULL, INIT));
 		else if (direction == RIGHT)
 			insert_node(sorted, sorted->nx, \
-			new_node(data, ft_strdup2(data, env->str), NULL, INITIALIZED));
+			new_node(data, ft_strdup2(data, env->str), NULL, INIT));
 		env = env->nx;
 	}
 	return (node_first(sorted));
@@ -67,7 +67,7 @@ void	copy_environment(t_data *data, t_mlist **env, char **envp)
 	while (envp[i] != NULL)
 	{
 		node_addback(env, new_node(data, \
-		ft_strdup2(data, envp[i]), NULL, INITIALIZED));
+		ft_strdup2(data, envp[i]), NULL, INIT));
 		i++;
 	}
 }

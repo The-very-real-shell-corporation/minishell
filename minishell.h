@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 18:29:17 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/05 20:28:00 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ typedef enum e_token
 	COMMAND = 200,
 	DUMMY,
 	FILENAME,
-	INITIALIZED,
-	WORD
+	INIT,
+	WORD,
+	STITCH
 }	t_token;
 
 typedef struct s_mlist
@@ -132,6 +133,7 @@ bool	run_builtins(t_data *data, t_mlist *pipeline);
 /*	Expander (dollar)	*/
 
 void	expand_dollar(t_data *data, char **str);
+void	journey_to_alexpandria(t_data *data, t_mlist **input, char *str);
 
 /*	Forking	*/
 
@@ -216,7 +218,7 @@ void	lexer_error(t_data *data, char *msg, char *token);
 char	**list_to_array(t_data *data, t_mlist *list);
 void	print_2d_charray(char **array);
 int		ptr_array_size(void **array);
-
+bool	is_quote(char c);
 void	print_debug(t_mlist *list);
 bool	contains_redirections(t_mlist *list);
 

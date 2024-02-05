@@ -56,7 +56,7 @@ t_mlist	*copy_node(t_data *data, t_mlist *node)
 	size_t	i;
 
 	i = 0;
-	copy = new_node(data, NULL, NULL, INITIALIZED);
+	copy = new_node(data, NULL, NULL, INIT);
 	copy->str = ft_strdup2(data, node->str);
 	copy->token = node->token;
 	if (node->args != NULL)

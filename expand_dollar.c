@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 16:00:43 by vincent       #+#    #+#                 */
-/*   Updated: 2024/01/11 18:36:42 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/05 16:23:16 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static uint32_t	get_length(char *str)
 
 	i = 0;
 	while (str[i] != '\0' && ft_iswhitespace(str[i]) == false \
-	&& ft_strchr("\'\"$", str[i]) == NULL)
+	&& ft_strchr("\'\"$=", str[i]) == NULL)
 	{
 		i++;
 	}

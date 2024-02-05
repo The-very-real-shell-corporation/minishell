@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 18:29:47 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/05 17:19:40 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static void	execute_pipelessly(t_data *data, t_mlist *pipeline)
 
 void	carry_out_orders(t_data *data, t_mlist *pipelines, int i)
 {
+	print_debug(pipelines);
 	if (contains_redirections(pipelines) == false)
 	{
 		execute_pipelessly(data, pipelines);

@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/25 19:21:54 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/05 20:57:46 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	is_quote(char c)
+bool	is_quote(char c)
 {
 	if (c == '\'' || c == '\"')
 		return (true);
@@ -38,7 +38,7 @@ static char	*remove_quotes(t_data *data, char *str, char c)
 	return (res);
 }
 
-void	expand_quotes(t_data *data, char **str)
+void	expand_quotes(t_data *data, t_mlist *node, char **str)
 {
 	char		*tmp;
 	uint32_t	i;
@@ -49,6 +49,8 @@ void	expand_quotes(t_data *data, char **str)
 	{
 		if (is_quote(tmp[i]) == true && ft_strchr(&tmp[i + 1], tmp[i]) != NULL)
 		{
+			if (tmp[ft_strlen(tmp) - 1] != ' ')
+				node->token = STITCH;
 			*str = remove_quotes(data, tmp, tmp[i]);
 			free(tmp);
 			return ;
@@ -59,40 +61,43 @@ void	expand_quotes(t_data *data, char **str)
 
 static void	contract_list(t_data *data, t_mlist *list)
 {
-	size_t	i;
 	char	*tmp;
 
-	while (list != NULL)
+	while (list->nx != NULL)
 	{
-		i = ft_strlen(list->str);
 		tmp = list->str;
-		if (i > 0 && list->str[i - 1] != ' ' && list->nx != NULL)
+		if (list->token == STITCH)
 		{
 			list->str = ft_strjoin2(data, tmp, list->nx->str);
 			free(tmp);
 			unlink_node(list->nx);
 		}
-		else
+		else if (tmp[ft_strlen(tmp) - 1] == ' ')
 		{
-			if (list->str[i - 1] == ' ')
-				list->str[i - 1] = '\0';
+			list->str[ft_strlen(tmp) - 1] = '\0';
 			list = list->nx;
 		}
+		else
+			list = list->nx;
 	}
+	tmp = list->str;
+	if (tmp[ft_strlen(tmp) - 1] == ' ')
+		tmp[ft_strlen(tmp) - 1] = '\0';
 }
 
-void	expansion_pack(t_data *data, char *input)
+void	expansion_pack(t_data *data, char *input_str)
 {
 	t_mlist	*split;
 
-	split = ft_special_split(data, input);
+	split = ft_special_split(data, input_str);
 	data->input = split;
 	if (split == NULL)
 		return ;
 	while (split != NULL)
 	{
 		expand_dollar(data, &split->str);
-		expand_quotes(data, &split->str);
+		journey_to_alexpandria(data, &split, split->str);
+		expand_quotes(data, split, &split->str);
 		split = split->nx;
 	}
 	contract_list(data, data->input);

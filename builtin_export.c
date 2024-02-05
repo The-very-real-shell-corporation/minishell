@@ -6,22 +6,44 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/30 18:42:31 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 18:43:57 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/05 20:43:30 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static bool	error_check(char **args)
+{
+	while (*args != NULL)
+	{
+		if (**args == '\0')
+		{
+			ft_putendl_fd("error: empty string in export", STDERR_FILENO);
+			return (ERROR);
+		}
+		if (ft_isalpha(**args) == false && **args != '_')
+		{
+			ft_putstr_fd("error: export must start with ", STDERR_FILENO);
+			ft_putendl_fd("a letter or underscore", STDERR_FILENO);
+			return (ERROR);
+		}
+		args++;
+	}
+	return (SUCCESS);
+}
 
 int	export_builtin(t_data *data, char **args)
 {
 	t_mlist	*tmp;
 	char	*env_string;
 
-	if (*args == NULL || **args == '\0')
+	if (error_check(args) == ERROR)
+		return (ERROR);
+	if (*args == NULL)
 	{
 		tmp = sort_environment(data, node_first(data->env));
 		print_list(node_first(tmp));
-		return (clear_mlist(&tmp), 0);
+		return (clear_mlist(&tmp), SUCCESS);
 	}
 	while (*args != NULL)
 	{
@@ -32,11 +54,11 @@ int	export_builtin(t_data *data, char **args)
 		tmp = find_input(data->env, env_string);
 		if (tmp == NULL)
 			node_addback(&data->env, \
-			new_node(data, ft_strdup2(data, env_string), NULL, INITIALIZED));
+			new_node(data, ft_strdup2(data, env_string), NULL, INIT));
 		else
 			replace_node(data, tmp, env_string);
 		data->env = node_first(data->env);
 		args++;
 	}
-	return (0);
+	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/20 15:53:40 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 15:35:34 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/05 20:41:48 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int	ft_ministrcmp(char *env_str, char *input)
 	if ((env_str[i] == '=' && input[i] == '\0') || \
 		(env_str[i] == '\0' && input[i] == '='))
 		i--;
-	if (input[i] != '\0' && input[i + 1] != '\0')
-		return (-1);
 	return (env_str[i] - input[i]);
 }
 
