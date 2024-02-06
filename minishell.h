@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/05 20:28:00 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/06 15:08:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	wait_for_process(t_data *data, pid_t id, char *input);
 
 /*	Initialization	*/
 
-void	get_input_and_parse(t_data *data);
+bool	get_input_and_parse(t_data *data);
 void	initialize_data(t_data *data, char **envp);
 bool	setup_redirections(t_data *data, t_mlist *pipeline);
 

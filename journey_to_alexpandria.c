@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/05 17:39:28 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/05 21:04:41 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/06 14:52:16 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ void	journey_to_alexpandria(t_data *data, t_mlist **input, char *str)
 			*input = (*input)->nx;
 			i++;
 		}
+		if (tmp->pv == NULL)
+			data->input = data->input->nx;
 		unlink_node(tmp);
-		// free(arr);
+		free(arr);
 	}
 }

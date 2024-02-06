@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 16:05:51 by vincent       #+#    #+#                 */
-/*   Updated: 2024/02/05 19:52:20 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/06 15:22:50 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void	print_debug(t_mlist *list)
 	while (list != NULL)
 	{
 		printf("Node[%d]:\n", i);
-		dprintf(STDERR_FILENO, "string: %s\n", list->str);
+		// dprintf(STDERR_FILENO, "string: %s\n", list->str);
 		print_2d_charray(list->args);
-		// dprintf(STDERR_FILENO, "token: %d\n", list->token);
+		dprintf(STDERR_FILENO, "token: %d\n", list->token);
 		list = list->nx;
 		dprintf(STDERR_FILENO, "\nNEXT\n\n");
 		i++;

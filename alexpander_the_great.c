@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/05 20:57:46 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/06 17:12:11 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	expand_quotes(t_data *data, t_mlist *node, char **str)
 static void	contract_list(t_data *data, t_mlist *list)
 {
 	char	*tmp;
+	int		pos;
 
 	while (list->nx != NULL)
 	{
@@ -80,9 +81,9 @@ static void	contract_list(t_data *data, t_mlist *list)
 		else
 			list = list->nx;
 	}
-	tmp = list->str;
-	if (tmp[ft_strlen(tmp) - 1] == ' ')
-		tmp[ft_strlen(tmp) - 1] = '\0';
+	pos = ft_strlen(list->str);
+	if (pos > 0 && list->str[pos - 1] == ' ')
+		list->str[pos - 1] = '\0';
 }
 
 void	expansion_pack(t_data *data, char *input_str)

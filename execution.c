@@ -6,11 +6,27 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/05 17:19:40 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/06 18:25:21 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	wait_for_all_forks(t_data *data, t_mlist *pipelines, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		while (pipelines != NULL && \
+		(pipelines->token != COMMAND && is_builtin(pipelines->token) == false))
+			pipelines = pipelines->nx;
+		wait_for_process(data, data->pids[i], pipelines->args[0]);
+		pipelines = pipelines->nx;
+		i++;
+	}
+}
 
 void	execute_through_path(t_data *data, t_mlist *p, char **path)
 {
@@ -50,13 +66,12 @@ static void	execute_pipelessly(t_data *data, t_mlist *pipeline)
 		if (id == 0)
 			execute_through_path(data, pipeline, data->path);
 		else
-			waitpid(-1, &data->exit_status, 0);
+			wait_for_process(data, id, pipeline->args[0]);
 	}
 }
 
 void	carry_out_orders(t_data *data, t_mlist *pipelines, int i)
 {
-	print_debug(pipelines);
 	if (contains_redirections(pipelines) == false)
 	{
 		execute_pipelessly(data, pipelines);
@@ -74,9 +89,5 @@ void	carry_out_orders(t_data *data, t_mlist *pipelines, int i)
 		}
 		pipelines = pipelines->nx;
 	}
-	while (i > 0)
-	{
-		i--;
-		wait_for_process(data, data->pids[i], data->pipelines->args[0]);
-	}
+	wait_for_all_forks(data, data->pipelines, i);
 }

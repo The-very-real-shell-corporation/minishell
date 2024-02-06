@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 18:13:51 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/06 17:05:55 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void	wait_for_process(t_data *data, pid_t id, char *input)
 		write(STDERR_FILENO, ": could not execute\n", 21);
 		return ;
 	}
+	if (data->exit_status == 131)
+		ft_putendl_fd("My core dumped, ouchie", STDERR_FILENO);
+	return ;
 	if (WIFSIGNALED(data->exit_status) != 0)
 	{
 		if (WTERMSIG(data->exit_status) == SIGINT)

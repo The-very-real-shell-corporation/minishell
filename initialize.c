@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/05 20:51:29 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/06 17:04:45 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	initialize_data(t_data *data, char **envp)
 	data->pipe_fds[1][WRITE] = -1;
 }
 
-void	get_input_and_parse(t_data *data)
+bool	get_input_and_parse(t_data *data)
 {
 	char	*line;
 
@@ -87,15 +87,18 @@ void	get_input_and_parse(t_data *data)
 	if (line == NULL || ft_strncmp(line, "exit", 5) == 0)
 		exit_builtin(data, NULL);
 	if (everythingiswhitespace(line) == true)
-		return ;
+		return (free(line), false);
 	add_history(line);
 	get_path_ready(data);
-	expansion_pack(data, line);
 	if (ft_strncmp(line, "about", 6) == 0)
 	{
 		about_message();
 		lexer_error(data, NULL, NULL);
+		free(line);
+		return (false);
 	}
+	expansion_pack(data, line);
 	free(line);
 	build_pipelines(data, data->input, &data->pipelines);
+	return (true);
 }

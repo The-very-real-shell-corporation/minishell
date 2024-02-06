@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 14:45:43 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/06 15:07:56 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	main(int argc, char **argv, char **envp)
 	while (INFINITY)
 	{
 		set_signals();
-		get_input_and_parse(&data);
-		carry_out_orders(&data, data.pipelines, 0);
+		if (get_input_and_parse(&data) == true)
+			carry_out_orders(&data, data.pipelines, 0);
 		loop_clean(&data);
 		unlink(HD_PATH);
 	}
