@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/06 17:05:55 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/07 16:43:23 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,8 @@
 
 void	wait_for_process(t_data *data, pid_t id, char *input)
 {
+	0x7f;
 	waitpid(id, &data->exit_status, 0);
-	if (WEXITSTATUS(data->exit_status) == EXIT_FAILURE)
-	{
-		ft_putstr_fd("command not found: ", STDERR_FILENO);
-		ft_putendl_fd(input, STDERR_FILENO);
-		return ;
-	}
-	if (WEXITSTATUS(data->exit_status) == EXEC_ERR)
-	{
-		write(STDERR_FILENO, input, ft_strlen(input));
-		write(STDERR_FILENO, ": could not execute\n", 21);
-		return ;
-	}
-	if (data->exit_status == 131)
-		ft_putendl_fd("My core dumped, ouchie", STDERR_FILENO);
-	return ;
 	if (WIFSIGNALED(data->exit_status) != 0)
 	{
 		if (WTERMSIG(data->exit_status) == SIGINT)
@@ -39,13 +25,23 @@ void	wait_for_process(t_data *data, pid_t id, char *input)
 		}
 		else if (WTERMSIG(data->exit_status) == SIGQUIT)
 		{
-			write(STDERR_FILENO, "My core dumped, ouchie\n", 23);
+			ft_putendl_fd("My core dumped, ouchie.", STDERR_FILENO);
 			data->exit_status = 128 + WTERMSIG(data->exit_status);
 		}
 	}
+	else if (WEXITSTATUS(data->exit_status) == EXIT_FAILURE)
+	{
+		ft_putstr_fd("command not found: ", STDERR_FILENO);
+		ft_putendl_fd(input, STDERR_FILENO);
+	}
+	// else if (WEXITSTATUS(data->exit_status) == EXEC_ERR)
+	// {
+	// 	ft_putstr_fd(input, STDERR_FILENO);
+	// 	ft_putendl_fd(": could not execute\n", STDERR_FILENO);
+	// }
 	else if (WEXITSTATUS(data->exit_status) != 0)
 	{
-		write(STDERR_FILENO, "Not sure what but something went wrong\n", 40);
+		ft_putendl_fd("Not sure what but something went wrong", STDERR_FILENO);
 	}
 }
 
