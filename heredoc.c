@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/21 14:48:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 17:35:20 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/13 17:03:03 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,10 @@ static int	open_heredoc(t_data *data)
 	return (fd);
 }
 
-static void	wait_briefly()
-{
-	int	i;
-
-	i = 0;
-	while (i < 1000000)
-		i++;
-}
-
 static void	get_user_input(t_data *data, int fd, char *delim, bool expansion)
 {
 	char	*line;
 
-	wait_briefly();
 	while (INFINITY)
 	{
 		line = readline("> ");

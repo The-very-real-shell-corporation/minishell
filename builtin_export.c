@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/30 18:42:31 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/05 20:43:30 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/13 17:43:38 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,20 @@ static bool	error_check(char **args)
 	return (SUCCESS);
 }
 
-int	export_builtin(t_data *data, char **args)
+static bool	with_arguments(t_data *data, char **args)
 {
-	t_mlist	*tmp;
 	char	*env_string;
+	t_mlist	*tmp;
 
-	if (error_check(args) == ERROR)
-		return (ERROR);
-	if (*args == NULL)
-	{
-		tmp = sort_environment(data, node_first(data->env));
-		print_list(node_first(tmp));
-		return (clear_mlist(&tmp), SUCCESS);
-	}
 	while (*args != NULL)
 	{
 		env_string = *args;
 		dollar_in_env(data, *args, &env_string);
 		if (env_string == NULL)
+		{
 			printf("Error: could not add \"%s\" to environment\n", *args);
+			return (ERROR);
+		}
 		tmp = find_input(data->env, env_string);
 		if (tmp == NULL)
 			node_addback(&data->env, \
@@ -60,5 +55,22 @@ int	export_builtin(t_data *data, char **args)
 		data->env = node_first(data->env);
 		args++;
 	}
+	return (SUCCESS);
+}
+
+int	export_builtin(t_data *data, char **args)
+{
+	t_mlist	*tmp;
+
+	if (error_check(args) == ERROR)
+		return (ERROR);
+	if (*args == NULL)
+	{
+		tmp = sort_environment(data, node_first(data->env));
+		print_list(node_first(tmp));
+		return (clear_mlist(&tmp), SUCCESS);
+	}
+	if (with_arguments(data, args) == ERROR)
+		return (ERROR);
 	return (SUCCESS);
 }

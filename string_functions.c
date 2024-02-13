@@ -16,7 +16,7 @@ char	*envp_string(t_data *data, char *input)
 {
 	t_mlist	*tmp;
 	char	*str;
-	
+
 	tmp = find_input(data->env, input);
 	str = "";
 	if (tmp != NULL)

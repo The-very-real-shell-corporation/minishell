@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/06 18:25:21 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/13 17:22:00 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	wait_for_all_forks(t_data *data, t_mlist *pipelines, int size)
+static void	await_forks(t_data *data, t_mlist *pipelines, pid_t *ids, int size)
 {
 	int	i;
 
@@ -22,10 +22,11 @@ static void	wait_for_all_forks(t_data *data, t_mlist *pipelines, int size)
 		while (pipelines != NULL && \
 		(pipelines->token != COMMAND && is_builtin(pipelines->token) == false))
 			pipelines = pipelines->nx;
-		wait_for_process(data, data->pids[i], pipelines->args[0]);
+		wait_for_process(data, ids[i], pipelines->args[0]);
 		pipelines = pipelines->nx;
 		i++;
 	}
+	free(ids);
 }
 
 void	execute_through_path(t_data *data, t_mlist *p, char **path)
@@ -72,22 +73,24 @@ static void	execute_pipelessly(t_data *data, t_mlist *pipeline)
 
 void	carry_out_orders(t_data *data, t_mlist *pipelines, int i)
 {
+	pid_t	*pids;
+
 	if (contains_redirections(pipelines) == false)
 	{
 		execute_pipelessly(data, pipelines);
 		return ;
 	}
-	data->pids = ft_calloc2(data, count_tokens(pipelines, PIPE) + 1, sizeof(pid_t));
+	pids = ft_calloc2(data, count_tokens(pipelines, PIPE) + 1, sizeof(pid_t));
 	while (pipelines != NULL)
 	{
 		if (pipelines->pv == NULL || pipelines->token == PIPE)
 		{
-			data->pids[i] = fork_process(data, pipelines);
-			if (data->pids[i] == -1)
+			pids[i] = fork_process(data, pipelines);
+			if (pids[i] == -1)
 				break ;
 			i++;
 		}
 		pipelines = pipelines->nx;
 	}
-	wait_for_all_forks(data, data->pipelines, i);
+	await_forks(data, data->pipelines, pids, i);
 }

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/05 15:04:08 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/13 17:15:59 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,6 @@ static void	assign_command_token(t_mlist *node, char *str)
 		node->token = B_PWD;
 	else if (ft_strncmp("unset", str, 6) == 0)
 		node->token = B_UNSET;
-	// else if (ft_strncmp(str, "<<", 3) == 0)
-	// 	node->token = HEREDOC;
-	// else if (ft_strncmp(str, "|", 2) == 0)
-	// 	node->token = PIPE;
 	else
 		node->token = COMMAND;
 }
@@ -78,13 +74,19 @@ static void	check_list(t_data *data, t_mlist *in)
 {
 	while (in != NULL)
 	{
-		if (is_redirection(in->token) == true)
+		if (in->token == COMMAND && ft_strncmp(in->str, "<<", 3) == 0)
 		{
-			if (is_double_redirection(in->nx) == true || in->nx == NULL)
-			{
+			if (in->nx != NULL && is_redirection(in->nx->token) == true)
 				lexer_error(data, "error near redirection symbol: ", in->str);
-				return ;
-			}
+			else
+				lexer_error(data, "command not found: ", in->str);
+			return ;
+		}
+		if (is_redirection(in->token) == true && \
+		(is_double_redirection(in->nx) == true || in->nx == NULL))
+		{
+			lexer_error(data, "error near redirection symbol: ", in->str);
+			return ;
 		}
 		if (in->token == HEREDOC)
 		{
@@ -99,8 +101,6 @@ static void	check_list(t_data *data, t_mlist *in)
 
 void	tokenize_list(t_data *data, t_mlist *in)
 {
-	static int i = 0;
-
 	while (in != NULL)
 	{
 		assign_token(in, in->str);
@@ -109,5 +109,4 @@ void	tokenize_list(t_data *data, t_mlist *in)
 		in = in->nx;
 	}
 	check_list(data, data->input);
-	i++;
 }

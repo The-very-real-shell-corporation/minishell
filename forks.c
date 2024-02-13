@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/07 16:43:23 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/13 16:19:52 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	wait_for_process(t_data *data, pid_t id, char *input)
 {
-	0x7f;
 	waitpid(id, &data->exit_status, 0);
 	if (WIFSIGNALED(data->exit_status) != 0)
 	{
@@ -43,6 +42,9 @@ void	wait_for_process(t_data *data, pid_t id, char *input)
 	{
 		ft_putendl_fd("Not sure what but something went wrong", STDERR_FILENO);
 	}
+	if (data->exit_status > 255)
+		data->exit_status = data->exit_status >> 8;
+	printf("status: %d\n", data->exit_status);
 }
 
 pid_t	create_fork(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/06 17:04:45 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/13 16:51:15 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ bool	get_input_and_parse(t_data *data)
 	}
 	expansion_pack(data, line);
 	free(line);
+	if (data->input == NULL)
+		return (false);
 	build_pipelines(data, data->input, &data->pipelines);
 	return (true);
 }
