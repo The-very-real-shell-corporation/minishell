@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/30 18:42:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/13 17:17:25 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 20:33:10 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	receive_status(char **args)
 	status = mini_to_i(*args);
 	if (status == -1)
 	{
-		ft_putendl_fd("error: non-numerical input for exit", STDERR_FILENO);
+		ft_putendl_fd("error: invalid input for exit", STDERR_FILENO);
 		return (-1);
 	}
 	if (status == -2)
@@ -72,7 +72,10 @@ int	exit_builtin(t_data *data, char **args)
 	int	status;
 
 	if (args == NULL || *args == NULL)
+	{
+		ft_putendl_fd("exit", STDOUT_FILENO);
 		exit(EXIT_SUCCESS);
+	}
 	status = receive_status(args);
 	if (status == -1)
 		return (-1);

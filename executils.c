@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/21 18:33:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/02/14 16:11:46 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 20:33:50 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,15 @@ static bool	check_access(char *filename, int *status)
 	return (SUCCESS);
 }
 
-void	execute_through_path(t_data *data, t_mlist *p, char **path)
+static int	loop_through_path(t_data *data, t_mlist *p, char **path, char *cwd)
 {
 	int		i;
 	int		status;
 	char	*directory;
-	char	*cwd;
 
 	i = 0;
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
-		exit_error(data, "cwd failed");
-	data->env_array = list_to_array(data, data->env);
-	if (check_access(p->args[0], &status) == SUCCESS)
-		execute_command(data, ft_strdup2(data, p->args[0]), p->args);
-	while (path[i] != NULL)
+	status = 0;
+	while (path != NULL && path[i] != NULL)
 	{
 		chdir(path[i]);
 		if (check_access(p->args[0], &status) == SUCCESS)
@@ -53,8 +47,28 @@ void	execute_through_path(t_data *data, t_mlist *p, char **path)
 			chdir(cwd);
 			execute_command(data, directory, p->args);
 		}
+		if (status == 127)
+			break ;
 		i++;
 	}
+	chdir(cwd);
+	return (status);
+}
+
+void	execute_through_path(t_data *data, t_mlist *p, char **path)
+{
+	int		status;
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (check_errno(&status, "can't work in the void") == ERROR)
+		exit(EXIT_FAILURE);
+	if (cwd == NULL)
+		exit_error(data, "cwd failed");
+	data->env_array = list_to_array(data, data->env);
+	status = loop_through_path(data, p, path, cwd);
+	if (status != 127 && check_access(p->args[0], &status) == SUCCESS)
+		execute_command(data, ft_strdup2(data, p->args[0]), p->args);
 	if (status == 126)
 	{
 		ft_putstr_fd("command not found: ", STDERR_FILENO);

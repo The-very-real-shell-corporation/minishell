@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/14 17:14:46 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 19:37:29 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ char	*remake_str(char *original, int start, int len, char *newpart);
 
 /*	Utility functions	*/
 
-bool	check_errno(int *status);
+bool	check_errno(int *status, char *msg);
 bool	everythingiswhitespace(char *str);
 void	exit_error(t_data *data, char *msg);
 bool	is_builtin(t_token tolkien);

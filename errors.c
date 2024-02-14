@@ -6,17 +6,17 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 11:56:43 by vincent       #+#    #+#                 */
-/*   Updated: 2024/02/14 17:15:07 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 19:35:24 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	check_errno(int *status)
+bool	check_errno(int *status, char *msg)
 {
 	if (errno == ENOENT)
 	{
-		ft_putendl_fd(strerror(ENOENT), STDERR_FILENO);
+		ft_putendl_fd(msg, STDERR_FILENO);
 		*status = ENOENT;
 		return (ERROR);
 	}
