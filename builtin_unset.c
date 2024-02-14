@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/30 18:42:39 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 18:44:26 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 19:00:31 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	unset_builtin(t_data *data, char **args)
 	if (*args == NULL)
 	{
 		printf("Please provide a variable to unset\n");
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	while (*args != NULL)
 	{
@@ -31,5 +31,5 @@ int	unset_builtin(t_data *data, char **args)
 		}
 		args++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

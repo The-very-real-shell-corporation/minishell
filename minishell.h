@@ -6,29 +6,30 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/14 16:14:16 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 17:14:46 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <signal.h>
-# include <stdbool.h>
 # include <ctype.h>
+# include <dirent.h>
+# include <errno.h>
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <dirent.h>
+# include <signal.h>
+# include <stdbool.h>
 # include <stdint.h>
+# include <stdio.h>
+# include <stdlib.h>
 # include <sys/ioctl.h>
 # include <sys/stat.h>
 # include <sys/types.h>
-# include <termios.h>
 # include <sys/wait.h>
+# include <termios.h>
+# include <unistd.h>
 # include "libft/libft.h"
 
 # define INFINITY	1
@@ -210,6 +211,7 @@ char	*remake_str(char *original, int start, int len, char *newpart);
 
 /*	Utility functions	*/
 
+bool	check_errno(int *status);
 bool	everythingiswhitespace(char *str);
 void	exit_error(t_data *data, char *msg);
 bool	is_builtin(t_token tolkien);

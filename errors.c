@@ -6,11 +6,22 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/24 11:56:43 by vincent       #+#    #+#                 */
-/*   Updated: 2024/01/30 14:25:29 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 17:15:07 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool	check_errno(int *status)
+{
+	if (errno == ENOENT)
+	{
+		ft_putendl_fd(strerror(ENOENT), STDERR_FILENO);
+		*status = ENOENT;
+		return (ERROR);
+	}
+	return (SUCCESS);
+}
 
 void	exit_error(t_data *data, char *msg)
 {

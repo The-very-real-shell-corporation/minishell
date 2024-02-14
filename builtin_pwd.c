@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/30 18:42:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 18:44:36 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 18:58:32 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@ int	pwd_builtin(t_data *data, char **args)
 
 	(void)args;
 	out = getcwd(NULL, 0);
+	if (errno == ENOENT)
+	{
+		ft_putendl_fd(strerror(ENOENT), STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	if (out == NULL)
-		exit_error(data, "cwd failed\n");
+		exit_error(data, "cwd failed");
 	ft_putendl_fd(out, STDOUT_FILENO);
 	free(out);
-	return (0);
+	return (EXIT_SUCCESS);
 }
