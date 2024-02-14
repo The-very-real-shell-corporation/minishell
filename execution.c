@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/14 15:22:53 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 16:15:33 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	await_forks(t_data *data, t_mlist *pipelines, pid_t *ids, int size)
 		while (pipelines != NULL && \
 		(pipelines->token != COMMAND && is_builtin(pipelines->token) == false))
 			pipelines = pipelines->nx;
-		wait_for_process(data, ids[i], pipelines->args[0]);
+		wait_for_process(data, ids[i]);
 		pipelines = pipelines->nx;
 		i++;
 	}
@@ -39,7 +39,7 @@ static void	execute_pipelessly(t_data *data, t_mlist *pipeline)
 		if (id == 0)
 			execute_through_path(data, pipeline, data->path);
 		else
-			wait_for_process(data, id, pipeline->args[0]);
+			wait_for_process(data, id);
 	}
 }
 
