@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/06 15:08:22 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 16:14:16 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ struct s_data
 	char	**real_path;
 	int		(*fn[7])(t_data *, char **);
 	int		pipe_fds[2][2];
-	pid_t	*pids;
 	t_mlist	*env;
 	t_mlist	*input;
 	t_mlist	*pipelines;
@@ -138,7 +137,7 @@ void	journey_to_alexpandria(t_data *data, t_mlist **input, char *str);
 /*	Forking	*/
 
 pid_t	create_fork(t_data *data);
-void	wait_for_process(t_data *data, pid_t id, char *input);
+void	wait_for_process(t_data *data, pid_t id);
 
 /*	Initialization	*/
 
@@ -193,6 +192,7 @@ void	make_pipes_pipe(t_data *data, int pipe_fds[2][2]);
 void	duplicate_fd(t_data *data, int old, int new);
 pid_t	fork_process(t_data *data, t_mlist *pipelines);
 void	open_pipe(t_data *data, int pipes);
+void	open_single_pipe(t_data *data, int *fd);
 void	whatsup_doc(t_data *data, char *delim);
 
 /*	Signals	*/

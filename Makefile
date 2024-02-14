@@ -35,6 +35,7 @@ SRCS	=	alexer.c \
 			errors.c \
 			executils.c \
 			execution.c \
+			exit_process.c \
 			expand_dollar.c \
 			forks.c \
 			ft_special_split.c \

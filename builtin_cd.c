@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/30 18:42:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/06 17:39:44 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 15:05:21 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	cd_builtin(t_data *data, char **args)
 	char	*tmp;
 
 	if (check_errors(args) == ERROR)
-		return (-1);
+		return (EXIT_FAILURE);
 	tmp = getcwd(NULL, 0);
 	if (tmp == NULL)
 		exit_error(data, "getcwd failed");
@@ -43,12 +43,12 @@ int	cd_builtin(t_data *data, char **args)
 		ft_putstr_fd("error: ", STDERR_FILENO);
 		ft_putstr_fd(*args, STDERR_FILENO);
 		ft_putendl_fd(" is not a directory", STDERR_FILENO);
-		return (126);
+		return (EXIT_FAILURE);
 	}
 	change_env_var(data, "OLDPWD=", tmp);
 	tmp = getcwd(NULL, 0);
 	if (tmp == NULL)
 		exit_error(data, "getcwd failed");
 	change_env_var(data, "PWD=", tmp);
-	return (0);
+	return (EXIT_SUCCESS);
 }

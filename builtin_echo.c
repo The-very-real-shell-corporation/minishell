@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/30 18:42:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/01/30 18:43:27 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 15:06:02 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	echo_builtin(t_data *data, char **args)
 	if (*args == NULL)
 	{
 		write(STDOUT_FILENO, "\n", 1);
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	(void)data;
 	n_flag = false;
@@ -37,5 +37,5 @@ int	echo_builtin(t_data *data, char **args)
 	}
 	if (n_flag == false)
 		ft_putstr_fd("\n", STDOUT_FILENO);
-	return (0);
+	return (EXIT_SUCCESS);
 }

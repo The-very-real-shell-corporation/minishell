@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/30 18:42:31 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/13 17:43:38 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 14:20:48 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static bool	with_arguments(t_data *data, char **args)
 		dollar_in_env(data, *args, &env_string);
 		if (env_string == NULL)
 		{
-			printf("Error: could not add \"%s\" to environment\n", *args);
+			printf("Error: could not add \"%s\" to environment\n", *args); // -> std error
 			return (ERROR);
 		}
 		tmp = find_input(data->env, env_string);

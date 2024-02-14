@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/13 17:22:00 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 15:22:53 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,34 +27,6 @@ static void	await_forks(t_data *data, t_mlist *pipelines, pid_t *ids, int size)
 		i++;
 	}
 	free(ids);
-}
-
-void	execute_through_path(t_data *data, t_mlist *p, char **path)
-{
-	int		i;
-	char	*directory;
-	char	*cwd;
-
-	i = 0;
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
-		exit_error(data, "cwd failed");
-	data->env_array = list_to_array(data, data->env);
-	while (path[i] != NULL)
-	{
-		chdir(path[i]);
-		if (access(p->args[0], X_OK) == 0)
-		{
-			directory = ft_strjoin2(data, data->real_path[i], p->args[0]);
-			chdir(cwd);
-			execute_command(data, directory, p->args);
-		}
-		i++;
-	}
-	chdir(cwd);
-	if (access(p->args[0], X_OK) == 0)
-		execute_command(data, ft_strdup2(data, p->args[0]), p->args);
-	exit(EXIT_FAILURE);
 }
 
 static void	execute_pipelessly(t_data *data, t_mlist *pipeline)
@@ -93,4 +65,23 @@ void	carry_out_orders(t_data *data, t_mlist *pipelines, int i)
 		pipelines = pipelines->nx;
 	}
 	await_forks(data, data->pipelines, pids, i);
+}
+
+void	build_pipelines(t_data *data, t_mlist *in, t_mlist **pipelines)
+{
+	char	**arr;
+
+	while (in != NULL)
+	{
+		arr = list_to_array(data, in);
+		if (arr != NULL)
+			node_addback(pipelines, new_node(data, NULL, arr, in->token));
+		while (in != NULL && is_redirection(in->token) == false)
+			in = in->nx;
+		if (in != NULL)
+		{
+			node_addback(pipelines, copy_node(data, in));
+			in = in->nx;
+		}
+	}
 }

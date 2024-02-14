@@ -6,30 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:56:08 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/02 18:28:33 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/14 14:29:42 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	build_pipelines(t_data *data, t_mlist *in, t_mlist **pipelines)
-{
-	char	**arr;
-
-	while (in != NULL)
-	{
-		arr = list_to_array(data, in);
-		if (arr != NULL)
-			node_addback(pipelines, new_node(data, NULL, arr, in->token));
-		while (in != NULL && is_redirection(in->token) == false)
-			in = in->nx;
-		if (in != NULL)
-		{
-			node_addback(pipelines, copy_node(data, in));
-			in = in->nx;
-		}
-	}
-}
 
 void	make_pipes_pipe(t_data *data, int pipe_fds[2][2])
 {
@@ -44,5 +25,32 @@ void	make_pipes_pipe(t_data *data, int pipe_fds[2][2])
 		close(data->pipe_fds[1][WRITE]);
 		duplicate_fd(data, pipe_fds[1][READ], STDIN_FILENO);
 		close(data->pipe_fds[1][READ]);
+	}
+}
+
+void	open_pipe(t_data *data, int position)
+{
+	int	*fd[2];
+
+	fd[0] = data->pipe_fds[0];
+	fd[1] = data->pipe_fds[1];
+	if (position == START)
+	{
+		open_single_pipe(data, fd[0]);
+		fd[1][READ] = -1;
+		fd[1][WRITE] = -1;
+	}
+	if (position == MIDDLE)
+	{
+		fd[1][READ] = fd[0][READ];
+		fd[1][WRITE] = fd[0][WRITE];
+		open_single_pipe(data, fd[0]);
+	}
+	if (position == END)
+	{
+		fd[1][READ] = fd[0][READ];
+		fd[1][WRITE] = fd[0][WRITE];
+		fd[0][READ] = -1;
+		fd[0][WRITE] = -1;
 	}
 }
