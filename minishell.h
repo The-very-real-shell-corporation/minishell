@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/14 19:37:29 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/15 15:59:50 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define WRITE 1
 # define EXEC_ERR	10000
 
-# define HD_PATH "heredoc_dir/heredoc.txt"
+# define HD_PATH "/tmp/heredoc.txt"
 
 typedef struct s_data	t_data;
 

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/21 14:48:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/13 17:03:03 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/15 16:17:00 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	get_user_input(t_data *data, int fd, char *delim, bool expansion)
 	while (INFINITY)
 	{
 		line = readline("> ");
-		if (line == NULL || ft_strncmp(line, delim, ft_strlen(delim)) == 0)
+		if (line == NULL || ft_strncmp(line, delim, ft_strlen(delim) + 1) == 0)
 		{
 			if (line == NULL)
 				ft_putendl_fd("warning: ended heredoc without delimiter", STDERR_FILENO);

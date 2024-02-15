@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/14 14:31:00 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/05 20:17:38 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/15 18:45:07 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ t_mlist	*ft_special_split(t_data *data, char *input)
 		if (input[i] != '\0')
 			i++;
 	}
+	// print_debug(res);
 	return (res);
 }

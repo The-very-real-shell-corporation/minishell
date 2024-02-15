@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/14 16:15:33 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/15 19:34:45 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,12 @@ static void	execute_pipelessly(t_data *data, t_mlist *pipeline)
 	{
 		id = create_fork(data);
 		if (id == 0)
-			execute_through_path(data, pipeline, data->path);
+		{
+			if (ft_strchr(pipeline->args[0], '/') != NULL)
+				execute_command(data, pipeline->args[0], pipeline->args);
+			else
+				execute_through_path(data, pipeline, data->path);
+		}
 		else
 			wait_for_process(data, id);
 	}

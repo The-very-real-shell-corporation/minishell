@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/14 18:50:04 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/15 18:49:16 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	expand_quotes(t_data *data, t_mlist *node, char **str)
 	{
 		if (is_quote(tmp[i]) == true && ft_strchr(&tmp[i + 1], tmp[i]) != NULL)
 		{
-			if (tmp[ft_strlen(tmp) - 1] != ' ')
+			if (ft_iswhitespace(tmp[ft_strlen(tmp) - 1]) == true)
 				node->token = STITCH;
 			*str = remove_quotes(data, tmp, tmp[i]);
 			free(tmp);
@@ -73,7 +73,7 @@ static void	contract_list(t_data *data, t_mlist *list)
 			free(tmp);
 			unlink_node(list->nx);
 		}
-		else if (tmp[ft_strlen(tmp) - 1] == ' ')
+		else if (ft_iswhitespace(tmp[ft_strlen(tmp) - 1]) == true)
 		{
 			list->str[ft_strlen(tmp) - 1] = '\0';
 			list = list->nx;
@@ -82,7 +82,7 @@ static void	contract_list(t_data *data, t_mlist *list)
 			list = list->nx;
 	}
 	pos = ft_strlen(list->str);
-	if (pos > 0 && list->str[pos - 1] == ' ')
+	if (pos > 0 && ft_iswhitespace(list->str[pos - 1]) == true)
 		list->str[pos - 1] = '\0';
 }
 

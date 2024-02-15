@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 17:02:38 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/14 18:44:09 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/15 18:57:39 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	if (argc != 1)
-		return (printf("Please insert input AFTER starting minishell"), 1);
+	{
+		ft_putendl_fd("Insert input after starting minishell", STDOUT_FILENO);
+		return (1);
+	}
+	ft_putendl_fd("Welcome to The Bashbasher!", STDOUT_FILENO);
+	ft_putendl_fd("Please write \"about\" for more information", STDOUT_FILENO);
 	initialize_data(&data, envp);
-	printf("Welcome to The Bashbasher!\n");
-	printf("Please write \"about\" for more information\n");
 	while (INFINITY)
 	{
 		set_signals();
@@ -30,5 +33,4 @@ int	main(int argc, char **argv, char **envp)
 		loop_clean(&data);
 		unlink(HD_PATH);
 	}
-	return (0);
 }

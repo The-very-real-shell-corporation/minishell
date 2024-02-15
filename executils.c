@@ -6,52 +6,46 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/21 18:33:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/02/14 20:33:50 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/15 19:33:15 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	check_access(char *filename, int *status)
+static bool	check_access(char *filepath, int *status)
 {
 	*status = 0;
-	if (access(filename, F_OK) == -1)
+	if (access(filepath, F_OK) == -1)
 	{
 		*status = 126;
 		return (ERROR);
 	}
-	if (access(filename, X_OK) == -1)
+	if (access(filepath, X_OK) == -1)
 	{
 		*status = 127;
-		ft_putstr_fd(filename, STDERR_FILENO);
+		ft_putstr_fd(filepath, STDERR_FILENO);
 		ft_putendl_fd(": insufficient permissions", STDERR_FILENO);
 		return (ERROR);
 	}
 	return (SUCCESS);
 }
 
-static int	loop_through_path(t_data *data, t_mlist *p, char **path, char *cwd)
+static int	loop_through_path(t_data *data, t_mlist *p, char **path)
 {
 	int		i;
 	int		status;
-	char	*directory;
+	char	*filepath;
 
 	i = 0;
 	status = 0;
-	while (path != NULL && path[i] != NULL)
+	while (path != NULL && path[i] != NULL && status != 127)
 	{
-		chdir(path[i]);
-		if (check_access(p->args[0], &status) == SUCCESS)
-		{
-			directory = ft_strjoin2(data, data->real_path[i], p->args[0]);
-			chdir(cwd);
-			execute_command(data, directory, p->args);
-		}
-		if (status == 127)
-			break ;
+		filepath = ft_strjoin2(data, data->real_path[i], p->args[0]);
+		if (check_access(filepath, &status) == SUCCESS)
+			execute_command(data, filepath, p->args);
+		free(filepath);
 		i++;
 	}
-	chdir(cwd);
 	return (status);
 }
 
@@ -66,9 +60,7 @@ void	execute_through_path(t_data *data, t_mlist *p, char **path)
 	if (cwd == NULL)
 		exit_error(data, "cwd failed");
 	data->env_array = list_to_array(data, data->env);
-	status = loop_through_path(data, p, path, cwd);
-	if (status != 127 && check_access(p->args[0], &status) == SUCCESS)
-		execute_command(data, ft_strdup2(data, p->args[0]), p->args);
+	status = loop_through_path(data, p, path);
 	if (status == 126)
 	{
 		ft_putstr_fd("command not found: ", STDERR_FILENO);
@@ -78,14 +70,23 @@ void	execute_through_path(t_data *data, t_mlist *p, char **path)
 	exit(status);
 }
 
-void	execute_command(t_data *data, char *directory, char **args)
+void	execute_command(t_data *data, char *filepath, char **args)
 {
-	if (execve(directory, args, data->env_array) == -1)
+	int	status;
+
+	if (check_access(filepath, &status) == SUCCESS)
 	{
-		free(directory);
-		exit_error(data, "execve failed");
+		if (execve(filepath, args, data->env_array) == -1)
+		{
+			free(filepath);
+			exit_error(data, "execve failed");
+		}
 	}
-	free(directory);
+	if (status == 126)
+	{
+		ft_putstr_fd("File or folder doesn't exist: ", STDERR_FILENO);
+		ft_putendl_fd(filepath, STDERR_FILENO);
+	}
 	clean_up(data);
 	exit(EXIT_FAILURE);
 }

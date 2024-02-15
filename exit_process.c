@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/14 14:28:02 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/14 19:01:49 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/15 15:39:26 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ void	wait_for_process(t_data *data, pid_t id)
 {
 	waitpid(id, &data->exit_status, 0);
 	waifu_exit(&data->exit_status);
+	// data->exit_status = data->exit_status >> 8;
 }

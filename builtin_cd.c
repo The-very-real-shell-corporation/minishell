@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/30 18:42:21 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/14 19:37:06 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/15 19:51:17 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static int	check_new_directory(t_data *data, char *tmp)
 {
-	if (errno == 0)
-		change_env_var(data, "OLDPWD=", tmp);
+	change_env_var(data, "OLDPWD=", tmp);
 	tmp = getcwd(NULL, 0);
 	if (check_errno(&data->exit_status, "can't access directory") == ERROR)
 		return (data->exit_status);
@@ -33,6 +32,7 @@ static char	*check_old_directory(t_data *data)
 	if (errno == ENOENT)
 	{
 		change_env_var(data, "PWD=", ft_strdup2(data, ""));
+		tmp = ft_strdup2(data, "");
 	}
 	else if (tmp == NULL)
 		exit_error(data, "getcwd malloc failed");

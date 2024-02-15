@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/13 17:15:59 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/15 18:53:10 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void	check_list(t_data *data, t_mlist *in)
 		}
 		if (in->token == HEREDOC)
 		{
-			in->args = ft_split(in->nx->str, ' ');
+			in->args = ft_split(in->nx->str, '\0');
 			if (in->args == NULL)
 				exit_error(data, "split alloc failed");
 			unlink_node(in->nx);

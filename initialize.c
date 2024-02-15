@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/14 19:57:47 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/15 16:59:21 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ static void	about_message(void)
 	int		fd;
 
 	fd = open("about.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		ft_putendl_fd("no about.txt, can't display message", STDOUT_FILENO);
+		return ;
+	}
 	while (INFINITY)
 	{
 		line = get_next_line(fd);
