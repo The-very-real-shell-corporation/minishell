@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/13 17:27:05 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/15 18:49:16 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/19 17:33:49 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	expand_quotes(t_data *data, t_mlist *node, char **str)
 	{
 		if (is_quote(tmp[i]) == true && ft_strchr(&tmp[i + 1], tmp[i]) != NULL)
 		{
-			if (ft_iswhitespace(tmp[ft_strlen(tmp) - 1]) == true)
+			if (node->nx != NULL && token_chars(node->nx->str[0]) == false)
 				node->token = STITCH;
 			*str = remove_quotes(data, tmp, tmp[i]);
 			free(tmp);

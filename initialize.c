@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/27 17:06:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/15 16:59:21 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/19 18:38:47 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	about_message(void)
 	fd = open("about.txt", O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putendl_fd("no about.txt, can't display message", STDOUT_FILENO);
+		ft_putendl_fd("no about.txt, can't display message", STDERR_FILENO);
 		return ;
 	}
 	while (INFINITY)
@@ -100,7 +100,7 @@ bool	get_input_and_parse(t_data *data)
 	if (ft_strncmp(line, "about", 6) == 0)
 	{
 		about_message();
-		lexer_error(data, NULL, NULL);
+		clear_mlist(&data->input);
 		free(line);
 		return (false);
 	}

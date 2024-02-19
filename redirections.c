@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/20 15:04:31 by vincent       #+#    #+#                 */
-/*   Updated: 2024/02/15 15:45:42 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/19 18:45:27 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	append_output(t_data *data, char *pathname, bool *status)
 	int	fd;
 
 	fd = open(pathname, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	if (fd == ERROR)
+	if (fd == -1)
 	{
 		ft_putstr_fd("failed to open file: ", STDERR_FILENO);
 		ft_putendl_fd(pathname, STDERR_FILENO);

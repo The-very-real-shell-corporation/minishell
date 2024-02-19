@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 19:47:55 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/06 17:18:09 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/19 18:27:43 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	copy_environment(t_data *data, t_mlist **env, char **envp)
 
 	i = 0;
 	if (envp == NULL)
-		exit_error(data, "Envp was NULL somehow");
+		return ;
 	while (envp[i] != NULL)
 	{
 		node_addback(env, new_node(data, \

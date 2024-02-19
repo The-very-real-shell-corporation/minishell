@@ -6,36 +6,15 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 13:50:27 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/06 15:06:58 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/19 18:48:18 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_2d_charray(char **array)
-{
-	int	i;
-
-	i = 0;
-	printf("args: ");
-	if (array == NULL)
-	{
-		printf("%p\n", array);
-		return ;
-	}
-	printf("\n");
-	while (array[i] != NULL)
-	{
-		printf("String [%d]: %s\n", i, array[i]);
-		i++;
-	}
-	printf("String [%d]: %s\n", i, array[i]);
-}
-
 char	**list_to_array(t_data *data, t_mlist *input)
 {
 	char	**arr;
-	char	*tmp;
 	size_t	i;
 
 	i = 0;
@@ -43,9 +22,6 @@ char	**list_to_array(t_data *data, t_mlist *input)
 	while (input != NULL && is_redirection(input->token) == false)
 	{
 		arr[i] = ft_strdup2(data, input->str);
-		tmp = arr[i];
-		arr[i] = ft_strtrim2(data, tmp, " ");
-		free(tmp);
 		input = input->nx;
 		i++;
 	}

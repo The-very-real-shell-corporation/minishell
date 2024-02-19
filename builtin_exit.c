@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/30 18:42:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/14 20:33:10 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/19 18:17:30 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	mini_to_i(const char *str)
 		res += (str[i] - '0');
 		if (res > INT_MAX)
 		{
-			ft_putendl_fd("Atoi error: number too large", 2);
+			ft_putendl_fd("Atoi error: number too large", STDERR_FILENO);
 			return (-2);
 		}
 		i++;

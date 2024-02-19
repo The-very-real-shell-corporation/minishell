@@ -12,16 +12,15 @@
 # **************************************************************************** #
 
 NAME	= minishell
-USER	= vvan-der
 LIBFT	= libft
 LIBS	= $(LIBFT)/libft.a
 RM		= rm -rf
 CC		= cc
-CFLAGS	= -Wall -Werror -Wextra -g
-#CFLAGS	+= -fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra #-g
 L_FLAGS	= -lreadline
 
 SRCS	=	alexer.c \
+			alexer_chexer.c \
 			alexpander_the_great.c \
 			builtin_cd.c \
 			builtin_echo.c \
@@ -56,7 +55,6 @@ SRCS	=	alexer.c \
 			string_nav.c \
 			utilities_01.c \
 
-HEREDOC	= heredoc_dir
 OBJDIR	= shobjects
 
 OBJS	= $(SRCS:%.c=$(OBJDIR)/%.o)
@@ -71,17 +69,16 @@ $(OBJDIR)/%.o : %.c
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
-	mkdir -p $(HEREDOC)
 
 $(NAME): $(LIBS) $(OBJDIR) $(OBJS) 
 	$(CC) $(CFLAGS) $(OBJS) $(L_FLAGS) $(LIBS) -o $(NAME)
 
 clean:	
-	$(RM) $(OBJDIR) $(HEREDOC)
+	$(RM) $(OBJDIR)
 	make clean -C $(LIBFT)
 
 fclean: clean
-	$(RM) $(NAME) $(HEREDOC)
+	$(RM) $(NAME)
 	$(RM) $(LIBFT)/$(LIBFT).a
 
 re: fclean all

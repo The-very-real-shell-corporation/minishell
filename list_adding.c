@@ -16,14 +16,10 @@ t_mlist	*new_node(t_data *data, char *word, char **args, t_token tolkien)
 {
 	t_mlist	*new;
 
-	new = malloc(sizeof(t_mlist));
-	if (new == NULL)
-		exit_error(data, "List malloc failed");
+	new = ft_calloc2(data, 1, sizeof(t_mlist));
 	new->str = word;
 	new->args = args;
 	new->token = tolkien;
-	new->nx = NULL;
-	new->pv = NULL;
 	return (new);
 }
 

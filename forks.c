@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 15:20:13 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/15 19:47:01 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/19 18:11:33 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ pid_t	create_fork(t_data *data)
 	return (id);
 }
 
-pid_t	fork_process(t_data *data, t_mlist *pipeline)
+pid_t	fork_process(t_data *data, t_mlist *pipeline, pid_t id)
 {
-	pid_t	id;
-
 	if (pipeline->pv == NULL && count_tokens(pipeline, PIPE) != 0)
 		open_pipe(data, START);
 	else if (count_tokens(pipeline->nx, PIPE) != 0)
@@ -48,8 +46,7 @@ pid_t	fork_process(t_data *data, t_mlist *pipeline)
 		{
 			if (ft_strchr(pipeline->args[0], '/') != NULL)
 				execute_command(data, pipeline->args[0], pipeline->args);
-			else
-				execute_through_path(data, pipeline, data->path);
+			execute_through_path(data, pipeline, data->path);
 		}
 		clean_up(data);
 		exit(data->exit_status);

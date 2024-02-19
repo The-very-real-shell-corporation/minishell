@@ -6,28 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/18 14:04:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/15 18:53:10 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/19 15:27:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static bool	is_double_redirection(t_mlist *list)
-{
-	if (list != NULL && list->pv != NULL)
-	{
-		if (is_redirection(list->pv->token) == true)
-		{
-			if (is_redirection(list->token) == true)
-			{
-				if (list->pv->token == HEREDOC)
-					return (false);
-				return (true);
-			}
-		}
-	}
-	return (false);
-}
 
 static void	assign_command_token(t_mlist *node, char *str)
 {
@@ -70,32 +53,20 @@ static void	assign_token(t_mlist *node, char *str)
 		node->token = WORD;
 }
 
-static void	check_list(t_data *data, t_mlist *in)
+static void	check_list(t_data *data, t_mlist *input)
 {
-	while (in != NULL)
+	while (input != NULL)
 	{
-		if (in->token == COMMAND && ft_strncmp(in->str, "<<", 3) == 0)
-		{
-			if (in->nx != NULL && is_redirection(in->nx->token) == true)
-				lexer_error(data, "error near redirection symbol: ", in->str);
-			else
-				lexer_error(data, "command not found: ", in->str);
+		if (redirection_ok(data, input) == false)
 			return ;
-		}
-		if (is_redirection(in->token) == true && \
-		(is_double_redirection(in->nx) == true || in->nx == NULL))
+		if (input->token == HEREDOC)
 		{
-			lexer_error(data, "error near redirection symbol: ", in->str);
-			return ;
-		}
-		if (in->token == HEREDOC)
-		{
-			in->args = ft_split(in->nx->str, '\0');
-			if (in->args == NULL)
+			input->args = ft_split(input->nx->str, '\0');
+			if (input->args == NULL)
 				exit_error(data, "split alloc failed");
-			unlink_node(in->nx);
+			unlink_node(input->nx);
 		}
-		in = in->nx;
+		input = input->nx;
 	}
 }
 
@@ -104,7 +75,7 @@ void	tokenize_list(t_data *data, t_mlist *in)
 	while (in != NULL)
 	{
 		assign_token(in, in->str);
-		if (in->pv == NULL || in->pv->token == PIPE)
+		if (in->pv == NULL || (in->pv->token == PIPE && in->token != PIPE))
 			assign_command_token(in, in->str);
 		in = in->nx;
 	}

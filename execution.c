@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/05 15:44:07 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/15 19:34:45 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/19 18:30:29 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ static void	execute_pipelessly(t_data *data, t_mlist *pipeline)
 		{
 			if (ft_strchr(pipeline->args[0], '/') != NULL)
 				execute_command(data, pipeline->args[0], pipeline->args);
-			else
-				execute_through_path(data, pipeline, data->path);
+			execute_through_path(data, pipeline, data->path);
 		}
 		else
 			wait_for_process(data, id);
@@ -62,7 +61,7 @@ void	carry_out_orders(t_data *data, t_mlist *pipelines, int i)
 	{
 		if (pipelines->pv == NULL || pipelines->token == PIPE)
 		{
-			pids[i] = fork_process(data, pipelines);
+			pids[i] = fork_process(data, pipelines, 0);
 			if (pids[i] == -1)
 				break ;
 			i++;

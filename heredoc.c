@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/21 14:48:23 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/15 16:17:00 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/19 17:31:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static int	open_heredoc(t_data *data)
 
 	fd = open(HD_PATH, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
-		exit_error(data, "failed to open or create file");
+		exit_error(data, "failed to create heredoc file (does /tmp exist?)");
 	return (fd);
 }
 
-static void	get_user_input(t_data *data, int fd, char *delim, bool expansion)
+static void	get_user_input(int fd, char *delim)
 {
 	char	*line;
 
@@ -34,13 +34,14 @@ static void	get_user_input(t_data *data, int fd, char *delim, bool expansion)
 		if (line == NULL || ft_strncmp(line, delim, ft_strlen(delim) + 1) == 0)
 		{
 			if (line == NULL)
-				ft_putendl_fd("warning: ended heredoc without delimiter", STDERR_FILENO);
+			{
+				ft_putstr_fd("warning: ended heredoc", STDERR_FILENO);
+				ft_putendl_fd(" without delimiter", STDERR_FILENO);
+			}
 			free(line);
 			close(fd);
 			return ;
 		}
-		if (expansion == true)
-			expand_dollar(data, &line);
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
@@ -49,11 +50,7 @@ static void	get_user_input(t_data *data, int fd, char *delim, bool expansion)
 void	whatsup_doc(t_data *data, char *delim)
 {
 	int		fd;
-	bool	expansion;
 
 	fd = open_heredoc(data);
-	expansion = true;
-	if (first_last(delim, '\"') == true || first_last(delim, '\'') == true)
-		expansion = false;
-	get_user_input(data, fd, delim, expansion);
+	get_user_input(fd, delim);
 }

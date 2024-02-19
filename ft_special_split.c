@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/14 14:31:00 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/15 18:45:07 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/19 17:19:11 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	token_chars(char c)
+bool	token_chars(char c)
 {
 	char	*values;
 	int		i;
@@ -78,7 +78,8 @@ t_mlist	*ft_special_split(t_data *data, char *input)
 			len = get_token_length(&input[i]);
 		else
 			len = get_length(&input[i]);
-		if (ft_iswhitespace(input[i + len]) == true)
+		if (ft_iswhitespace(input[i + len]) == true \
+			&& token_chars(input[i + len + 1]) == false)
 			len++;
 		node_addback(&res, \
 		new_node(data, mini_shubstr(data, &input[i], len), NULL, INIT));
@@ -86,6 +87,5 @@ t_mlist	*ft_special_split(t_data *data, char *input)
 		if (input[i] != '\0')
 			i++;
 	}
-	// print_debug(res);
 	return (res);
 }

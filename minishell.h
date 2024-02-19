@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:24:36 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/15 15:59:50 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/19 18:48:23 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,11 @@
 # include <unistd.h>
 # include "libft/libft.h"
 
-# define INFINITY	1
-# define ERROR	1
+# define INFINITY 1
+# define ERROR 1
 # define SUCCESS 0
 # define READ 0
 # define WRITE 1
-# define EXEC_ERR	10000
-
 # define HD_PATH "/tmp/heredoc.txt"
 
 typedef struct s_data	t_data;
@@ -176,6 +174,7 @@ void	print_list(t_mlist *list);
 
 void	expansion_pack(t_data *data, char *input);
 bool	first_last(char *str, char c);
+bool	redirection_ok(t_data *data, t_mlist *input);
 int		ft_ministrcmp(char *str1, char *str2);
 char	*mini_shubstr(t_data *data, char *str, int len);
 void	tokenize_list(t_data *data, t_mlist *in);
@@ -191,14 +190,14 @@ void	build_pipelines(t_data *data, t_mlist *input, t_mlist **pipelines);
 void	close_main_fds(int pipe_fds[2][2]);
 void	make_pipes_pipe(t_data *data, int pipe_fds[2][2]);
 void	duplicate_fd(t_data *data, int old, int new);
-pid_t	fork_process(t_data *data, t_mlist *pipelines);
+pid_t	fork_process(t_data *data, t_mlist *pipelines, pid_t id);
 void	open_pipe(t_data *data, int pipes);
 void	open_single_pipe(t_data *data, int *fd);
 void	whatsup_doc(t_data *data, char *delim);
 
 /*	Signals	*/
 
-void	set_signals(void);
+void	set_signals(t_data *data);
 void	signal_int_handler(int sig);
 void	signals_for_kids(void);
 void	unset_signals(void);
@@ -216,12 +215,11 @@ bool	everythingiswhitespace(char *str);
 void	exit_error(t_data *data, char *msg);
 bool	is_builtin(t_token tolkien);
 bool	is_redirection(t_token tolkien);
+bool	token_chars(char c);
 void	lexer_error(t_data *data, char *msg, char *token);
 char	**list_to_array(t_data *data, t_mlist *list);
-void	print_2d_charray(char **array);
 int		ptr_array_size(void **array);
 bool	is_quote(char c);
-void	print_debug(t_mlist *list);
 bool	contains_redirections(t_mlist *list);
 
 #endif

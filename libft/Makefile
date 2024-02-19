@@ -6,14 +6,14 @@
 #    By: vvan-der <vvan-der@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/10/03 18:04:48 by vvan-der      #+#    #+#                  #
-#    Updated: 2024/01/30 14:29:20 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/02/19 18:49:23 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= libft.a
 RM		= rm -rf
-CC		= cc # changed it to cc
-CFLAGS	= -Wall -Werror -Wextra#-g3 -fsanitize=address
+CC		= cc
+CFLAGS	= -Wall -Werror -Wextra #-g3 -fsanitize=address
 OBJDIR	= libft_obj
 
 SRCS	= ft_ato_double.c ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \

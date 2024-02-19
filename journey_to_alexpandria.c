@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/05 17:39:28 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/06 14:52:16 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/19 18:12:47 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,25 @@ static bool	contains_one_word(char *str)
 	return (true);
 }
 
-void	journey_to_alexpandria(t_data *data, t_mlist **input, char *str)
+void	journey_to_alexpandria(t_data *data, t_mlist **in, char *str)
 {
 	int		i;
 	char	**arr;
 	t_mlist	*tmp;
 
 	i = 0;
-	tmp = *input;
+	tmp = *in;
 	if (ft_strchr(str, '\"') != NULL || ft_strchr(str, '\'') != NULL)
 		return ;
-	if (contains_one_word((*input)->str) == false)
+	if (contains_one_word((*in)->str) == false)
 	{
 		arr = ft_split(str, ' ');
 		if (arr == NULL)
 			exit_error(data, "ft_split failed");
 		while (arr[i] != NULL)
 		{
-			insert_node(*input, (*input)->nx, new_node(data, arr[i], NULL, INIT));
-			*input = (*input)->nx;
+			insert_node(*in, (*in)->nx, new_node(data, arr[i], NULL, INIT));
+			*in = (*in)->nx;
 			i++;
 		}
 		if (tmp->pv == NULL)
