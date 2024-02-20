@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/21 18:33:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/02/15 19:33:15 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/20 23:25:58 by akasiota      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,11 @@ void	execute_command(t_data *data, char *filepath, char **args)
 {
 	int	status;
 
+	data->env_array = list_to_array(data, data->env);
 	if (check_access(filepath, &status) == SUCCESS)
 	{
 		if (execve(filepath, args, data->env_array) == -1)
-		{
-			free(filepath);
 			exit_error(data, "execve failed");
-		}
 	}
 	if (status == 126)
 	{
